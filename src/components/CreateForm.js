@@ -1,22 +1,45 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
+import { Button, Container } from 'react-bootstrap';
+
 import ProjectForm from './common/ProjectForm';
-import { Button } from 'react-bootstrap';
+import AboutForm from './common/AboutForm';
+import LinksForm from './common/LinksForm';
 
 const CreateForm = () => {
-	const imageRef = useRef();
-	const urlRef = useRef();
-	const textRef = useRef();
+	const [projectText, setProjectText] = useState();
+	const [projectUrl, setProjectUrl] = useState();
+	const [projectImage, setProjectImage] = useState();
+	const [aboutTitle, setAboutTitle] = useState();
+	const [aboutText, setAboutText] = useState();
+	const [aboutUrl, setAboutUrl] = useState();
+	const [addProjectForm, setAddProjectForm] = useState([1]);
+	const [addAboutForm, setAddAboutForm] = useState([1]);
 
 	const handleOnClick = (e) => {
-		e.preventDefault();
-		console.log('Add more form')
+		if (e.target.innerHTML === 'Add Project') {
+			setAddProjectForm([
+				...addProjectForm,
+				addProjectForm
+			]);
+		}
+
+		if( e.target.innerHTML === 'Add Text Section') {
+			setAddAboutForm([
+				...addAboutForm,
+				addAboutForm
+			]);
+		}
 	};
 
 	const onImageButtonClick = () => {
-		console.log('click ti add image');
+		console.log('click to add image');
 	};
 
 	const handleTextChange = (e) => {
+		console.log(e.target.value);
+	};
+
+	const handleTitleChange = (e) => {
 		console.log(e.target.value);
 	};
 
@@ -26,16 +49,48 @@ const CreateForm = () => {
 
 	return ( 
 		<>
-			<ProjectForm 
-				onClick={onImageButtonClick}
-				handleTextChange={handleTextChange}
-				handleUrlChange={handleUrlChange}
-				image={imageRef}
-				url={urlRef}
-				text={textRef}
-			/>
+			<Container className="create-project">
+				
+				{
+					addProjectForm.map((form, index) => (
+						<ProjectForm 
+							key={index}
+							onClick={onImageButtonClick}
+							handleTextChange={handleTextChange}
+							handleUrlChange={handleUrlChange}
+							image={projectImage}
+							url={projectUrl}
+							text={projectText}
+						/>
+						
+					))
+					
+				}
 
-			<Button onClick={handleOnClick} type="button">Add project</Button>
+				<Button className="button" onClick={handleOnClick} type="button">Add Project</Button>
+			</Container>
+			<Container className="add-about-text mt-5">
+				{
+					addAboutForm.map((form, index) => (
+						<AboutForm 
+							key={index}
+							handleTextChange={handleTextChange}
+							handleTitleChange={handleTitleChange}
+							handleUrlChange={handleUrlChange}
+							title={aboutTitle}
+							text={aboutText}
+							url={aboutUrl}
+						/>
+					))
+				}
+				
+				<Button className="button" onClick={handleOnClick} type="button">Add Text Section</Button>
+			</Container>
+
+			<Container className="add-links-form mt-5">
+				<LinksForm 
+				/>
+			</Container>
 		</>
 	 );
 }

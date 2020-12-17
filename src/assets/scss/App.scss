@@ -1,1 +1,46 @@
 @import "~bootstrap/scss/bootstrap";
+
+a{
+	color: rgba(0, 0, 0, 0.5);
+	&:hover{
+		color: rgba(0, 0, 0, 0.7);
+		text-decoration: none;
+	}
+}
+
+body{
+	color: #bfc4c9;
+}
+
+h1{
+	font-size: 100px;
+}
+
+.icons{
+	color: #b4dacc;
+	font-size: 35px;
+}
+
+.form{
+	background-color: #e1faf1;
+	border-radius: 0.25rem;
+	box-shadow: 5px 5px 5px #c6ecde;
+	padding: 10px;
+	margin-bottom: 25px;	
+}
+
+.button{
+	background-color: #ced4da;
+	border: none;
+		&:hover{
+			background-color: #ced4da;
+			color: rgba(0, 0, 0, 0.7);
+		}
+}
+
+.image-button{
+	&:hover{
+		color: #ced4da;
+		border: 1px solid #ced4da;
+	}
+}

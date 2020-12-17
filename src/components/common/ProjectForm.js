@@ -1,14 +1,15 @@
 import React from 'react';
 import { Form, Button, InputGroup, FormControl } from 'react-bootstrap';
 
-const ProjectForm = ({ handleTextChange, handleUrlChange, onClick, text, url }) => {
+const ProjectForm = ({ handleTextChange, handleUrlChange, onClick }) => {
 
 	return ( 
-		<Form>
+		<Form className="form">
 
 			<InputGroup className="mb-3">
 				<InputGroup.Prepend>
 					<Button 
+						className="bg-white image-button"
 						onClick={onClick}
 						variant="outline-secondary">
 						Add Image
@@ -18,21 +19,19 @@ const ProjectForm = ({ handleTextChange, handleUrlChange, onClick, text, url }) 
 			</InputGroup>
 
 			<Form.Group id="url">
-				<Form.Label>URL</Form.Label>
 				<Form.Control 
+					placeholder="URL"
 					onChange={handleUrlChange}
 					type="text" 
-					ref={url}
 				/>
 			</Form.Group>
 
 			<Form.Group id="text">
-				<Form.Label>Text</Form.Label>
 				<Form.Control 
+					placeholder="Text"
 					onChange={handleTextChange}
 					as="textarea" 
 					rows={3} 
-					ref={text} 
 				/>
 			</Form.Group>
 

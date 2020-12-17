@@ -47,7 +47,7 @@ const SignIn = () => {
 									<Form.Control type="password" ref={passwordRef} required />
 								</Form.Group>
 
-								<Button disabled={loading} type="submit">Sign in</Button>
+								<Button className="button" disabled={loading} type="submit">Sign in</Button>
 
 							</Form>
 						</Card.Body>
