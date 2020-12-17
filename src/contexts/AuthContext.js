@@ -25,7 +25,6 @@ const AuthContextProvider = (props) => {
 	}
 
 	const setName = (name) => {
-		console.log(name);
 		return currentUser.updateProfile({
 			displayName: name
 		})

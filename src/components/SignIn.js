@@ -12,7 +12,6 @@ const SignIn = () => {
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
-		console.log(currentUser);
 		e.preventDefault();
 
 		setError(null);
@@ -20,7 +19,7 @@ const SignIn = () => {
 		try {
 			setLoading(true)
 			await signin(emailRef.current.value, passwordRef.current.value)
-			navigate(`/:${currentUser.displayName}/create`)
+			navigate(`/${currentUser.displayName}/create`)
 		} catch (e) {
 			setError(e.message)
 			setLoading(false)

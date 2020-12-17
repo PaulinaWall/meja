@@ -9,13 +9,14 @@ import SignOut from './components/SignOut';
 import SignUp from './components/SignUp';
 import NotFound from './components/NotFound';
 import LandingPage from './components/LandingPage';
-// import CreateForm from './components/CreateForm';
+import CreateForm from './components/CreateForm';
 import UserLandingPage from './components/UserPages/UserLandingPage';
 import UserProjectPage from './components/UserPages/UserProjectPage';
 import UserAboutPage from './components/UserPages/UserAboutPage';
 import UserContactForm from './components/UserPages/UserContactForm';
 import Navigation from './components/Navigation';
 import AuthContextProvider from './contexts/AuthContext';
+import AuthRoute from './components/AuthRoute';
 
 function App() {
   return (
@@ -40,20 +41,24 @@ function App() {
 						<SignUp />
 					</Route>
 
-					{/* <AuthRoute path="/create">
-						<CreateForm />
-					</AuthRoute> */}
-
 					<Route path="/:userName">
+					
 						<Route path="/">
 							<UserLandingPage />
 						</Route>
+
+						<AuthRoute path="/create">
+							<CreateForm />
+						</AuthRoute>
+
 						<Route path="/projects">
 							<UserProjectPage />
 						</Route>
+
 						<Route path="/about">
 							<UserAboutPage />
 						</Route>
+
 						<Route path="/contact">
 							<UserContactForm />
 						</Route>

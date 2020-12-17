@@ -1,16 +1,26 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React from 'react'
-import { Navbar, Container, Nav } from 'react-bootstrap'
-import { Link, NavLink } from 'react-router-dom'
+import React from 'react';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Link, NavLink } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const Navigation = () => {
+
+	const { currentUser } = useAuth();
+
 	return (
 		<div>
 			<Navbar bg="light" variant="light" >
 				<Container>
 					<Link to="/">Meja</Link>
 					<Nav className="ml-auto">
-						<NavLink className="nav-link" to="/signin">Sign in</NavLink>
+						{
+							currentUser ? (
+								<NavLink className="nav-link" to="/signin">Sign out</NavLink>
+							) : (
+								<NavLink className="nav-link" to="/signin">Sign in</NavLink>
+							)
+						}
 					</Nav>
 				</Container>
 			</Navbar>
