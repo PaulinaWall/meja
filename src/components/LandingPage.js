@@ -11,7 +11,7 @@ const LandingPage = () => {
 	};
 
 	return ( 
-		<Container className="d-flex flex-column align-items-center">
+		<Container className="landingPage d-flex flex-column align-items-center">
 			<h1 className="mt-5">MEJA</h1>
 			<p className="mt-5">Makes it easy to create a cool portfolio in a few steps. <a href="value">SAMPLE</a></p>
 			<Button className="button mt-5" onClick={handleOnClick}>
