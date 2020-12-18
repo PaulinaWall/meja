@@ -1,19 +1,64 @@
 import React, { useState } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Alert } from 'react-bootstrap';
+import { useNavigate } from 'react-router';
 
 import ProjectForm from './common/ProjectForm';
 import AboutForm from './common/AboutForm';
 import LinksForm from './common/LinksForm';
+import { db } from '../firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 const CreateForm = () => {
+	const [error, setError] = useState(false)
+	const [loading, setLoading] = useState(false)
+
 	const [projectText, setProjectText] = useState();
 	const [projectUrl, setProjectUrl] = useState();
 	const [projectImage, setProjectImage] = useState();
+	const [addProjectForm, setAddProjectForm] = useState([1]);
+
 	const [aboutTitle, setAboutTitle] = useState();
 	const [aboutText, setAboutText] = useState();
 	const [aboutUrl, setAboutUrl] = useState();
-	const [addProjectForm, setAddProjectForm] = useState([1]);
 	const [addAboutForm, setAddAboutForm] = useState([1]);
+
+	const [gitHubUrl, setGithubUrl] = useState();
+	const [linkedinUrl, setLinkedinUrl] = useState();
+	const [facebookUrl, setFacebookUrl] = useState();
+
+	const { currentUser } = useAuth();
+	const navigate = useNavigate();
+
+	const handleCreatePortfolioOnClick = async (e) => {
+		try {
+			await db.collection('portfolios').add({
+				owner: currentUser.uid,
+				projects: [
+					{
+						image: 'image',
+						url: projectUrl,
+						text: projectText,
+					},
+				],
+				about: [
+					{
+						title: aboutTitle,
+						text: aboutText,
+						url: aboutUrl,
+					},
+				],
+				links: {
+					github: gitHubUrl,
+					facebook: facebookUrl,
+					linkedin: linkedinUrl,
+				},
+			},)
+			// navigate(`/${currentUser.displayName}/`);
+		} catch (e) {
+			setError(e.message);
+			setLoading(false);
+		}
+	}
 
 	const handleOnClick = (e) => {
 		if (e.target.innerHTML === 'Add Project') {
@@ -35,20 +80,11 @@ const CreateForm = () => {
 		console.log('click to add image');
 	};
 
-	const handleTextChange = (e) => {
-		console.log(e.target.value);
-	};
-
-	const handleTitleChange = (e) => {
-		console.log(e.target.value);
-	};
-
-	const handleUrlChange = (e) => {
-		console.log(e.target.value);
-	};
-
 	return ( 
 		<>
+			{error && 
+				(<Alert variant="danger">{error}</Alert>)
+			}
 			<Container className="create-project">
 				
 				{
@@ -56,18 +92,16 @@ const CreateForm = () => {
 						<ProjectForm 
 							key={index}
 							onClick={onImageButtonClick}
-							handleTextChange={handleTextChange}
-							handleUrlChange={handleUrlChange}
-							image={projectImage}
-							url={projectUrl}
-							text={projectText}
+							handleTextChange={(e) => setProjectText(e.target.value)}
+							handleUrlChange={(e) => setProjectUrl(e.target.value)}
 						/>
 						
 					))
 					
 				}
-
-				<Button className="button" onClick={handleOnClick} type="button">Add Project</Button>
+				<div className="d-flex justify-content-end">
+					<Button className="button btn-secondary" onClick={handleOnClick} type="button">Add Project</Button>
+				</div>
 			</Container>
 			
 			<Container className="add-about-text mt-5">
@@ -75,23 +109,29 @@ const CreateForm = () => {
 					addAboutForm.map((form, index) => (
 						<AboutForm 
 							key={index}
-							handleTextChange={handleTextChange}
-							handleTitleChange={handleTitleChange}
-							handleUrlChange={handleUrlChange}
-							title={aboutTitle}
-							text={aboutText}
-							url={aboutUrl}
+							handleTextChange={(e) => setAboutText(e.target.value)}
+							handleTitleChange={(e) => setAboutTitle(e.target.value)}
+							handleUrlChange={(e) => setAboutUrl(e.target.value)}
 						/>
 					))
 				}
 				
-				<Button className="button" onClick={handleOnClick} type="button">Add Text Section</Button>
+				<div className="d-flex justify-content-end">
+					<Button className="button btn-secondary" onClick={handleOnClick} type="button">Add Text Section</Button>
+				</div>
 			</Container>
 
 			<Container className="add-links-form mt-5">
 				<LinksForm 
+					handleGithubChange={(e) => setGithubUrl(e.target.value)}
+					handleLinkedinChange={(e) => setLinkedinUrl(e.target.value)}
+					handleFacebookChange={(e) => setFacebookUrl(e.target.value)}
 				/>
 			</Container>
+
+			<div className="d-flex justify-content-end">
+				<Button className="mr-3 button btn-secondary" onClick={handleCreatePortfolioOnClick} type="button" disabled={loading}>Create Portfolio</Button>
+			</div>
 		</>
 	 );
 }
