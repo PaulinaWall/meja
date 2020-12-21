@@ -1,7 +1,12 @@
 import React from 'react';
 import { Form, Button, InputGroup, FormControl } from 'react-bootstrap';
 
-const ProjectForm = ({ handleTextChange, handleUrlChange, onClick }) => {
+const ProjectForm = ({ 
+	handleTextChange, 
+	handleUrlChange, 
+	onClick, 
+	handleSaveOnClick, 
+}) => {
 
 	return ( 
 		<Form className="form">
@@ -34,7 +39,9 @@ const ProjectForm = ({ handleTextChange, handleUrlChange, onClick }) => {
 					rows={3} 
 				/>
 			</Form.Group>
-
+			<div className="d-flex justify-content-end">
+				<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">Save Project</Button>
+			</div>
 		</Form>
 	 );
 }

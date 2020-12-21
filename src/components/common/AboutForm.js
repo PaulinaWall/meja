@@ -1,7 +1,7 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
-const AboutForm = ({ handleTextChange, handleUrlChange, handleTitleChange }) => {
+const AboutForm = ({ handleTextChange, handleUrlChange, handleTitleChange, handleSaveOnClick }) => {
 
 	return ( 
 		<Form className="form">
@@ -30,7 +30,9 @@ const AboutForm = ({ handleTextChange, handleUrlChange, handleTitleChange }) => 
 					rows={3} 
 				/>
 			</Form.Group>
-
+			<div className="d-flex justify-content-end">
+				<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">Save Section</Button>
+			</div>
 		</Form>
 	 );
 }

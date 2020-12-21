@@ -11,48 +11,42 @@ import { useAuth } from '../contexts/AuthContext';
 const CreateForm = () => {
 	const [error, setError] = useState(false)
 	const [loading, setLoading] = useState(false)
-
-	const [projectText, setProjectText] = useState();
-	const [projectUrl, setProjectUrl] = useState();
-	const [projectImage, setProjectImage] = useState();
+	
+	const [addProjectButton, setAddProjectButton] = useState(false);
+	const [projectText, setProjectText] = useState(null);
+	const [projectUrl, setProjectUrl] = useState(null);
+	const [projectImage, setProjectImage] = useState(null);
+	const [projectObjects, setProjectObjects] = useState([]);
 	const [addProjectForm, setAddProjectForm] = useState([1]);
 
-	const [aboutTitle, setAboutTitle] = useState();
-	const [aboutText, setAboutText] = useState();
-	const [aboutUrl, setAboutUrl] = useState();
+	const [addAboutButton, setAddAboutButton] = useState(false);
+	const [aboutTitle, setAboutTitle] = useState(null);
+	const [aboutText, setAboutText] = useState(null);
+	const [aboutUrl, setAboutUrl] = useState(null);
+	const [aboutObjects, setAboutObjects] = useState([]);
 	const [addAboutForm, setAddAboutForm] = useState([1]);
 
-	const [gitHubUrl, setGithubUrl] = useState();
-	const [linkedinUrl, setLinkedinUrl] = useState();
-	const [facebookUrl, setFacebookUrl] = useState();
+	const [gitHubUrl, setGithubUrl] = useState(null);
+	const [linkedinUrl, setLinkedinUrl] = useState(null);
+	const [facebookUrl, setFacebookUrl] = useState(null);
 
 	const { currentUser } = useAuth();
 	const navigate = useNavigate();
 
-	const handleCreatePortfolioOnClick = async (e) => {
+	const handleCreatePortfolioOnClick = async () => {
+		console.log(aboutObjects, projectObjects)
 		try {
 			await db.collection('portfolios').add({
 				owner: currentUser.uid,
-				projects: [
-					{
-						image: 'image',
-						url: projectUrl,
-						text: projectText,
-					},
-				],
-				about: [
-					{
-						title: aboutTitle,
-						text: aboutText,
-						url: aboutUrl,
-					},
-				],
+				projects: projectObjects,
+				about: aboutObjects,
 				links: {
 					github: gitHubUrl,
 					facebook: facebookUrl,
 					linkedin: linkedinUrl,
 				},
 			},)
+			console.log('portfolio updated successfully')
 			// navigate(`/${currentUser.displayName}/`);
 		} catch (e) {
 			setError(e.message);
@@ -60,19 +54,55 @@ const CreateForm = () => {
 		}
 	}
 
-	const handleOnClick = (e) => {
-		if (e.target.innerHTML === 'Add Project') {
+	const handleSaveOnClick = (index, e) => {
+		if (e.target.innerHTML === 'Save Project') {
+			setProjectObjects([
+				...projectObjects,
+				{
+					id: index,
+					image: 'image',
+					url: projectUrl,
+					text: projectText,
+				}
+			]);
+			setAddProjectButton(true);
+			setProjectImage(null);
+			setProjectUrl(null);
+			setProjectText(null);
+		}
+
+		if( e.target.innerHTML === 'Save Section') {
+			setAboutObjects([
+				...aboutObjects,
+				{
+					id: index,
+					title: aboutTitle,
+					text: aboutText,
+					url: aboutUrl,
+				},
+			])
+			setAddAboutButton(true);
+			setAboutTitle(null);
+			setAboutText(null);
+			setAboutUrl(null);
+		}
+	}
+
+	const handleAddFormOnClick = (e) => {
+		if (e.target.innerHTML === 'Another Project') {
 			setAddProjectForm([
 				...addProjectForm,
 				addProjectForm
 			]);
+			setAddProjectButton(false);
 		}
 
-		if( e.target.innerHTML === 'Add Text Section') {
+		if( e.target.innerHTML === 'Another Section') {
 			setAddAboutForm([
 				...addAboutForm,
 				addAboutForm
 			]);
+			setAddAboutButton(false);
 		}
 	};
 
@@ -91,6 +121,7 @@ const CreateForm = () => {
 					addProjectForm.map((form, index) => (
 						<ProjectForm 
 							key={index}
+							handleSaveOnClick={(e) => handleSaveOnClick(index, e)}
 							onClick={onImageButtonClick}
 							handleTextChange={(e) => setProjectText(e.target.value)}
 							handleUrlChange={(e) => setProjectUrl(e.target.value)}
@@ -99,9 +130,15 @@ const CreateForm = () => {
 					))
 					
 				}
-				<div className="d-flex justify-content-end">
-					<Button className="button btn-secondary" onClick={handleOnClick} type="button">Add Project</Button>
-				</div>
+				{
+					addProjectButton ? (
+						<div className="d-flex justify-content-end">
+							<Button className="button btn-secondary" onClick={handleAddFormOnClick} type="button">Another Project</Button>
+						</div>
+					):(
+						''
+					)
+				}
 			</Container>
 			
 			<Container className="add-about-text mt-5">
@@ -109,6 +146,7 @@ const CreateForm = () => {
 					addAboutForm.map((form, index) => (
 						<AboutForm 
 							key={index}
+							handleSaveOnClick={(e) => handleSaveOnClick(index, e)}
 							handleTextChange={(e) => setAboutText(e.target.value)}
 							handleTitleChange={(e) => setAboutTitle(e.target.value)}
 							handleUrlChange={(e) => setAboutUrl(e.target.value)}
@@ -116,9 +154,15 @@ const CreateForm = () => {
 					))
 				}
 				
-				<div className="d-flex justify-content-end">
-					<Button className="button btn-secondary" onClick={handleOnClick} type="button">Add Text Section</Button>
-				</div>
+				{
+					addAboutButton ? (
+						<div className="d-flex justify-content-end">
+							<Button className="button btn-secondary" onClick={handleAddFormOnClick} type="button">Another Section</Button>
+						</div>
+					):(
+						''
+					)
+				}
 			</Container>
 
 			<Container className="add-links-form mt-5">
