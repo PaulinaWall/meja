@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router';
 import ProjectForm from './common/ProjectForm';
 import AboutForm from './common/AboutForm';
 import LinksForm from './common/LinksForm';
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
 	const [loading, setLoading] = useState(false)
 	
+	const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 	const [addProjectButton, setAddProjectButton] = useState(false);
 	const [projectText, setProjectText] = useState(null);
 	const [projectUrl, setProjectUrl] = useState(null);
@@ -32,6 +33,35 @@ const CreateForm = () => {
 
 	const { currentUser } = useAuth();
 	const navigate = useNavigate();
+
+	const addImageToStorage = (image) => {
+		console.log('e.target.Image', image)
+		if(!image) {
+			return;
+		};
+		const storageRef = storage.ref();
+
+		//TODO We can add a folder for every owner in firebase and send to right owner folder `${owner.id}/${image.name}`
+		const fileRef = storageRef.child(image.name);
+		
+		const uploadTask = fileRef.put(image);
+
+		uploadTask.then(snapshot => {
+			snapshot.ref.getDownloadURL().then(url => {
+				setUploadedImageUrl(url);
+				setProjectImage({
+					name: image.name,
+					size: image.size,
+					type: image.type,
+					path: snapshot.ref.fullPath,
+					url,
+				});
+			});
+		}).catch(error => {
+			setError(error.message)
+		});
+		console.log("uploadTask:", uploadTask);
+	};
 
 	const handleCreatePortfolioOnClick = async () => {
 		console.log(aboutObjects, projectObjects)
@@ -60,8 +90,8 @@ const CreateForm = () => {
 				...projectObjects,
 				{
 					id: index,
-					image: 'image',
-					url: projectUrl,
+					image: projectImage,
+					projectUrl: projectUrl,
 					text: projectText,
 				}
 			]);
@@ -106,8 +136,12 @@ const CreateForm = () => {
 		}
 	};
 
-	const onImageButtonClick = () => {
-		console.log('click to add image');
+	const handleImageChange = (e) => {
+		// if (e.target.files[0]) {
+			
+		// };
+		console.log('setimage', e.target.files[0])
+		addImageToStorage(e.target.files[0]);
 	};
 
 	return ( 
@@ -121,8 +155,9 @@ const CreateForm = () => {
 					addProjectForm.map((form, index) => (
 						<ProjectForm 
 							key={index}
+							uploadedImageUrl={uploadedImageUrl}
 							handleSaveOnClick={(e) => handleSaveOnClick(index, e)}
-							onClick={onImageButtonClick}
+							handleImageChange={handleImageChange}
 							handleTextChange={(e) => setProjectText(e.target.value)}
 							handleUrlChange={(e) => setProjectUrl(e.target.value)}
 						/>

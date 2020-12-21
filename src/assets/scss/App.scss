@@ -54,6 +54,15 @@ h1{
 	box-shadow: 40px 70px #F3DB74FF;
 }
 
+.project-image-container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	:first-child{
+		max-height: 250px;
+	}
+}
+
 // White (#FCF6F5FF), 
 // Vanilla Custard (#F0E1B9FF), 
 // Goldfinch (#F3DB74FF) 
