@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, Alert } from 'react-bootstrap';
+import { Button, Container, Alert, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
 import ProjectForm from './common/ProjectForm';
@@ -7,25 +7,26 @@ import AboutForm from './common/AboutForm';
 import LinksForm from './common/LinksForm';
 import { db, storage } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
+import ProjectCard from './common/ProjectCard';
+import About from './common/About';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
 	const [loading, setLoading] = useState(false)
+	const [isSaved, setIsSaved] = useState(false);
+	const [uploadProgress, setUploadProgress] = useState(null);
 	
 	const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
-	const [addProjectButton, setAddProjectButton] = useState(false);
-	const [projectText, setProjectText] = useState(null);
-	const [projectUrl, setProjectUrl] = useState(null);
-	const [projectImage, setProjectImage] = useState(null);
+	const [projectTitle, setProjectTitle] = useState('');
+	const [projectText, setProjectText] = useState('');
+	const [projectUrl, setProjectUrl] = useState('');
+	const [projectImage, setProjectImage] = useState('');
 	const [projectObjects, setProjectObjects] = useState([]);
-	const [addProjectForm, setAddProjectForm] = useState([1]);
 
-	const [addAboutButton, setAddAboutButton] = useState(false);
-	const [aboutTitle, setAboutTitle] = useState(null);
-	const [aboutText, setAboutText] = useState(null);
-	const [aboutUrl, setAboutUrl] = useState(null);
+	const [aboutTitle, setAboutTitle] = useState('');
+	const [aboutText, setAboutText] = useState('');
+	const [aboutUrl, setAboutUrl] = useState('');
 	const [aboutObjects, setAboutObjects] = useState([]);
-	const [addAboutForm, setAddAboutForm] = useState([1]);
 
 	const [gitHubUrl, setGithubUrl] = useState(null);
 	const [linkedinUrl, setLinkedinUrl] = useState(null);
@@ -35,7 +36,6 @@ const CreateForm = () => {
 	const navigate = useNavigate();
 
 	const addImageToStorage = (image) => {
-		console.log('e.target.Image', image)
 		if(!image) {
 			return;
 		};
@@ -45,6 +45,11 @@ const CreateForm = () => {
 		const fileRef = storageRef.child(image.name);
 		
 		const uploadTask = fileRef.put(image);
+
+		uploadTask.on('state_changed', taskSnapshot => {
+			setUploadProgress(Math.round(
+				(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100));
+		});
 
 		uploadTask.then(snapshot => {
 			snapshot.ref.getDownloadURL().then(url => {
@@ -56,6 +61,7 @@ const CreateForm = () => {
 					path: snapshot.ref.fullPath,
 					url,
 				});
+				setUploadProgress(null);
 			});
 		}).catch(error => {
 			setError(error.message)
@@ -77,70 +83,49 @@ const CreateForm = () => {
 				},
 			},)
 			console.log('portfolio updated successfully')
-			// navigate(`/${currentUser.displayName}/`);
 		} catch (e) {
 			setError(e.message);
 			setLoading(false);
 		}
 	}
 
-	const handleSaveOnClick = (index, e) => {
+	const handleSaveOnClick = (e) => {
 		if (e.target.innerHTML === 'Save Project') {
+			if(projectText.length > 50) {
+				return;
+			}
 			setProjectObjects([
 				...projectObjects,
 				{
-					id: index,
+					title: projectTitle,
 					image: projectImage,
 					projectUrl: projectUrl,
 					text: projectText,
 				}
 			]);
-			setAddProjectButton(true);
-			setProjectImage(null);
-			setProjectUrl(null);
-			setProjectText(null);
+			setProjectTitle('');
+			setUploadedImageUrl(null);
+			setProjectUrl('');
+			setProjectText('');
 		}
 
 		if( e.target.innerHTML === 'Save Section') {
+			setIsSaved(true);
 			setAboutObjects([
 				...aboutObjects,
 				{
-					id: index,
 					title: aboutTitle,
 					text: aboutText,
 					url: aboutUrl,
 				},
 			])
-			setAddAboutButton(true);
-			setAboutTitle(null);
-			setAboutText(null);
-			setAboutUrl(null);
+			setAboutTitle('');
+			setAboutText('');
+			setAboutUrl('');
 		}
 	}
 
-	const handleAddFormOnClick = (e) => {
-		if (e.target.innerHTML === 'Another Project') {
-			setAddProjectForm([
-				...addProjectForm,
-				addProjectForm
-			]);
-			setAddProjectButton(false);
-		}
-
-		if( e.target.innerHTML === 'Another Section') {
-			setAddAboutForm([
-				...addAboutForm,
-				addAboutForm
-			]);
-			setAddAboutButton(false);
-		}
-	};
-
 	const handleImageChange = (e) => {
-		// if (e.target.files[0]) {
-			
-		// };
-		console.log('setimage', e.target.files[0])
 		addImageToStorage(e.target.files[0]);
 	};
 
@@ -150,54 +135,55 @@ const CreateForm = () => {
 				(<Alert variant="danger">{error}</Alert>)
 			}
 			<Container className="create-project">
-				
-				{
-					addProjectForm.map((form, index) => (
-						<ProjectForm 
-							key={index}
-							uploadedImageUrl={uploadedImageUrl}
-							handleSaveOnClick={(e) => handleSaveOnClick(index, e)}
-							handleImageChange={handleImageChange}
-							handleTextChange={(e) => setProjectText(e.target.value)}
-							handleUrlChange={(e) => setProjectUrl(e.target.value)}
-						/>
-						
-					))
-					
-				}
-				{
-					addProjectButton ? (
-						<div className="d-flex justify-content-end">
-							<Button className="button btn-secondary" onClick={handleAddFormOnClick} type="button">Another Project</Button>
-						</div>
-					):(
-						''
-					)
-				}
+				<Row className="project-card-container">
+						{
+							projectObjects && projectObjects.map((project, index) => (
+								<Col  className="mb-3" sm={6} md={4} lg={3} key={index}>
+									<ProjectCard 
+										project={project}
+									/>
+								</Col>
+							))
+						}
+				</Row>
+
+				<ProjectForm 
+					title={projectTitle}
+					text={projectText}
+					url={projectUrl}
+					image={projectImage}
+					uploadProgress={uploadProgress}
+					uploadedImageUrl={uploadedImageUrl}
+					handleSaveOnClick={(e) => handleSaveOnClick(e)}
+					handleImageChange={handleImageChange}
+					handleTitleChange={(e) => setProjectTitle(e.target.value)}
+					handleTextChange={(e) => setProjectText(e.target.value)}
+					handleUrlChange={(e) => setProjectUrl(e.target.value)}
+				/>
 			</Container>
 			
 			<Container className="add-about-text mt-5">
-				{
-					addAboutForm.map((form, index) => (
-						<AboutForm 
-							key={index}
-							handleSaveOnClick={(e) => handleSaveOnClick(index, e)}
-							handleTextChange={(e) => setAboutText(e.target.value)}
-							handleTitleChange={(e) => setAboutTitle(e.target.value)}
-							handleUrlChange={(e) => setAboutUrl(e.target.value)}
-						/>
-					))
-				}
-				
-				{
-					addAboutButton ? (
-						<div className="d-flex justify-content-end">
-							<Button className="button btn-secondary" onClick={handleAddFormOnClick} type="button">Another Section</Button>
-						</div>
-					):(
-						''
+				{ isSaved && (
+						<Container className="about-container mb-3 pb-2">
+							<h1  className="p-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
+							{
+								aboutObjects && aboutObjects.map((section, index) => (
+									<About key={index} section={section} />
+								))
+							}
+						</Container>
 					)
 				}
+
+				<AboutForm 
+					title={aboutTitle}
+					text={aboutText}
+					url={aboutUrl}
+					handleSaveOnClick={(e) => handleSaveOnClick(e)}
+					handleTextChange={(e) => setAboutText(e.target.value)}
+					handleTitleChange={(e) => setAboutTitle(e.target.value)}
+					handleUrlChange={(e) => setAboutUrl(e.target.value)}
+				/>
 			</Container>
 
 			<Container className="add-links-form mt-5">

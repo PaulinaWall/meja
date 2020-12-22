@@ -1,34 +1,54 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
+import ProgressBar from 'react-bootstrap/esm/ProgressBar';
 
 const ProjectForm = ({ 
+	title,
+	text,
+	url,
+	handleTitleChange,
 	handleTextChange, 
 	handleUrlChange, 
 	handleSaveOnClick, 
 	handleImageChange,
-	uploadedImageUrl
+	uploadedImageUrl,
+	uploadProgress
 }) => {
-
 	return ( 
 		<Form className="form">
+			<h3 style={{ color: "#495057" }}>Add project</h3>
+			<Form.Group id="title">
+				<Form.Control 
+					value={title}
+					placeholder="Title"
+					onChange={handleTitleChange}
+					type="text" 
+				/>
+			</Form.Group>
 
-				<Form.Group>
-					<Form.File
-						id="upload-image"
-						label="Choose image to upload"
-						custom
-						onChange={handleImageChange}
-					/>
-				</Form.Group>
-				{
-					uploadedImageUrl && (
-						<div className="project-image-container">
-							<img src={uploadedImageUrl} className="img-fluid my-3" alt="uploaded file" />
-						</div>
-					)
-				}
+			<Form.Group>
+				<Form.File
+					id="upload-image"
+					label="Choose image to upload"
+					custom
+					onChange={handleImageChange}
+				/>
+			</Form.Group>
+			{
+				uploadedImageUrl && (
+					<div className="project-image-container">
+						<img src={uploadedImageUrl} className="img-fluid my-3" alt="uploaded file" />
+					</div>
+				)
+			}
+			{
+				uploadProgress !== null && (
+					<ProgressBar className="mb-3" variant="info" animated now={uploadProgress} />
+ 				)
+			}
 			<Form.Group id="url">
 				<Form.Control 
+					value={url}
 					placeholder="URL"
 					onChange={handleUrlChange}
 					type="text" 
@@ -37,14 +57,20 @@ const ProjectForm = ({
 
 			<Form.Group id="text">
 				<Form.Control 
+					value={text}
 					placeholder="Text"
 					onChange={handleTextChange}
 					as="textarea" 
-					rows={3} 
+					rows={3}
 				/>
+				{text && text.length > 50 && (
+					<Form.Text className="text-danger">Please shorten the text, maximum 50 characters.</Form.Text>
+				)}
 			</Form.Group>
 			<div className="d-flex justify-content-end">
-				<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">Save Project</Button>
+				<Button className="button btn-secondary" size="sm" type="button" onClick={handleSaveOnClick} >
+					Save Project
+				</Button>
 			</div>
 		</Form>
 	 );
