@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Container, Alert, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
@@ -10,12 +10,16 @@ import { useAuth } from '../contexts/AuthContext';
 import ProjectCard from './common/ProjectCard';
 import About from './common/About';
 
+import useGetPortfolio from '../hooks/useGetPortfolio';
+
 const CreateForm = () => {
 	const [error, setError] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const [isSaved, setIsSaved] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState(null);
+	const [portfolioId, setPortfolioId] = useState(null);
 	
+	const { portfolio } = useGetPortfolio();
 	const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 	const [projectTitle, setProjectTitle] = useState('');
 	const [projectText, setProjectText] = useState('');
@@ -34,6 +38,27 @@ const CreateForm = () => {
 
 	const { currentUser } = useAuth();
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		console.log(portfolio, 'portfolio')
+
+		const newPortfolio = {
+			owner: currentUser.uid,
+			about: [],
+			projects: [],
+			links: {},
+		}
+
+		db.collection("portfolios").add( newPortfolio )
+		.then(docRef => {
+			console.log('started portfolio', newPortfolio)
+			setPortfolioId(docRef.id)
+		})
+		.catch((e) => {
+			setError(e.message);
+		})
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	const addImageToStorage = (image) => {
 		if(!image) {
@@ -69,28 +94,40 @@ const CreateForm = () => {
 		console.log("uploadTask:", uploadTask);
 	};
 
-	const handleCreatePortfolioOnClick = async () => {
-		console.log(aboutObjects, projectObjects)
-		try {
-			await db.collection('portfolios').add({
-				owner: currentUser.uid,
-				projects: projectObjects,
-				about: aboutObjects,
-				links: {
-					github: gitHubUrl,
-					facebook: facebookUrl,
-					linkedin: linkedinUrl,
-				},
-			},)
-			console.log('portfolio updated successfully')
-		} catch (e) {
-			setError(e.message);
-			setLoading(false);
-		}
+	const setPortfolioContent = () => {
+		db.collection('portfolios').doc(portfolioId).get()
+        .then((snapshot) => {
+				const data = {
+					title: projectTitle,
+					image: projectImage,
+					projectUrl: projectUrl,
+					text: projectText,
+				}
+				const projects = snapshot.data().projects;
+				projects.push(data);
+
+			db.collection('portfolios').doc(portfolioId).set({
+				projects: projects,
+			}, { merge: true })
+			.then(() => {
+				console.log('updated projects with:', data)
+			})
+			.catch(() => {
+				this.setState({
+					errorMsg: true,
+				})
+			})
+
+		}).catch(() => {
+			this.setState({
+				errorMsg: true,
+			})
+		})
 	}
 
 	const handleSaveOnClick = (e) => {
 		if (e.target.innerHTML === 'Save Project') {
+			console.log('portfolio in save click', portfolio)
 			if(projectText.length > 50) {
 				return;
 			}
@@ -103,10 +140,13 @@ const CreateForm = () => {
 					text: projectText,
 				}
 			]);
+
 			setProjectTitle('');
 			setUploadedImageUrl(null);
 			setProjectUrl('');
 			setProjectText('');
+			console.log('projectObject', projectObjects)
+			setPortfolioContent('project');
 		}
 
 		if( e.target.innerHTML === 'Save Section') {
@@ -117,11 +157,14 @@ const CreateForm = () => {
 					title: aboutTitle,
 					text: aboutText,
 					url: aboutUrl,
-				},
-			])
+				}
+			]);
+
 			setAboutTitle('');
 			setAboutText('');
 			setAboutUrl('');
+
+			setPortfolioContent('about');
 		}
 	}
 
@@ -163,17 +206,14 @@ const CreateForm = () => {
 			</Container>
 			
 			<Container className="add-about-text mt-5">
-				{ isSaved && (
-						<Container className="about-container mb-3 pb-2">
+						{isSaved && <Container className="about-container mb-3 pb-2">
 							<h1  className="p-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
 							{
 								aboutObjects && aboutObjects.map((section, index) => (
 									<About key={index} section={section} />
 								))
 							}
-						</Container>
-					)
-				}
+						</Container>}
 
 				<AboutForm 
 					title={aboutTitle}
@@ -193,10 +233,6 @@ const CreateForm = () => {
 					handleFacebookChange={(e) => setFacebookUrl(e.target.value)}
 				/>
 			</Container>
-
-			<div className="d-flex justify-content-end">
-				<Button className="mr-3 button btn-secondary" onClick={handleCreatePortfolioOnClick} type="button" disabled={loading}>Create Portfolio</Button>
-			</div>
 		</>
 	 );
 }
