@@ -17,48 +17,90 @@ const CreateForm = () => {
 	const [loading, setLoading] = useState(false)
 	const [isSaved, setIsSaved] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState(null);
-	const [portfolioId, setPortfolioId] = useState(null);
 	
-	const { portfolio } = useGetPortfolio();
+	
 	const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 	const [projectTitle, setProjectTitle] = useState('');
 	const [projectText, setProjectText] = useState('');
 	const [projectUrl, setProjectUrl] = useState('');
 	const [projectImage, setProjectImage] = useState('');
 	const [projectObjects, setProjectObjects] = useState([]);
-
+	
 	const [aboutTitle, setAboutTitle] = useState('');
 	const [aboutText, setAboutText] = useState('');
 	const [aboutUrl, setAboutUrl] = useState('');
 	const [aboutObjects, setAboutObjects] = useState([]);
-
+	
 	const [gitHubUrl, setGithubUrl] = useState(null);
 	const [linkedinUrl, setLinkedinUrl] = useState(null);
 	const [facebookUrl, setFacebookUrl] = useState(null);
-
+	
+	const [portfolioId, setPortfolioId] = useState();
+	const [portfolio, setPortfolio] = useState();
 	const { currentUser } = useAuth();
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		console.log(portfolio, 'portfolio')
-
-		const newPortfolio = {
-			owner: currentUser.uid,
-			about: [],
-			projects: [],
-			links: {},
-		}
-
-		db.collection("portfolios").add( newPortfolio )
-		.then(docRef => {
-			console.log('started portfolio', newPortfolio)
-			setPortfolioId(docRef.id)
+	const getPortfolio = async () => {
+		await db.collection('portfolios')
+		.where('owner', '==', currentUser.uid)
+		.get()
+		.then((querySnapshot) => {
+			if(querySnapshot.empty){
+				const newPortfolio = {
+					owner: currentUser.uid,
+					about: [],
+					projects: [],
+					links: {},
+				}
+		
+				db.collection("portfolios").add( newPortfolio )
+				.then(docRef => {
+					setPortfolio({
+						id: docRef.id,
+						owner: currentUser.uid,
+						about: [],
+						projects: [],
+						links: {},
+					});
+					console.log('started new portfolio');
+				})
+				.catch((e) => {
+					setError(e.message);
+				})
+			}
+			querySnapshot.forEach((doc) => {
+				setPortfolio({
+					id: doc.id,
+					...doc.data(),
+				});
+			})
 		})
 		.catch((e) => {
 			setError(e.message);
 		})
+	}
+
+	useEffect(() => {
+		getPortfolio();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
+
+	useEffect(() => {
+		const unsubscribe = db.collection('portfolios')
+		.where('owner', '==', currentUser.uid)
+		.onSnapshot((snapshot) => {
+
+			snapshot.forEach(doc => {
+				setPortfolio({
+					id: doc.id,
+					...doc.data(),
+				});
+			});
+		})
+		return unsubscribe;
+		
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [portfolio?.id])
 
 	const addImageToStorage = (image) => {
 		if(!image) {
@@ -91,11 +133,10 @@ const CreateForm = () => {
 		}).catch(error => {
 			setError(error.message)
 		});
-		console.log("uploadTask:", uploadTask);
 	};
 
 	const setPortfolioContent = () => {
-		db.collection('portfolios').doc(portfolioId).get()
+		db.collection('portfolios').doc(portfolio.id).get()
         .then((snapshot) => {
 				const data = {
 					title: projectTitle,
@@ -106,28 +147,23 @@ const CreateForm = () => {
 				const projects = snapshot.data().projects;
 				projects.push(data);
 
-			db.collection('portfolios').doc(portfolioId).set({
+			db.collection('portfolios').doc(portfolio.id).set({
 				projects: projects,
 			}, { merge: true })
 			.then(() => {
-				console.log('updated projects with:', data)
+				console.log('updated projects with success:', data)
 			})
-			.catch(() => {
-				this.setState({
-					errorMsg: true,
-				})
+			.catch((e) => {
+				setError(e.message);
 			})
 
-		}).catch(() => {
-			this.setState({
-				errorMsg: true,
-			})
+		}).catch((e) => {
+			setError(e.message);
 		})
 	}
 
 	const handleSaveOnClick = (e) => {
 		if (e.target.innerHTML === 'Save Project') {
-			console.log('portfolio in save click', portfolio)
 			if(projectText.length > 50) {
 				return;
 			}
@@ -145,8 +181,7 @@ const CreateForm = () => {
 			setUploadedImageUrl(null);
 			setProjectUrl('');
 			setProjectText('');
-			console.log('projectObject', projectObjects)
-			setPortfolioContent('project');
+			setPortfolioContent();
 		}
 
 		if( e.target.innerHTML === 'Save Section') {
@@ -180,7 +215,7 @@ const CreateForm = () => {
 			<Container className="create-project">
 				<Row className="project-card-container">
 						{
-							projectObjects && projectObjects.map((project, index) => (
+							portfolio && portfolio.projects.map((project, index) => (
 								<Col  className="mb-3" sm={6} md={4} lg={3} key={index}>
 									<ProjectCard 
 										project={project}
@@ -209,7 +244,7 @@ const CreateForm = () => {
 						{isSaved && <Container className="about-container mb-3 pb-2">
 							<h1  className="p-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
 							{
-								aboutObjects && aboutObjects.map((section, index) => (
+								portfolio && portfolio.about.map((section, index) => (
 									<About key={index} section={section} />
 								))
 							}
