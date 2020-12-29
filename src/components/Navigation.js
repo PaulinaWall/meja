@@ -16,7 +16,7 @@ const Navigation = () => {
 					<Nav className="ml-auto">
 						{
 							currentUser ? (
-								<NavLink className="nav-link" to="/signin">Sign out</NavLink>
+								<NavLink className="nav-link" to="/signout">Sign out</NavLink>
 							) : (
 								<NavLink className="nav-link" to="/signin">Sign in</NavLink>
 							)
