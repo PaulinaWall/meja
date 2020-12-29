@@ -9,7 +9,7 @@ const About = ({ section }) => {
 				{section.text && <p >{section.text}</p>}
 				{section.url && <a href={section.url}>{section.url}</a>}
 			</div>
-			<Button style={{ height: "min-content" }} className="button btn-secondary" size="sm" type="button">
+			<Button className="button btn-secondary" size="sm" type="button">
 				Change
 			</Button>
 		</Container>

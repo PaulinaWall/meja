@@ -11,7 +11,7 @@ a{
 
 
 body{
-	color: #F0E1B9FF;
+	color: #495057;
 	background-color: rgb(243, 234, 232);
 }
 
@@ -39,6 +39,14 @@ h1{
 	background-color: white;
 	border-radius: 5px 5px;
 	box-shadow: 5px 5px 5px lightgray;
+	margin-bottom: 10px;
+}
+
+.email-container{
+	background-color: white;
+	border-radius: 5px 5px;
+	box-shadow: 5px 5px 5px lightgray;
+	padding: 10px;
 	margin-bottom: 10px;
 }
 
@@ -94,7 +102,6 @@ h1{
 	background-color: white;
 	border-radius: 5px 5px;
 	box-shadow: 5px 5px 5px lightgray;
-	color: #495057;
 }
 
 // White (#FCF6F5FF), 
