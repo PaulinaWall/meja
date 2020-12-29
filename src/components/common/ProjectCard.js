@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, handleOnClick }) => {
 
 	return (
 		<Card className="card">
@@ -15,7 +15,7 @@ const ProjectCard = ({ project }) => {
 			<Card.Body className="p-1.5">
 				<Card.Link href="#">{project.projectUrl}</Card.Link>
 			</Card.Body>
-			<Button className="button btn-secondary" size="sm" type="button">
+			<Button className="button btn-secondary" size="sm" type="button" onClick={handleOnClick}>
 				Change
 			</Button>
 		</Card>

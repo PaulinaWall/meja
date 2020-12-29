@@ -10,6 +10,7 @@ import { useAuth } from '../contexts/AuthContext';
 import ProjectCard from './common/ProjectCard';
 import About from './common/About';
 import Links from './common/Links';
+import ContactForm from './common/ContactForm';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
@@ -22,10 +23,13 @@ const CreateForm = () => {
 	const [projectText, setProjectText] = useState('');
 	const [projectUrl, setProjectUrl] = useState('');
 	const [projectImage, setProjectImage] = useState('');
+	const [currentProjectIndex, setCurrentProjectIndex] = useState(null); 
 	
 	const [aboutTitle, setAboutTitle] = useState('');
 	const [aboutText, setAboutText] = useState('');
 	const [aboutUrl, setAboutUrl] = useState('');
+
+	const [email, setEmail] = useState('');
 	
 	const [gitHubUrl, setGithubUrl] = useState(null);
 	const [linkedinUrl, setLinkedinUrl] = useState(null);
@@ -46,6 +50,7 @@ const CreateForm = () => {
 					about: [],
 					projects: [],
 					links: [],
+					email: '',
 				}
 		
 				db.collection("portfolios").add( newPortfolio )
@@ -56,6 +61,7 @@ const CreateForm = () => {
 						about: [],
 						projects: [],
 						links: [],
+						email: '',
 					});
 					console.log('started new portfolio');
 				})
@@ -133,6 +139,7 @@ const CreateForm = () => {
 	const setPortfolioContent = (partToSet) => {
 		db.collection('portfolios').doc(portfolio.id).get()
         .then((snapshot) => {
+			console.log('snapshot', snapshot.data().projects)
 			let projects;
 			let about;
 			let data;
@@ -145,13 +152,18 @@ const CreateForm = () => {
 					text: projectText,
 				}
 				projects = snapshot.data().projects;
-				projects.push(data);
+				if(currentProjectIndex){
+					projects[currentProjectIndex] = data;
+				}else{
+					projects.push(data);
+				}
 
 				db.collection('portfolios').doc(portfolio.id).set({
 					projects: projects,
 				}, { merge: true })
 				.then(() => {
 					console.log('updated projects with success:', data)
+					setCurrentProjectIndex(null);
 				})
 				.catch((e) => {
 					setError(e.message);
@@ -198,6 +210,18 @@ const CreateForm = () => {
 				})
 			}
 
+			if(partToSet === 'email') {
+				db.collection('portfolios').doc(portfolio.id).set({
+					email: email,
+				}, { merge: true })
+				.then(() => {
+					console.log('updated projects with success:', email)
+				})
+				.catch((e) => {
+					setError(e.message);
+				})
+			}
+
 		}).catch((e) => {
 			setError(e.message);
 		})
@@ -216,7 +240,6 @@ const CreateForm = () => {
 		}
 
 		if( e.target.innerHTML === 'Save Section') {
-			setIsSaved(true);
 			setAboutTitle('');
 			setAboutText('');
 			setAboutUrl('');
@@ -231,24 +254,60 @@ const CreateForm = () => {
 			setPortfolioContent('links');
 		}
 
+		if( e.target.innerHTML === 'Save Email' ){
+			setEmail('');
+			setPortfolioContent('email');
+		}
+
 	}
 
 	const handleImageChange = (e) => {
 		addImageToStorage(e.target.files[0]);
 	};
 
+	const handleChangeOnClick = (project, index) => {
+		setProjectTitle(project.title);
+		setUploadedImageUrl(project.image.url);
+		setProjectImage(project.image.url);
+		setProjectUrl(project.projectUrl);
+		setProjectText(project.text);
+		setCurrentProjectIndex(index);
+	}
+
 	return ( 
 		<>
 			{error && 
 				(<Alert variant="danger">{error}</Alert>)
 			}
-			<Container className="create-project">
+			<Container className="add-about-text mt-5">
+						{<Container className="about-container mb-3 pb-2">
+							<h1  className="p-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
+							{
+								portfolio && portfolio.about.map((section, index) => (
+									<About key={index} section={section} />
+								))
+							}
+						</Container>}
+
+				<AboutForm 
+					title={aboutTitle}
+					text={aboutText}
+					url={aboutUrl}
+					handleSaveOnClick={(e) => handleSaveOnClick(e)}
+					handleTextChange={(e) => setAboutText(e.target.value)}
+					handleTitleChange={(e) => setAboutTitle(e.target.value)}
+					handleUrlChange={(e) => setAboutUrl(e.target.value)}
+				/>
+			</Container>
+
+			<Container className="create-project mt-5">
 				<Row className="project-card-container">
 						{
 							portfolio && portfolio.projects.map((project, index) => (
 								<Col  className="mb-3" sm={6} md={4} lg={3} key={index}>
 									<ProjectCard 
 										project={project}
+										handleOnClick={() => handleChangeOnClick(project, index)}
 									/>
 								</Col>
 							))
@@ -269,25 +328,17 @@ const CreateForm = () => {
 					handleUrlChange={(e) => setProjectUrl(e.target.value)}
 				/>
 			</Container>
-			
-			<Container className="add-about-text mt-5">
-						{<Container className="about-container mb-3 pb-2">
-							<h1  className="p-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
-							{
-								portfolio && portfolio.about.map((section, index) => (
-									<About key={index} section={section} />
-								))
-							}
-						</Container>}
 
-				<AboutForm 
-					title={aboutTitle}
-					text={aboutText}
-					url={aboutUrl}
+			<Container className="add-email mt-5">
+				{
+					portfolio && <Container className="email-container">
+									<h3>{portfolio.email}</h3>
+								</Container>
+				}
+				<ContactForm
+					email={email}
+					handleEmailChange={(e) => setEmail(e.target.value)}
 					handleSaveOnClick={(e) => handleSaveOnClick(e)}
-					handleTextChange={(e) => setAboutText(e.target.value)}
-					handleTitleChange={(e) => setAboutTitle(e.target.value)}
-					handleUrlChange={(e) => setAboutUrl(e.target.value)}
 				/>
 			</Container>
 
