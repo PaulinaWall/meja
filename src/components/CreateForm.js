@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Alert, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router';
+import { Container, Alert, Row, Col } from 'react-bootstrap';
+// import { useNavigate } from 'react-router';
 
 import ProjectForm from './common/ProjectForm';
 import AboutForm from './common/AboutForm';
@@ -9,12 +9,10 @@ import { db, storage } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 import ProjectCard from './common/ProjectCard';
 import About from './common/About';
-
-import useGetPortfolio from '../hooks/useGetPortfolio';
+import Links from './common/Links';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
-	const [loading, setLoading] = useState(false)
 	const [isSaved, setIsSaved] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState(null);
 	
@@ -24,21 +22,18 @@ const CreateForm = () => {
 	const [projectText, setProjectText] = useState('');
 	const [projectUrl, setProjectUrl] = useState('');
 	const [projectImage, setProjectImage] = useState('');
-	const [projectObjects, setProjectObjects] = useState([]);
 	
 	const [aboutTitle, setAboutTitle] = useState('');
 	const [aboutText, setAboutText] = useState('');
 	const [aboutUrl, setAboutUrl] = useState('');
-	const [aboutObjects, setAboutObjects] = useState([]);
 	
 	const [gitHubUrl, setGithubUrl] = useState(null);
 	const [linkedinUrl, setLinkedinUrl] = useState(null);
 	const [facebookUrl, setFacebookUrl] = useState(null);
 	
-	const [portfolioId, setPortfolioId] = useState();
 	const [portfolio, setPortfolio] = useState();
 	const { currentUser } = useAuth();
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	const getPortfolio = async () => {
 		await db.collection('portfolios')
@@ -50,7 +45,7 @@ const CreateForm = () => {
 					owner: currentUser.uid,
 					about: [],
 					projects: [],
-					links: {},
+					links: [],
 				}
 		
 				db.collection("portfolios").add( newPortfolio )
@@ -60,7 +55,7 @@ const CreateForm = () => {
 						owner: currentUser.uid,
 						about: [],
 						projects: [],
-						links: {},
+						links: [],
 					});
 					console.log('started new portfolio');
 				})
@@ -135,27 +130,73 @@ const CreateForm = () => {
 		});
 	};
 
-	const setPortfolioContent = () => {
+	const setPortfolioContent = (partToSet) => {
 		db.collection('portfolios').doc(portfolio.id).get()
         .then((snapshot) => {
-				const data = {
+			let projects;
+			let about;
+			let data;
+			let links;
+			if(partToSet === 'projects'){
+				data = {
 					title: projectTitle,
 					image: projectImage,
 					projectUrl: projectUrl,
 					text: projectText,
 				}
-				const projects = snapshot.data().projects;
+				projects = snapshot.data().projects;
 				projects.push(data);
 
-			db.collection('portfolios').doc(portfolio.id).set({
-				projects: projects,
-			}, { merge: true })
-			.then(() => {
-				console.log('updated projects with success:', data)
-			})
-			.catch((e) => {
-				setError(e.message);
-			})
+				db.collection('portfolios').doc(portfolio.id).set({
+					projects: projects,
+				}, { merge: true })
+				.then(() => {
+					console.log('updated projects with success:', data)
+				})
+				.catch((e) => {
+					setError(e.message);
+				})
+			}
+			
+			if (partToSet === 'about'){
+				data = {
+					title: aboutTitle,
+					projectUrl: aboutUrl,
+					text: aboutText,
+				}
+				about = snapshot.data().about;
+				about.push(data);
+
+				db.collection('portfolios').doc(portfolio.id).set({
+					about,
+				}, { merge: true })
+				.then(() => {
+					console.log('updated projects with success:', data)
+				})
+				.catch((e) => {
+					setError(e.message);
+				})
+			}
+
+			if (partToSet === 'links') {
+				data = {
+					facebook: facebookUrl,
+					linkedin: linkedinUrl,
+					github: gitHubUrl,
+				}
+				links = snapshot.data().links;
+				links.push(data);
+
+				db.collection('portfolios').doc(portfolio.id).set({
+					links,
+				}, { merge: true })
+				.then(() => {
+					console.log('updated projects with success:', data)
+				})
+				.catch((e) => {
+					setError(e.message);
+				})
+			}
 
 		}).catch((e) => {
 			setError(e.message);
@@ -167,40 +208,29 @@ const CreateForm = () => {
 			if(projectText.length > 50) {
 				return;
 			}
-			setProjectObjects([
-				...projectObjects,
-				{
-					title: projectTitle,
-					image: projectImage,
-					projectUrl: projectUrl,
-					text: projectText,
-				}
-			]);
-
 			setProjectTitle('');
 			setUploadedImageUrl(null);
 			setProjectUrl('');
 			setProjectText('');
-			setPortfolioContent();
+			setPortfolioContent('projects');
 		}
 
 		if( e.target.innerHTML === 'Save Section') {
 			setIsSaved(true);
-			setAboutObjects([
-				...aboutObjects,
-				{
-					title: aboutTitle,
-					text: aboutText,
-					url: aboutUrl,
-				}
-			]);
-
 			setAboutTitle('');
 			setAboutText('');
 			setAboutUrl('');
-
 			setPortfolioContent('about');
 		}
+
+		if( e.target.innerHTML === 'Save Links') {
+			setGithubUrl('');
+			setFacebookUrl('');
+			setLinkedinUrl('');
+			setIsSaved(true);
+			setPortfolioContent('links');
+		}
+
 	}
 
 	const handleImageChange = (e) => {
@@ -241,7 +271,7 @@ const CreateForm = () => {
 			</Container>
 			
 			<Container className="add-about-text mt-5">
-						{isSaved && <Container className="about-container mb-3 pb-2">
+						{<Container className="about-container mb-3 pb-2">
 							<h1  className="p-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
 							{
 								portfolio && portfolio.about.map((section, index) => (
@@ -262,10 +292,17 @@ const CreateForm = () => {
 			</Container>
 
 			<Container className="add-links-form mt-5">
+				{
+					portfolio && portfolio.links.map((link, index) => (
+						<Links key={index} link={link} />
+					))
+				}
 				<LinksForm 
+					isSaved={isSaved}
 					handleGithubChange={(e) => setGithubUrl(e.target.value)}
 					handleLinkedinChange={(e) => setLinkedinUrl(e.target.value)}
 					handleFacebookChange={(e) => setFacebookUrl(e.target.value)}
+					handleSaveOnClick={(e) => handleSaveOnClick(e)}
 				/>
 			</Container>
 		</>

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 
-const LinksForm = ({ handleGithubChange, handleLinkedinChange, handleFacebookChange }) => {
+const LinksForm = ({ handleGithubChange, handleLinkedinChange, handleFacebookChange, handleSaveOnClick, isSaved }) => {
 
 	return ( 
 		<Form className="form">
@@ -11,6 +11,7 @@ const LinksForm = ({ handleGithubChange, handleLinkedinChange, handleFacebookCha
 			<Form.Group id="github" className="d-flex align-items-center" >
 				<FontAwesomeIcon icon={faGithub} className="mr-2 icons" />
 				<Form.Control 
+					disabled={isSaved}
 					placeholder="Github"
 					onChange={handleGithubChange}
 					type="text" 
@@ -20,6 +21,7 @@ const LinksForm = ({ handleGithubChange, handleLinkedinChange, handleFacebookCha
 			<Form.Group id="linkedin" className="d-flex align-items-center">
 				<FontAwesomeIcon icon={faLinkedin} className="mr-2 icons" />
 				<Form.Control 
+					disabled={isSaved}
 					placeholder="Linkedin"
 					onChange={handleLinkedinChange}
 					type="text" 
@@ -29,11 +31,19 @@ const LinksForm = ({ handleGithubChange, handleLinkedinChange, handleFacebookCha
 			<Form.Group id="facebook" className="d-flex align-items-center">
 				<FontAwesomeIcon icon={faFacebook} className="mr-2 icons" />
 				<Form.Control 
+					disabled={isSaved}
 					placeholder="Facebook"
 					onChange={handleFacebookChange}
 					type="text" 
 				/>
 			</Form.Group>
+			{
+				!isSaved &&
+					<div className="d-flex justify-content-end">
+						<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">Save Links</Button>
+					</div>
+			}
+			
 		</Form>
 	 );
 }

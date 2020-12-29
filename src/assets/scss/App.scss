@@ -24,6 +24,24 @@ h1{
 	font-size: 35px;
 }
 
+.linked-icons{
+	color: #b4dacc;
+	font-size: 50px;
+	margin: 20px !important; 
+		&:hover{
+			color: #95b6aa;
+		}
+}
+
+.linked-icons-container{
+	display: flex;
+	align-items: center;
+	background-color: white;
+	border-radius: 5px 5px;
+	box-shadow: 5px 5px 5px lightgray;
+	margin-bottom: 10px;
+}
+
 .form{
 	background-color: #d5e9e1;
 	border-radius: 0.25rem;
@@ -34,11 +52,20 @@ h1{
 
 .button{
 	background-color: #ced4da;
+	box-shadow: 3px 3px 3px rgb(165, 164, 164);
 	border: none;
 		&:hover{
 			background-color: #ced4da;
 			color: rgba(0, 0, 0, 0.7);
 		}
+}
+
+.card{
+	height: 100%;
+	background-color: white;
+	border-radius: 5px 5px;
+	box-shadow: 5px 5px 5px lightgray;
+	color: #495057;
 }
 
 .image-button{
