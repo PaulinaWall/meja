@@ -139,7 +139,7 @@ const CreateForm = () => {
 	const setPortfolioContent = (partToSet) => {
 		db.collection('portfolios').doc(portfolio.id).get()
         .then((snapshot) => {
-			console.log('snapshot', snapshot.data().projects)
+			console.log('snapshot', snapshot.data().about, currentProjectIndex)
 			let projects;
 			let about;
 			let data;
@@ -152,7 +152,7 @@ const CreateForm = () => {
 					text: projectText,
 				}
 				projects = snapshot.data().projects;
-				if(currentProjectIndex){
+				if(currentProjectIndex || currentProjectIndex === 0){
 					projects[currentProjectIndex] = data;
 				}else{
 					projects.push(data);
@@ -173,17 +173,22 @@ const CreateForm = () => {
 			if (partToSet === 'about'){
 				data = {
 					title: aboutTitle,
-					projectUrl: aboutUrl,
+					aboutUrl: aboutUrl,
 					text: aboutText,
 				}
 				about = snapshot.data().about;
-				about.push(data);
+				if(currentProjectIndex || currentProjectIndex === 0) {
+					about[currentProjectIndex] = data;
+				}else{
+					about.push(data);
+				}
 
 				db.collection('portfolios').doc(portfolio.id).set({
-					about,
+					about: about,
 				}, { merge: true })
 				.then(() => {
 					console.log('updated projects with success:', data)
+					setCurrentProjectIndex(null);
 				})
 				.catch((e) => {
 					setError(e.message);
@@ -265,13 +270,22 @@ const CreateForm = () => {
 		addImageToStorage(e.target.files[0]);
 	};
 
-	const handleChangeOnClick = (project, index) => {
-		setProjectTitle(project.title);
-		setUploadedImageUrl(project.image.url);
-		setProjectImage(project.image.url);
-		setProjectUrl(project.projectUrl);
-		setProjectText(project.text);
-		setCurrentProjectIndex(index);
+	const handleChangeOnClick = (part, object, index) => {
+		if(part === 'project') {
+			setProjectTitle(object.title);
+			setUploadedImageUrl(object.image.url);
+			setProjectImage(object.image.url);
+			setProjectUrl(object.projectUrl);
+			setProjectText(object.text);
+			setCurrentProjectIndex(index);
+		}
+
+		if(part === 'about') {
+			setAboutText(object.text);
+			setAboutTitle(object.title);
+			setAboutUrl(object.aboutUrl);
+			setCurrentProjectIndex(index);
+		}
 	}
 
 	return ( 
@@ -284,7 +298,11 @@ const CreateForm = () => {
 							<h1  className="p-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
 							{
 								portfolio && portfolio.about.map((section, index) => (
-									<About key={index} section={section} />
+									<About 
+										key={index} 
+										section={section}
+										handleOnClick={() => handleChangeOnClick('about', section, index)} 
+									/>
 								))
 							}
 						</Container>}
@@ -307,7 +325,7 @@ const CreateForm = () => {
 								<Col  className="mb-3" sm={6} md={4} lg={3} key={index}>
 									<ProjectCard 
 										project={project}
-										handleOnClick={() => handleChangeOnClick(project, index)}
+										handleOnClick={() => handleChangeOnClick('project', project, index)}
 									/>
 								</Col>
 							))
