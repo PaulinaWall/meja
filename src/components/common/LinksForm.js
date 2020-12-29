@@ -7,7 +7,7 @@ const LinksForm = ({ handleGithubChange, handleLinkedinChange, handleFacebookCha
 
 	return ( 
 		<Form className="form">
-			<h3 style={{ color: "#495057" }}>Add Links</h3>
+			<h3>Add Links</h3>
 			<Form.Group id="github" className="d-flex align-items-center" >
 				<FontAwesomeIcon icon={faGithub} className="mr-2 icons" />
 				<Form.Control 
