@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 
-const LinksForm = ({ handleGithubChange, handleLinkedinChange, handleFacebookChange, handleSaveOnClick, isSaved }) => {
+const LinksForm = ({ facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, handleLinkedinChange, handleFacebookChange, handleSaveOnClick, isSaved }) => {
 
 	return ( 
 		<Form className="form">
@@ -12,6 +12,7 @@ const LinksForm = ({ handleGithubChange, handleLinkedinChange, handleFacebookCha
 				<FontAwesomeIcon icon={faGithub} className="mr-2 icons" />
 				<Form.Control 
 					disabled={isSaved}
+					value={gitHubUrl}
 					placeholder="Github"
 					onChange={handleGithubChange}
 					type="text" 
@@ -22,6 +23,7 @@ const LinksForm = ({ handleGithubChange, handleLinkedinChange, handleFacebookCha
 				<FontAwesomeIcon icon={faLinkedin} className="mr-2 icons" />
 				<Form.Control 
 					disabled={isSaved}
+					value={linkedinUrl}
 					placeholder="Linkedin"
 					onChange={handleLinkedinChange}
 					type="text" 
@@ -32,6 +34,7 @@ const LinksForm = ({ handleGithubChange, handleLinkedinChange, handleFacebookCha
 				<FontAwesomeIcon icon={faFacebook} className="mr-2 icons" />
 				<Form.Control 
 					disabled={isSaved}
+					value={facebookUrl}
 					placeholder="Facebook"
 					onChange={handleFacebookChange}
 					type="text" 

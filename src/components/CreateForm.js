@@ -31,9 +31,9 @@ const CreateForm = () => {
 
 	const [email, setEmail] = useState('');
 	
-	const [gitHubUrl, setGithubUrl] = useState(null);
-	const [linkedinUrl, setLinkedinUrl] = useState(null);
-	const [facebookUrl, setFacebookUrl] = useState(null);
+	const [gitHubUrl, setGithubUrl] = useState('');
+	const [linkedinUrl, setLinkedinUrl] = useState('');
+	const [facebookUrl, setFacebookUrl] = useState('');
 	
 	const [portfolio, setPortfolio] = useState();
 	const { currentUser } = useAuth();
@@ -139,7 +139,6 @@ const CreateForm = () => {
 	const setPortfolioContent = (partToSet) => {
 		db.collection('portfolios').doc(portfolio.id).get()
         .then((snapshot) => {
-			console.log('snapshot', snapshot.data().about, currentProjectIndex)
 			let projects;
 			let about;
 			let data;
@@ -201,14 +200,20 @@ const CreateForm = () => {
 					linkedin: linkedinUrl,
 					github: gitHubUrl,
 				}
+
 				links = snapshot.data().links;
-				links.push(data);
+				if(currentProjectIndex || currentProjectIndex === 0) {
+					links[currentProjectIndex] = data;
+				}else{
+					links.push(data);
+				}
 
 				db.collection('portfolios').doc(portfolio.id).set({
-					links,
+					links: links,
 				}, { merge: true })
 				.then(() => {
 					console.log('updated projects with success:', data)
+					setCurrentProjectIndex(null);
 				})
 				.catch((e) => {
 					setError(e.message);
@@ -286,6 +291,14 @@ const CreateForm = () => {
 			setAboutUrl(object.aboutUrl);
 			setCurrentProjectIndex(index);
 		}
+
+		if(part === 'links') {
+			console.log(object)
+			setFacebookUrl(object.facebook);
+			setLinkedinUrl(object.linkedin);
+			setGithubUrl(object.github);
+			setCurrentProjectIndex(index);
+		}
 	}
 
 	return ( 
@@ -294,7 +307,7 @@ const CreateForm = () => {
 				(<Alert variant="danger">{error}</Alert>)
 			}
 			<Container className="add-about-text mt-5">
-						{<Container className="about-container mb-3 pb-2">
+						{(portfolio && portfolio.about.length > 0) && <Container className="about-container mb-3 pb-2">
 							<h1  className="p-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
 							{
 								portfolio && portfolio.about.map((section, index) => (
@@ -349,7 +362,7 @@ const CreateForm = () => {
 
 			<Container className="add-email mt-5">
 				{
-					portfolio && <Container className="email-container">
+					(portfolio && portfolio.email) && <Container className="email-container">
 									<h3>{portfolio.email}</h3>
 								</Container>
 				}
@@ -363,11 +376,14 @@ const CreateForm = () => {
 			<Container className="add-links-form mt-5">
 				{
 					portfolio && portfolio.links.map((link, index) => (
-						<Links key={index} link={link} />
+						<Links key={index} link={link} handleOnClick={() => handleChangeOnClick('links', link, index)} />
 					))
 				}
 				<LinksForm 
 					isSaved={isSaved}
+					facebookUrl={facebookUrl}
+					gitHubUrl={gitHubUrl}
+					linkedinUrl={linkedinUrl}
 					handleGithubChange={(e) => setGithubUrl(e.target.value)}
 					handleLinkedinChange={(e) => setLinkedinUrl(e.target.value)}
 					handleFacebookChange={(e) => setFacebookUrl(e.target.value)}
