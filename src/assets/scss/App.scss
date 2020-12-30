@@ -19,6 +19,10 @@ h1{
 	font-size: 100px;
 }
 
+image{
+	height: auto;
+}
+
 .icons{
 	color: #b4dacc;
 	font-size: 35px;
@@ -28,6 +32,10 @@ h1{
 	color: #b4dacc;
 	font-size: 30px;
 	margin-right: 0 !important;
+		&:hover{
+			color: #95b6aa;
+			cursor: pointer;
+		}
 }
 
 .linked-icons{

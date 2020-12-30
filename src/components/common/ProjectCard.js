@@ -3,11 +3,11 @@ import { Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-const ProjectCard = ({ project, handleOnClick }) => {
+const ProjectCard = ({ project, handleOnClick, handleDelete }) => {
 
 	return (
 		<Card className="card">
-			<Card.Img style={{ height: '120px' }} variant="top" src={project.image.url} />
+			<Card.Img variant="top" src={project.image.url} />
 			<Card.Body className="size-sm p-1.5">
 				<Card.Title>{project.title}</Card.Title>
 				<Card.Text>
@@ -21,7 +21,7 @@ const ProjectCard = ({ project, handleOnClick }) => {
 				<Button className="button btn-secondary" size="sm" type="button" onClick={handleOnClick}>
 					Change
 				</Button>
-				<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" />
+				<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons"  onClick={handleDelete} />
 			</div>
 		</Card>
 	)

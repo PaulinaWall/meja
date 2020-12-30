@@ -303,6 +303,30 @@ const CreateForm = () => {
 		}
 	}
 
+	const handleDelete = (part, index = 0) => {
+		if(part === 'email'){
+			db.collection("portfolios").doc(portfolio.id).update({
+				[part]: ''
+			})
+			.then(function() {
+				console.log("Document successfully deleted!");
+			}).catch(function(error) {
+				console.error("Error removing document: ", error);
+			});
+		} else{
+			const updatedPart = portfolio[part];
+			updatedPart.splice(index, 1);
+			db.collection("portfolios").doc(portfolio.id).update({
+				[part]: updatedPart 
+			})
+			.then(function() {
+				console.log("Document successfully deleted!");
+			}).catch(function(error) {
+				console.error("Error removing document: ", error);
+			});
+		}
+	}
+
 	return ( 
 		<>
 			{error && 
@@ -316,6 +340,7 @@ const CreateForm = () => {
 									<About 
 										key={index} 
 										section={section}
+										handleDelete={() => handleDelete('about', index)} 
 										handleOnClick={() => handleChangeOnClick('about', section, index)} 
 									/>
 								))
@@ -340,6 +365,7 @@ const CreateForm = () => {
 								<Col  className="mb-3" sm={6} md={4} lg={3} key={index}>
 									<ProjectCard 
 										project={project}
+										handleDelete={() => handleDelete('projects', index)}
 										handleOnClick={() => handleChangeOnClick('project', project, index)}
 									/>
 								</Col>
@@ -367,7 +393,7 @@ const CreateForm = () => {
 					(portfolio && portfolio.email) && 
 						<Container className="email-container">
 							<h3>{portfolio.email}</h3>
-							<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" />
+							<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" onClick={() => handleDelete('email')} />
 						</Container>
 				}
 				<ContactForm
@@ -380,7 +406,12 @@ const CreateForm = () => {
 			<Container className="add-links-form mt-5">
 				{
 					portfolio && portfolio.links.map((link, index) => (
-						<Links key={index} link={link} handleOnClick={() => handleChangeOnClick('links', link, index)} />
+						<Links 
+							key={index} 
+							link={link}
+							handleDelete={() => handleDelete('links')}
+							handleOnClick={() => handleChangeOnClick('links', link, index)} 
+						/>
 					))
 				}
 				<LinksForm 

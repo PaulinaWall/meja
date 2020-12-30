@@ -5,7 +5,7 @@ import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-i
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 
-const Links = ({ link, handleOnClick }) => {
+const Links = ({ link, handleOnClick, handleDelete }) => {
 	return ( 
 		<Container className="linked-icons-container">
 			<div>
@@ -29,7 +29,7 @@ const Links = ({ link, handleOnClick }) => {
 				<Button style={{ height: "min-content" }} className="button mr-3" size="sm" type="button" onClick={handleOnClick}>
 					Change
 				</Button>
-				<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" />
+				<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" onClick={handleDelete} />
 			</div>
 		</Container>
 	 );

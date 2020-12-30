@@ -3,7 +3,7 @@ import { Container, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-const About = ({ section, handleOnClick }) => {
+const About = ({ section, handleOnClick, handleDelete }) => {
 	return ( 
 		<Container className="d-flex justify-content-between align-items-center">
 			<div className="mb-3">
@@ -15,7 +15,7 @@ const About = ({ section, handleOnClick }) => {
 				<Button className="button mr-3" size="sm" type="button" onClick={handleOnClick}>
 					Change
 				</Button>
-				<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" />
+				<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons"  onClick={handleDelete} />
 			</div>
 		</Container>
 	 );
