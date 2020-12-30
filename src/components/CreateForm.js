@@ -16,7 +16,7 @@ import ContactForm from './common/ContactForm';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
-	const [isSaved, setIsSaved] = useState(false);
+	const [showLinksSaveButton, setShowLinksSaveButton] = useState(true);
 	const [uploadProgress, setUploadProgress] = useState(null);
 	
 	
@@ -262,7 +262,7 @@ const CreateForm = () => {
 			setGithubUrl('');
 			setFacebookUrl('');
 			setLinkedinUrl('');
-			setIsSaved(true);
+			setShowLinksSaveButton(false);
 			setPortfolioContent('links');
 		}
 
@@ -295,15 +295,18 @@ const CreateForm = () => {
 		}
 
 		if(part === 'links') {
-			console.log(object)
 			setFacebookUrl(object.facebook);
 			setLinkedinUrl(object.linkedin);
 			setGithubUrl(object.github);
+			setShowLinksSaveButton(true);
 			setCurrentProjectIndex(index);
 		}
 	}
 
 	const handleDelete = (part, index = 0) => {
+		if(part === 'links'){
+			setShowLinksSaveButton(true);
+		}
 		if(part === 'email'){
 			db.collection("portfolios").doc(portfolio.id).update({
 				[part]: ''
@@ -415,7 +418,8 @@ const CreateForm = () => {
 					))
 				}
 				<LinksForm 
-					isSaved={isSaved}
+					showLinksSaveButton={showLinksSaveButton}
+					// links={portfolio?.links}
 					facebookUrl={facebookUrl}
 					gitHubUrl={gitHubUrl}
 					linkedinUrl={linkedinUrl}

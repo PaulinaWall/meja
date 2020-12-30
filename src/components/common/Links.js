@@ -10,17 +10,17 @@ const Links = ({ link, handleOnClick, handleDelete }) => {
 		<Container className="linked-icons-container">
 			<div>
 				{ link.github && 
-					<a href={link.github}>
+					<a href={`http://${link.github}`}>
 						<FontAwesomeIcon icon={faGithub} className="mr-2 linked-icons" />
 					</a>
 				}
 				{ link.linkedin && 
-					<a href={link.linkedin}>
+					<a href={`http://${link.linkedin}`}>
 						<FontAwesomeIcon icon={faLinkedin} className="mr-2 linked-icons" />
 					</a>
 				}
 				{ link.facebook && 
-					<a href={link.facebook}>
+					<a href={`http://${link.facebook}`}>
 						<FontAwesomeIcon icon={faFacebook} className="mr-2 linked-icons" />
 					</a>
 				}
