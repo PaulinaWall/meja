@@ -245,6 +245,7 @@ const CreateForm = () => {
 				return;
 			}
 			setProjectTitle('');
+			setProjectImage('');
 			setUploadedImageUrl(null);
 			setProjectUrl('');
 			setProjectText('');
@@ -340,8 +341,10 @@ const CreateForm = () => {
 				(<Alert variant="danger">{error}</Alert>)
 			}
 			<Container className="add-about-text mt-5">
-						{(portfolio && portfolio.about.length > 0) && <Container className="about-container mb-3 pb-2">
-							<h1  className="p-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
+					{
+					(portfolio && portfolio.about.length > 0) && 
+						<Container className="about-container mb-3 pb-2">
+							<h1  className="pt-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
 							{
 								portfolio && portfolio.about.map((section, index) => (
 									<About 
@@ -352,7 +355,8 @@ const CreateForm = () => {
 									/>
 								))
 							}
-						</Container>}
+						</Container>
+					}
 
 				<AboutForm 
 					title={aboutTitle}
