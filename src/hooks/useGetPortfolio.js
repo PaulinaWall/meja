@@ -1,33 +1,29 @@
 import { useEffect, useState } from 'react';
-import { db } from '../firebase';
 
 import { useAuth } from '../contexts/AuthContext';
+import { db } from '../firebase';
 
 const useGetPortfolio = () => {
-	const [portfolio, setPortfolio] = useState([]);
-
+	const [portfolio, setPortfolio] = useState();
 	const { currentUser } = useAuth();
 
 	useEffect(() => {
 		const unsubscribe = db.collection('portfolios')
 		.where('owner', '==', currentUser.uid)
-		.onSnapshot((snapshot) => {
-			const portfolioArray = [];
-
-			snapshot.forEach(doc => {
-				portfolioArray.push({
-					id: doc.id,
-					...doc.data(),
-				});
-			});
-			console.log('portfolioArray in getportfolio', portfolioArray)
-			setPortfolio(portfolioArray);
+		.get()
+		.then((querySnapshot) => {
+			querySnapshot.forEach((doc) => {
+				setPortfolio(doc.data());
+			})
 		})
-		return unsubscribe;
-
-	}, [currentUser]);
+		.catch((e) => {
+			console.error('error', e);
+		})
+	return unsubscribe;
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return { portfolio }
 }
-
+ 
 export default useGetPortfolio;
