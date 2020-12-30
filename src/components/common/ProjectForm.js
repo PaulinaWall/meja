@@ -68,7 +68,7 @@ const ProjectForm = ({
 				)}
 			</Form.Group>
 			<div className="d-flex justify-content-end">
-				<Button className="button btn-secondary" size="sm" type="button" onClick={handleSaveOnClick} >
+				<Button className="button" size="sm" type="button" onClick={handleSaveOnClick} >
 					Save Project
 				</Button>
 			</div>

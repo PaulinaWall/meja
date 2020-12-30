@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Alert, Row, Col } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 // import { useNavigate } from 'react-router';
 
 import ProjectForm from './common/ProjectForm';
@@ -362,9 +364,11 @@ const CreateForm = () => {
 
 			<Container className="add-email mt-5">
 				{
-					(portfolio && portfolio.email) && <Container className="email-container">
-									<h3>{portfolio.email}</h3>
-								</Container>
+					(portfolio && portfolio.email) && 
+						<Container className="email-container">
+							<h3>{portfolio.email}</h3>
+							<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" />
+						</Container>
 				}
 				<ContactForm
 					email={email}

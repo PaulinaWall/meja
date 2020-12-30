@@ -43,7 +43,7 @@ const LinksForm = ({ facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, ha
 			{
 				!isSaved &&
 					<div className="d-flex justify-content-end">
-						<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">Save Links</Button>
+						<Button className="button" size="sm" onClick={handleSaveOnClick} type="button">Save Links</Button>
 					</div>
 			}
 			
