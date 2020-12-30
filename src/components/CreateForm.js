@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Alert, Row, Col } from 'react-bootstrap';
+import { Container, Alert, Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-// import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import ProjectForm from './common/ProjectForm';
 import AboutForm from './common/AboutForm';
@@ -39,7 +39,7 @@ const CreateForm = () => {
 	
 	const [portfolio, setPortfolio] = useState();
 	const { currentUser } = useAuth();
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const getPortfolio = async () => {
 		await db.collection('portfolios')
@@ -330,6 +330,10 @@ const CreateForm = () => {
 		}
 	}
 
+	const handleShowPortfolioOnClick = () => {
+		navigate(`/${currentUser.displayName}/`)
+	}
+
 	return ( 
 		<>
 			{error && 
@@ -429,6 +433,8 @@ const CreateForm = () => {
 					handleSaveOnClick={(e) => handleSaveOnClick(e)}
 				/>
 			</Container>
+
+			<Button className="button" onClick={handleShowPortfolioOnClick}>Show Portfolio</Button>
 		</>
 	 );
 }
