@@ -21,17 +21,17 @@ const Navigation = () => {
 							{
 								currentUser ? (
 									<NavDropdown title={currentUser.displayName} id="basic-nav-dropdown">
-										<NavLink to={`/${currentUser.displayName}/about`} className="dropdown-item">About</NavLink>
-										<NavLink to={`/${currentUser.displayName}/projects`} className="dropdown-item">Projects</NavLink>
-										<NavLink to={`/${currentUser.displayName}/contact`} className="dropdown-item">Contact</NavLink>
+										<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/about`} className="dropdown-item">About</NavLink>
+										<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/projects`} className="dropdown-item">Projects</NavLink>
+										<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/contact`} className="dropdown-item">Contact</NavLink>
 										{
 										currentUser &&
 											<NavLink 
 												className="dropdown-item"
 												onClick={() => setCreateOrPreview(!createOrPreview)}
 												to={createOrPreview
-													? `/${currentUser.displayName}/create`
-													: `/${currentUser.displayName}/`
+													? `/${currentUser?.displayName.replace(' ', '')}/create`
+													: `/${currentUser?.displayName.replace(' ', '')}/`
 												}
 											>
 												{

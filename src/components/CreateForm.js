@@ -328,7 +328,7 @@ const CreateForm = () => {
 	}
 
 	const handleShowPortfolioOnClick = () => {
-		navigate(`/${currentUser.displayName}/`)
+		navigate(`/${currentUser?.displayName.replace(' ', '')}/`)
 	}
 
 	return ( 

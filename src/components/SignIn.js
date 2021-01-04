@@ -13,13 +13,13 @@ const SignIn = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
+		
 		setError(null);
 
 		try {
 			setLoading(true)
 			await signin(emailRef.current.value, passwordRef.current.value)
-			navigate(`/${currentUser.displayName}/create`)
+			navigate(`/${currentUser?.displayName.replace(' ', '')}/create`)
 		} catch (e) {
 			setError(e.message)
 			setLoading(false)
