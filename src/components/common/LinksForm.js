@@ -3,7 +3,11 @@ import { Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 
+import useGetPortfolio from '../../hooks/useGetPortfolio';
+
 const LinksForm = ({ showLinksSaveButton, facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, handleLinkedinChange, handleFacebookChange, handleSaveOnClick }) => {
+
+	const { portfolio } = useGetPortfolio();
 	return ( 
 		<Form className="form">
 			<h3>Add Links</h3>
@@ -37,7 +41,7 @@ const LinksForm = ({ showLinksSaveButton, facebookUrl, linkedinUrl, gitHubUrl, h
 				/>
 			</Form.Group>
 			{
-				(showLinksSaveButton) &&
+				(!portfolio?.links.length > 0 || showLinksSaveButton) &&
 					<div className="d-flex justify-content-end">
 						<Button className="button" size="sm" onClick={handleSaveOnClick} type="button">Save Links</Button>
 					</div>

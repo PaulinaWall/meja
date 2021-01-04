@@ -16,7 +16,7 @@ import ContactForm from './common/ContactForm';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
-	const [showLinksSaveButton, setShowLinksSaveButton] = useState(true);
+	const [showLinksSaveButton, setShowLinksSaveButton] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState(null);
 	
 	
@@ -207,7 +207,7 @@ const CreateForm = () => {
 				if(currentProjectIndex || currentProjectIndex === 0) {
 					links[currentProjectIndex] = data;
 				}else{
-					links.push(data);
+					links[0] = data;
 				}
 
 				db.collection('portfolios').doc(portfolio.id).set({
@@ -299,15 +299,11 @@ const CreateForm = () => {
 			setFacebookUrl(object.facebook);
 			setLinkedinUrl(object.linkedin);
 			setGithubUrl(object.github);
-			setShowLinksSaveButton(true);
 			setCurrentProjectIndex(index);
 		}
 	}
 
 	const handleDelete = (part, index = 0) => {
-		if(part === 'links'){
-			setShowLinksSaveButton(true);
-		}
 		if(part === 'email'){
 			db.collection("portfolios").doc(portfolio.id).update({
 				[part]: ''
@@ -427,13 +423,18 @@ const CreateForm = () => {
 				}
 				<LinksForm 
 					showLinksSaveButton={showLinksSaveButton}
-					// links={portfolio?.links}
 					facebookUrl={facebookUrl}
 					gitHubUrl={gitHubUrl}
 					linkedinUrl={linkedinUrl}
-					handleGithubChange={(e) => setGithubUrl(e.target.value)}
-					handleLinkedinChange={(e) => setLinkedinUrl(e.target.value)}
-					handleFacebookChange={(e) => setFacebookUrl(e.target.value)}
+					handleGithubChange={(e) => {
+						setGithubUrl(e.target.value) 
+						setShowLinksSaveButton(true)}}
+					handleLinkedinChange={(e) => {
+						setLinkedinUrl(e.target.value)
+						setShowLinksSaveButton(true)}}
+					handleFacebookChange={(e) => {
+						setFacebookUrl(e.target.value)
+						setShowLinksSaveButton(true)}}
 					handleSaveOnClick={(e) => handleSaveOnClick(e)}
 				/>
 			</Container>
