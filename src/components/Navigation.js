@@ -1,22 +1,23 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from 'react';
-import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const Navigation = () => {
 
 	const { currentUser } = useAuth();
-	const [createOrPreview, setCreateOrPreview] = useState(false);
+	// const [createOrPreview, setCreateOrPreview] = useState(false);
 
 	return (
 		<div>
 			<Navbar bg="light" variant="light" >
 				<Container>
 					<Link to="/">Meja</Link>
-					<Nav className="ml-auto">
-						<>
-							{
+					<Navbar.Toggle aria-controls="basic-navbar-nav" />
+					<Navbar.Collapse id="basic-navbar-nav">
+						<Nav className="ml-auto">
+							{/* {
 								currentUser &&
 									<NavLink 
 										className="nav-link"
@@ -32,17 +33,24 @@ const Navigation = () => {
 										: 'Preview'
 									}
 									</NavLink>
+							} */}
+							{
+								currentUser ? (
+									<NavDropdown title={currentUser.displayName} id="basic-nav-dropdown">
+										<NavLink to={`/${currentUser.displayName}/about`}className="dropdown-item">About</NavLink>
+										<NavLink to={`/${currentUser.displayName}/projects`}className="dropdown-item">Projects</NavLink>
+										<NavLink to={`/${currentUser.displayName}/contact`}className="dropdown-item">Contact</NavLink>
+										<NavLink to={`/${currentUser.displayName}/create`}className="dropdown-item">Create Form</NavLink>
+										<NavDropdown.Divider />
+										<NavLink to="/sigout" className="dropdown-item">Sign Out</NavLink>
+									</NavDropdown>
+								) : (
+									<NavLink to="/signin" className="nav-link">Sign In</NavLink>
+								)
 							}
-						</>
-						
-						{
-							currentUser ? (
-								<NavLink className="nav-link" to="/signout">Sign out</NavLink>
-							) : (
-								<NavLink className="nav-link" to="/signin">Sign in</NavLink>
-							)
-						}
-					</Nav>
+						</Nav>
+					</Navbar.Collapse>
+					
 				</Container>
 			</Navbar>
 		</div>
