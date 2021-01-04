@@ -10,7 +10,7 @@ const SignOut = () => {
 	useEffect(() => {
 		(async () => {
 			await signout()
-			navigate('/login')
+			navigate('/signin')
 		})()
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
