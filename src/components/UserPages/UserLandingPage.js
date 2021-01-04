@@ -9,17 +9,24 @@ const UserLandingPage = () => {
 
 	const { currentUser } = useAuth();
 	return ( 
-		<Row>
-			<Col sm={12} md={4} lg={4}>
-				<Link to={`/${currentUser.displayName}/about`}><h3>About</h3></Link>
-			</Col>
-			<Col sm={12} md={4} lg={4}>
-				<Link to={`/${currentUser.displayName}/projects`}><h3>Projects</h3></Link>
-			</Col>
-			<Col sm={12} md={4} lg={4}>
-				<Link to={`/${currentUser.displayName}/contact`}><h3>Contact</h3></Link>
-			</Col>
-		</Row>
+		<>
+			{
+				currentUser && (
+					<Row>
+						<Col sm={12} md={4} lg={4}>
+							<Link to={`/${currentUser.displayName}/about`}><h3>About</h3></Link>
+						</Col>
+						<Col sm={12} md={4} lg={4}>
+							<Link to={`/${currentUser.displayName}/projects`}><h3>Projects</h3></Link>
+						</Col>
+						<Col sm={12} md={4} lg={4}>
+							<Link to={`/${currentUser.displayName}/contact`}><h3>Contact</h3></Link>
+						</Col>
+					</Row>
+				)
+			}
+		</>
+		
 	 );
 }
  
