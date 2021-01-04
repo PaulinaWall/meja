@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 
 import { useAuth } from '../../contexts/AuthContext';
+import Footer from '../UserPages/Footer';
 
 
 const UserLandingPage = () => {
 
 	const { currentUser } = useAuth();
 	return ( 
-		<>
+		<div className="user-site-container">
 			{
 				currentUser && (
 					<Row>
@@ -25,7 +26,8 @@ const UserLandingPage = () => {
 					</Row>
 				)
 			}
-		</>
+			<Footer />
+		</div>
 		
 	 );
 }

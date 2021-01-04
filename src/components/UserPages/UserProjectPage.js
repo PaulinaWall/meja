@@ -2,12 +2,14 @@ import React from 'react';
 import { Card, Row, Col, Image } from 'react-bootstrap';
 
 import useGetPortfolio from '../../hooks/useGetPortfolio';
+import Footer from '../UserPages/Footer';
+
 
 const UserProjectPage = () => {
 	const { portfolio } = useGetPortfolio();
 
 	return ( 
-		<>
+		<div className="user-site-container">
 			<Row>
 				{
 					(portfolio && portfolio.projects) && portfolio.projects.map((project, index) => {
@@ -36,7 +38,8 @@ const UserProjectPage = () => {
 					})
 				}
 			</Row>
-		</>
+			<Footer />
+		</div>
 	 );
 }
  

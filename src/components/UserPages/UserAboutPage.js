@@ -3,13 +3,15 @@ import { Container } from 'react-bootstrap';
 
 import useGetPortfolio from '../../hooks/useGetPortfolio';
 import { useAuth } from '../../contexts/AuthContext';
+import Footer from '../UserPages/Footer';
+
 
 const UserAboutPage = () => {
 	const { portfolio } = useGetPortfolio();
 	const { currentUser } = useAuth();
 
 	return ( 
-		<>
+		<div className="user-site-container">
 			{
 			(portfolio?.about.length > 0) && 
 				<Container className="about-container mb-3 pb-2">
@@ -25,7 +27,8 @@ const UserAboutPage = () => {
 					}
 				</Container>
 			}
-		</>
+			<Footer />
+		</div>
 	 );
 }
  

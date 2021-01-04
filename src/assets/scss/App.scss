@@ -122,6 +122,17 @@ image{
 	box-shadow: 5px 5px 5px lightgray;
 }
 
+.user-site-container{
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.footer{
+	margin-bottom: 50px;
+}
+
 // White (#FCF6F5FF), 
 // Vanilla Custard (#F0E1B9FF), 
 // Goldfinch (#F3DB74FF) 
