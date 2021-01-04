@@ -42,7 +42,7 @@ const Navigation = () => {
 											</NavLink>
 							}
 										<NavDropdown.Divider />
-										<NavLink to="/sigout" className="dropdown-item">Sign Out</NavLink>
+										<NavLink to="/signout" className="dropdown-item">Sign Out</NavLink>
 									</NavDropdown>
 								) : (
 									<NavLink to="/signin" className="nav-link">Sign In</NavLink>
