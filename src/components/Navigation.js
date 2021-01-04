@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 const Navigation = () => {
 
 	const { currentUser } = useAuth();
-	// const [createOrPreview, setCreateOrPreview] = useState(false);
+	const [createOrPreview, setCreateOrPreview] = useState(false);
 
 	return (
 		<div>
@@ -17,30 +17,30 @@ const Navigation = () => {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ml-auto">
-							{/* {
-								currentUser &&
-									<NavLink 
-										className="nav-link"
-										onClick={() => setCreateOrPreview(!createOrPreview)}
-										to={createOrPreview
-											? `/${currentUser.displayName}/create`
-											: `/${currentUser.displayName}/`
-										}
-									>
-									{
-										createOrPreview
-										? 'Create Portfolio'
-										: 'Preview'
-									}
-									</NavLink>
-							} */}
+							
 							{
 								currentUser ? (
 									<NavDropdown title={currentUser.displayName} id="basic-nav-dropdown">
-										<NavLink to={`/${currentUser.displayName}/about`}className="dropdown-item">About</NavLink>
-										<NavLink to={`/${currentUser.displayName}/projects`}className="dropdown-item">Projects</NavLink>
-										<NavLink to={`/${currentUser.displayName}/contact`}className="dropdown-item">Contact</NavLink>
-										<NavLink to={`/${currentUser.displayName}/create`}className="dropdown-item">Create Form</NavLink>
+										<NavLink to={`/${currentUser.displayName}/about`} className="dropdown-item">About</NavLink>
+										<NavLink to={`/${currentUser.displayName}/projects`} className="dropdown-item">Projects</NavLink>
+										<NavLink to={`/${currentUser.displayName}/contact`} className="dropdown-item">Contact</NavLink>
+										{
+										currentUser &&
+											<NavLink 
+												className="dropdown-item"
+												onClick={() => setCreateOrPreview(!createOrPreview)}
+												to={createOrPreview
+													? `/${currentUser.displayName}/create`
+													: `/${currentUser.displayName}/`
+												}
+											>
+												{
+													createOrPreview
+													? 'Create Portfolio'
+													: 'Preview'
+												}
+											</NavLink>
+							}
 										<NavDropdown.Divider />
 										<NavLink to="/sigout" className="dropdown-item">Sign Out</NavLink>
 									</NavDropdown>
