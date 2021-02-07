@@ -13,14 +13,14 @@ const UserLandingPage = () => {
 		<div className="user-site-container">
 			{
 				currentUser && (
-					<Row>
-						<Col sm={12} md={4} lg={4}>
+					<Row className="landingPage-row">
+						<Col className="box-styles" sm={12} md={3} lg={3}>
 							<Link to={`/${currentUser.displayName}/about`}><h3>About</h3></Link>
 						</Col>
-						<Col sm={12} md={4} lg={4}>
+						<Col className="box-styles" sm={12} md={3} lg={3}>
 							<Link to={`/${currentUser.displayName}/projects`}><h3>Projects</h3></Link>
 						</Col>
-						<Col sm={12} md={4} lg={4}>
+						<Col className="box-styles" sm={12} md={3} lg={3}>
 							<Link to={`/${currentUser.displayName}/contact`}><h3>Contact</h3></Link>
 						</Col>
 					</Row>

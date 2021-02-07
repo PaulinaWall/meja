@@ -1,22 +1,16 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'
-import { Button, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
+import Writer from "../assets/images/Writer.png"
 
 const LandingPage = () => {
-
-	const navigate = useNavigate();
-
-	const handleOnClick = () => {
-		navigate('/signup')
-	};
-
 	return ( 
-		<Container className="landingPage d-flex flex-column align-items-center">
-			<h1 className="mt-5">MEJA</h1>
+		<Container className="center landingPage">
+			<div className="d-flex mt-4">
+				<Image className="mr-4" width="300" src={Writer} roundedCircle />
+				<h1 className="mt-5">MEJA</h1>
+			</div>
 			<p className="mt-5">Makes it easy to create a cool portfolio in a few steps. <a href="value">SAMPLE</a></p>
-			<Button className="button mt-5" onClick={handleOnClick}>
-				Create account
-			</Button>
 		</Container>
 	 );
 }

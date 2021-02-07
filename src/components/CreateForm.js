@@ -4,15 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router';
 
-import ProjectForm from './common/ProjectForm';
-import AboutForm from './common/AboutForm';
-import LinksForm from './common/LinksForm';
-import { db, storage } from '../firebase';
-import { useAuth } from '../contexts/AuthContext';
-import ProjectCard from './common/ProjectCard';
 import About from './common/About';
 import Links from './common/Links';
+import { db, storage } from '../firebase';
+import AboutForm from './common/AboutForm';
+import LinksForm from './common/LinksForm';
+import ProjectCard from './common/ProjectCard';
+import ProjectForm from './common/ProjectForm';
 import ContactForm from './common/ContactForm';
+import { useAuth } from '../contexts/AuthContext';
+import ProjectColorPicker from './UserPages/ProjectColorPicker';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
@@ -393,6 +394,10 @@ const CreateForm = () => {
 					handleTextChange={(e) => setProjectText(e.target.value)}
 					handleUrlChange={(e) => setProjectUrl(e.target.value)}
 				/>
+			</Container>
+
+			<Container>
+				<ProjectColorPicker />
 			</Container>
 
 			<Container className="add-email mt-5">
