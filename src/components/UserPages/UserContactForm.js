@@ -1,8 +1,6 @@
 import React from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 
-import Footer from '../UserPages/Footer';
-
 const UserContactForm = () => {
 
 	const handleSubmit = (e) => {
@@ -33,7 +31,6 @@ const UserContactForm = () => {
 					Submit
 				</Button>
 			</Form>
-			<Footer />
 		</Container>
 	 );
 }

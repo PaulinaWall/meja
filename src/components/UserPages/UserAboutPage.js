@@ -3,8 +3,6 @@ import { Container } from 'react-bootstrap';
 
 import useGetPortfolio from '../../hooks/useGetPortfolio';
 import { useAuth } from '../../contexts/AuthContext';
-import Footer from '../UserPages/Footer';
-
 
 const UserAboutPage = () => {
 	const { portfolio } = useGetPortfolio();
@@ -27,7 +25,6 @@ const UserAboutPage = () => {
 					}
 				</Container>
 			}
-			<Footer />
 		</div>
 	 );
 }

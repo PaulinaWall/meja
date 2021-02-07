@@ -17,6 +17,7 @@ import UserContactForm from './components/UserPages/UserContactForm';
 import Navigation from './components/Navigation';
 import AuthContextProvider from './contexts/AuthContext';
 import AuthRoute from './components/AuthRoute';
+import Footer from './components/UserPages/Footer';
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
 					</Route>
 				</Routes>
 			</Container>
+			<Footer />
 		</AuthContextProvider>
 	</Router>
   );

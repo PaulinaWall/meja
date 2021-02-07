@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, Row, Col, Image } from 'react-bootstrap';
 
 import useGetPortfolio from '../../hooks/useGetPortfolio';
-import Footer from '../UserPages/Footer';
 
 
 const UserProjectPage = () => {
@@ -38,7 +37,6 @@ const UserProjectPage = () => {
 					})
 				}
 			</Row>
-			<Footer />
 		</div>
 	 );
 }
