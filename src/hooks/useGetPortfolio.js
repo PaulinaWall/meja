@@ -8,6 +8,9 @@ const useGetPortfolio = () => {
 	const { currentUser } = useAuth();
 
 	useEffect(() => {
+		if(!currentUser){
+			return;
+		}
 		const unsubscribe = db.collection('portfolios')
 		.where('owner', '==', currentUser.uid)
 		.get()
