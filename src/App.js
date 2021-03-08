@@ -15,60 +15,63 @@ import UserProjectPage from './components/UserPages/UserProjectPage';
 import UserAboutPage from './components/UserPages/UserAboutPage';
 import UserContactForm from './components/UserPages/UserContactForm';
 import Navigation from './components/Navigation';
-import AuthContextProvider from './contexts/AuthContext';
 import AuthRoute from './components/AuthRoute';
 import Footer from './components/UserPages/Footer';
+import AuthContextProvider from './contexts/AuthContext';
+import ThemeContextProvider from './contexts/ThemeContext';
 
 function App() {
   return (
 	<Router>
 		<AuthContextProvider>
-			<Navigation />
-			<Container className="py-3">
-				<Routes>
-					<Route path="/">
-						<LandingPage />
-					</Route>
-
-					<Route path="/signin">
-						<SignIn />
-					</Route>
-
-					<Route path="/signout">
-						<SignOut />
-					</Route>
-
-					<Route path="/signup">
-						<SignUp />
-					</Route>
-
-					<Route path="/:userName">
-					
+			<ThemeContextProvider>
+				<Navigation />
+				<Container className="py-3">
+					<Routes>
 						<Route path="/">
-							<UserLandingPage />
+							<LandingPage />
 						</Route>
 
-						<AuthRoute path="/create">
-							<CreateForm />
-						</AuthRoute>
-
-						<Route path="/projects">
-							<UserProjectPage />
+						<Route path="/signin">
+							<SignIn />
 						</Route>
 
-						<Route path="/about">
-							<UserAboutPage />
+						<Route path="/signout">
+							<SignOut />
 						</Route>
 
-						<Route path="/contact">
-							<UserContactForm />
+						<Route path="/signup">
+							<SignUp />
 						</Route>
 
-						<Route path="*" element={<NotFound />} />
-					</Route>
-				</Routes>
-			</Container>
-			<Footer />
+						<Route path="/:userName">
+						
+							<Route path="/">
+								<UserLandingPage />
+							</Route>
+
+							<AuthRoute path="/create">
+								<CreateForm />
+							</AuthRoute>
+
+							<Route path="/projects">
+								<UserProjectPage />
+							</Route>
+
+							<Route path="/about">
+								<UserAboutPage />
+							</Route>
+
+							<Route path="/contact">
+								<UserContactForm />
+							</Route>
+
+							<Route path="*" element={<NotFound />} />
+						</Route>
+					</Routes>
+				</Container>
+				<Footer />
+			</ThemeContextProvider>
 		</AuthContextProvider>
 	</Router>
   );

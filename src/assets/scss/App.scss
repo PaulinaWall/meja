@@ -37,36 +37,53 @@ image{
 }
 
 .blue-theme-1{
-	background-color: #F0B7A4;
-}
-.blue-theme-2{
-	background-color: #F1D1B5;
-}
-.blue-theme-3{
 	background-color: #568EA6;
 }
-.blue-theme-4{
+
+.blue-theme-2{
 	background-color: #305F72;
 }
 
 .peach-theme-1{
-	background-color: #8FB9A8;
-}
-.peach-theme-2{
-	background-color: #FEFAD4;
-}
-.peach-theme-3{
 	background-color: #FCD0BA;
 }
-.peach-theme-4{
+
+.peach-theme-2{
 	background-color: #F1828D;
 }
 
+.beige-theme-1{
+	background-color: #FAF6F2;
+}
+
+.beige-theme-2{
+	background-color:#DED1BD;
+}
+
+.green-theme-1{
+	background-color: #77ACA2;
+}
+
+.green-theme-2{
+	background-color: #9DBEBB;
+}
+
+.purple-theme-1{
+	background-color: #816EA7;
+}
+
+.purple-theme-2{
+	background-color: #B19CD9;
+}
 
 .app{
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
+}
+
+.circle{
+	border-radius: 50px, 50px;
 }
 
 .icons{

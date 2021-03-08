@@ -1,44 +1,35 @@
-import React, {useState} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import React, { useContext } from 'react';
+
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 const ProjectColorPicker = () => {
-	const [checked, setChecked] = useState(false);
-	const handleToggleTheme = () => {
-		setChecked(!checked);
-	}
+	const { setThemeColor, getTheme } = useContext(ThemeContext);
 
 	return (
 		<div>
-			<h2>Choose your color theme</h2>
-			<ul className="theme-color-list">
-				<li className="theme-color-list-item">
-					<div className="d-flex">
-						<div className="blue-theme-1 theme-color-section">#F0B7A4</div>
-						<div className="blue-theme-2 theme-color-section">#F1D1B5</div>
-						<div className="blue-theme-3 theme-color-section">#568EA6</div>
-						<div className="blue-theme-4 theme-color-section">#305F72</div>
-					</div>
-					<FontAwesomeIcon
-					 	icon={faCheck} 
-						className={checked ? 'checked' : 'unChecked'} 
-						onClick={handleToggleTheme}
-					/>
-				</li>
-				<li className="theme-color-list-item">
-					<div className="d-flex">
-						<div className="peach-theme-1 theme-color-section">#8FB9A8</div>
-						<div className="peach-theme-2 theme-color-section">#FEFAD4</div>
-						<div className="peach-theme-3 theme-color-section">#FCD0BA</div>
-						<div className="peach-theme-4 theme-color-section">#F1828D</div>
-					</div>
-					<FontAwesomeIcon
-						icon={faCheck} 
-						className={checked ? 'checked' : 'unChecked'} 
-						onClick={handleToggleTheme}
-					/>
-				</li>
-			</ul>
+			<h2 style={getTheme()}>Choose your color theme</h2>
+			<div>
+				<div className="d-flex circle" onClick={() => setThemeColor('blue')}>
+					<div className="blue-theme-1 theme-color-section"></div>
+					<div className="blue-theme-2 theme-color-section"></div>
+				</div>
+				<div className="d-flex" onClick={() => setThemeColor('pink')}>
+					<div className="peach-theme-1 theme-color-section"></div>
+					<div className="peach-theme-2 theme-color-section"></div>
+				</div>
+				<div className="d-flex" onClick={() => setThemeColor('beige')}>
+					<div className="beige-theme-1 theme-color-section"></div>
+					<div className="beige-theme-2 theme-color-section"></div>
+				</div>
+				<div className="d-flex" onClick={() => setThemeColor('green')}>
+					<div className="green-theme-1 theme-color-section"></div>
+					<div className="green-theme-2 theme-color-section"></div>
+				</div>
+				<div className="d-flex" onClick={() => setThemeColor('purple')}>
+					<div className="purple-theme-1 theme-color-section"></div>
+					<div className="purple-theme-2 theme-color-section"></div>
+				</div>
+			</div>
 		</div>
 	);
 }
