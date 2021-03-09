@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Alert, Row, Col, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { Container, Alert, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
-import About from './common/About';
-import Links from './common/Links';
 import { db, storage } from '../firebase';
 import AboutForm from './common/AboutForm';
 import LinksForm from './common/LinksForm';
-import ProjectCard from './common/ProjectCard';
 import ProjectForm from './common/ProjectForm';
 import ContactForm from './common/ContactForm';
 import { useAuth } from '../contexts/AuthContext';
 import ProjectColorPicker from './UserPages/ProjectColorPicker';
+import PortfolioContent from './UserPages/PortfolioContent';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
@@ -334,117 +330,81 @@ const CreateForm = () => {
 
 	return ( 
 		<>
-			{error && 
-				(<Alert variant="danger">{error}</Alert>)
-			}
-			<Container className="add-about-text mt-5">
-					{
-					(portfolio && portfolio.about.length > 0) && 
-						<Container className="about-container mb-3 pb-2">
-							<h1  className="pt-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
-							{
-								portfolio && portfolio.about.map((section, index) => (
-									<About 
-										key={index} 
-										section={section}
-										handleDelete={() => handleDelete('about', index)} 
-										handleOnClick={() => handleChangeOnClick('about', section, index)} 
-									/>
-								))
-							}
-						</Container>
+			<div className="create-form">
+				<Container className="form-container">
+					{error && 
+						(<Alert variant="danger">{error}</Alert>)
 					}
-
-				<AboutForm 
-					title={aboutTitle}
-					text={aboutText}
-					url={aboutUrl}
-					handleSaveOnClick={(e) => handleSaveOnClick(e)}
-					handleTextChange={(e) => setAboutText(e.target.value)}
-					handleTitleChange={(e) => setAboutTitle(e.target.value)}
-					handleUrlChange={(e) => setAboutUrl(e.target.value)}
-				/>
-			</Container>
-
-			<Container className="create-project mt-5">
-				<Row className="project-card-container">
-						{
-							portfolio && portfolio.projects.map((project, index) => (
-								<Col  className="mb-3" sm={6} md={4} lg={3} key={index}>
-									<ProjectCard 
-										project={project}
-										handleDelete={() => handleDelete('projects', index)}
-										handleOnClick={() => handleChangeOnClick('project', project, index)}
-									/>
-								</Col>
-							))
-						}
-				</Row>
-
-				<ProjectForm 
-					title={projectTitle}
-					text={projectText}
-					url={projectUrl}
-					image={projectImage}
-					uploadProgress={uploadProgress}
-					uploadedImageUrl={uploadedImageUrl}
-					handleSaveOnClick={(e) => handleSaveOnClick(e)}
-					handleImageChange={handleImageChange}
-					handleTitleChange={(e) => setProjectTitle(e.target.value)}
-					handleTextChange={(e) => setProjectText(e.target.value)}
-					handleUrlChange={(e) => setProjectUrl(e.target.value)}
-				/>
-			</Container>
-
-			<Container>
-				<ProjectColorPicker />
-			</Container>
-
-			<Container className="add-email mt-5">
-				{
-					(portfolio && portfolio.email) && 
-						<Container className="email-container">
-							<h3>{portfolio.email}</h3>
-							<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" onClick={() => handleDelete('email')} />
-						</Container>
-				}
-				<ContactForm
-					email={email}
-					handleEmailChange={(e) => setEmail(e.target.value)}
-					handleSaveOnClick={(e) => handleSaveOnClick(e)}
-				/>
-			</Container>
-
-			<Container className="add-links-form mt-5">
-				{
-					portfolio && portfolio.links.map((link, index) => (
-						<Links 
-							key={index} 
-							link={link}
-							handleDelete={() => handleDelete('links')}
-							handleOnClick={() => handleChangeOnClick('links', link, index)} 
+					<Container className="add-about-text mt-5">
+						<AboutForm 
+							title={aboutTitle}
+							text={aboutText}
+							url={aboutUrl}
+							handleSaveOnClick={(e) => handleSaveOnClick(e)}
+							handleTextChange={(e) => setAboutText(e.target.value)}
+							handleTitleChange={(e) => setAboutTitle(e.target.value)}
+							handleUrlChange={(e) => setAboutUrl(e.target.value)}
 						/>
-					))
-				}
-				<LinksForm 
-					showLinksSaveButton={showLinksSaveButton}
-					facebookUrl={facebookUrl}
-					gitHubUrl={gitHubUrl}
-					linkedinUrl={linkedinUrl}
-					handleGithubChange={(e) => {
-						setGithubUrl(e.target.value) 
-						setShowLinksSaveButton(true)}}
-					handleLinkedinChange={(e) => {
-						setLinkedinUrl(e.target.value)
-						setShowLinksSaveButton(true)}}
-					handleFacebookChange={(e) => {
-						setFacebookUrl(e.target.value)
-						setShowLinksSaveButton(true)}}
-					handleSaveOnClick={(e) => handleSaveOnClick(e)}
-				/>
-			</Container>
+					</Container>
 
-			<Button className="button" onClick={handleShowPortfolioOnClick}>Show Portfolio</Button>
+					<Container className="create-project mt-5">
+						<ProjectForm 
+							title={projectTitle}
+							text={projectText}
+							url={projectUrl}
+							image={projectImage}
+							uploadProgress={uploadProgress}
+							uploadedImageUrl={uploadedImageUrl}
+							handleSaveOnClick={(e) => handleSaveOnClick(e)}
+							handleImageChange={handleImageChange}
+							handleTitleChange={(e) => setProjectTitle(e.target.value)}
+							handleTextChange={(e) => setProjectText(e.target.value)}
+							handleUrlChange={(e) => setProjectUrl(e.target.value)}
+						/>
+					</Container>
+
+					<Container>
+						<ProjectColorPicker />
+					</Container>
+
+					<Container className="add-email mt-5">
+						<ContactForm
+							email={email}
+							handleEmailChange={(e) => setEmail(e.target.value)}
+							handleSaveOnClick={(e) => handleSaveOnClick(e)}
+						/>
+					</Container>
+
+					<Container className="add-links-form mt-5">
+						<LinksForm 
+							showLinksSaveButton={showLinksSaveButton}
+							facebookUrl={facebookUrl}
+							gitHubUrl={gitHubUrl}
+							linkedinUrl={linkedinUrl}
+							handleGithubChange={(e) => {
+								setGithubUrl(e.target.value) 
+								setShowLinksSaveButton(true)}}
+							handleLinkedinChange={(e) => {
+								setLinkedinUrl(e.target.value)
+								setShowLinksSaveButton(true)}}
+							handleFacebookChange={(e) => {
+								setFacebookUrl(e.target.value)
+								setShowLinksSaveButton(true)}}
+							handleSaveOnClick={(e) => handleSaveOnClick(e)}
+						/>
+					</Container>
+				</Container>
+
+				<Container className="portfolio-container">
+					<PortfolioContent
+						portfolio={portfolio}
+						handleDelete={handleDelete}
+						handleChangeOnClick={handleChangeOnClick}
+					/>
+				</Container>
+
+			</div>
+			<Button className="button save-portfolio-button" onClick={handleShowPortfolioOnClick}>Show Portfolio</Button>
 		</>
 	 );
 }

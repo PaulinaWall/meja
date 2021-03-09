@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './assets/scss/App.scss';
@@ -26,7 +25,6 @@ function App() {
 		<AuthContextProvider>
 			<ThemeContextProvider>
 				<Navigation />
-				<Container className="py-3">
 					<Routes>
 						<Route path="/">
 							<LandingPage />
@@ -69,7 +67,6 @@ function App() {
 							<Route path="*" element={<NotFound />} />
 						</Route>
 					</Routes>
-				</Container>
 				<Footer />
 			</ThemeContextProvider>
 		</AuthContextProvider>

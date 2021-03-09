@@ -82,8 +82,9 @@ image{
 	height: 100vh;
 }
 
-.circle{
-	border-radius: 50px, 50px;
+.create-form{
+	display: flex;
+	justify-content: space-between;
 }
 
 .icons{
@@ -210,10 +211,24 @@ image{
 	}
 }
 
+.portfolio-content{
+	height: 100px;
+	width: 100px;
+}
+
+.portfolio-container{
+	border-left: 1px solid var(--darkGreen);
+}
+
 .about-container{
 	background-color: white;
 	border-radius: 5px 5px;
 	box-shadow: 5px 5px 5px lightgray;
+}
+
+.save-portfolio-button{
+	width: 100vw;
+    margin: 30px;
 }
 
 .theme-color-list{

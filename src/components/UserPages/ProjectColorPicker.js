@@ -3,11 +3,11 @@ import React, { useContext } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
 
 const ProjectColorPicker = () => {
-	const { setThemeColor, getTheme } = useContext(ThemeContext);
+	const { setThemeColor } = useContext(ThemeContext);
 
 	return (
 		<div>
-			<h2 style={getTheme()}>Choose your color theme</h2>
+			<h2>Choose your color theme</h2>
 			<div>
 				<div className="d-flex circle" onClick={() => setThemeColor('blue')}>
 					<div className="blue-theme-1 theme-color-section"></div>
