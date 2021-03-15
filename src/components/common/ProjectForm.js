@@ -27,9 +27,9 @@ const ProjectForm = ({
 
 			<Form.Group>
 				<Form.File
+					custom
 					id="upload-image"
 					label="Choose image to upload"
-					custom
 					onChange={handleImageChange}
 				/>
 			</Form.Group>

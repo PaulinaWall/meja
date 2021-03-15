@@ -427,7 +427,11 @@ const CreateForm = () => {
 				</Container>
 
 			</div>
-			<Button className="button save-portfolio-button" onClick={handleShowPortfolioOnClick}>Show Portfolio</Button>
+
+			<div className="save-portfolio-button-container">
+				<Button className="button save-portfolio-button" onClick={handleShowPortfolioOnClick}>Preview Portfolio</Button>
+				<Button className="button save-portfolio-button">Create Portfolio</Button>
+			</div>
 		</>
 	 );
 }

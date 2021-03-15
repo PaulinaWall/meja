@@ -14,7 +14,6 @@ const Footer = () => {
 		<>
 			{
 				<Navbar className="footer">	
-					<Container>
 					{
 						currentUser
 						? portfolio?.links.map((link, index) => {
@@ -48,7 +47,6 @@ const Footer = () => {
 							</a>
 						</Nav>
 					}
-					</Container>
 				</Navbar>
 			}
 		</>

@@ -14,9 +14,9 @@ const Navigation = () => {
 	return (
 		<div>
 			<Navbar className="navigation p-3">
-				<Link to="/">
+				<Link className="logo-link" to="/">
 					<Image className="mr-2" width="60" src={Logo} rounded />
-					Meja
+					<h1 className="logo">Meja</h1>
 				</Link>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
@@ -24,7 +24,7 @@ const Navigation = () => {
 						
 						{
 							currentUser ? (
-								<NavDropdown title={currentUser.displayName} id="basic-nav-dropdown">
+								<NavDropdown className="logo" title={currentUser.displayName} id="basic-nav-dropdown">
 									<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/about`} className="dropdown-item">About</NavLink>
 									<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/projects`} className="dropdown-item">Projects</NavLink>
 									<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/contact`} className="dropdown-item">Contact</NavLink>

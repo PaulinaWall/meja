@@ -41,7 +41,7 @@ const ThemeContextProvider = (props) => {
 			setThemeColor,
 			getTheme
 		}}>
-			<div id={`theme-${theme}`}>
+			<div className="theme-container" id={`theme-${theme}`}>
 				{props.children}
 			</div>
 		</ThemeContext.Provider>

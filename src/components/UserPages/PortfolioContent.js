@@ -8,6 +8,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import Links from '../common/Links';
 import ProjectCard from '../common/ProjectCard';
 import About from '../common/About';
+import ColorExampleCard from '../common/ColorExampleCard';
 
 const PortfolioContent = ({
 	formState,
@@ -50,6 +51,12 @@ const PortfolioContent = ({
 					))
 				}
 			</Row>
+
+			{
+				formState === 'color' &&
+					<ColorExampleCard />
+			}
+
 			{
 				(portfolio?.email && formState === 'contact') && 
 					<Container className="email-container">
@@ -57,6 +64,7 @@ const PortfolioContent = ({
 						<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" onClick={() => handleDelete('email')} />
 					</Container>
 			}
+
 			{
 				formState === 'links' && portfolio?.links.map((link, index) => (
 					<Links 
