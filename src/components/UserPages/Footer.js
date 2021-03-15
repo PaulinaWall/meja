@@ -13,7 +13,7 @@ const Footer = () => {
 	return (
 		<>
 			{
-				<Navbar className="footer" bg="light" variant="light" >	
+				<Navbar className="footer">	
 					<Container>
 					{
 						currentUser

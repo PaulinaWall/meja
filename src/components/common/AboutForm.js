@@ -5,7 +5,6 @@ const AboutForm = ({ title, url, text, handleTextChange, handleUrlChange, handle
 
 	return ( 
 		<Form className="form">
-			<h3 style={{ color: "#495057" }}>Add About Section</h3>
 			<Form.Group id="title">
 				<Form.Control 
 					value={title}

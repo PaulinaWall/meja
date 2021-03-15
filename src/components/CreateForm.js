@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Alert, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
@@ -10,12 +10,13 @@ import ContactForm from './common/ContactForm';
 import { useAuth } from '../contexts/AuthContext';
 import ProjectColorPicker from './UserPages/ProjectColorPicker';
 import PortfolioContent from './UserPages/PortfolioContent';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
 	const [showLinksSaveButton, setShowLinksSaveButton] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState(null);
-	
+	const [formState, setFormState] = useState('');
 	
 	const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 	const [projectTitle, setProjectTitle] = useState('');
@@ -36,6 +37,7 @@ const CreateForm = () => {
 	
 	const [portfolio, setPortfolio] = useState();
 	const { currentUser } = useAuth();
+	const { getTheme } = useContext(ThemeContext);
 	const navigate = useNavigate();
 
 	const getPortfolio = async () => {
@@ -335,68 +337,89 @@ const CreateForm = () => {
 					{error && 
 						(<Alert variant="danger">{error}</Alert>)
 					}
-					<Container className="add-about-text mt-5">
-						<AboutForm 
-							title={aboutTitle}
-							text={aboutText}
-							url={aboutUrl}
-							handleSaveOnClick={(e) => handleSaveOnClick(e)}
-							handleTextChange={(e) => setAboutText(e.target.value)}
-							handleTitleChange={(e) => setAboutTitle(e.target.value)}
-							handleUrlChange={(e) => setAboutUrl(e.target.value)}
-						/>
+					<Container onClick={() => setFormState('about')} className="pointer mt-5">
+						<h2>Add About Text</h2>
+						{
+							formState === 'about' &&
+								<AboutForm 
+									title={aboutTitle}
+									text={aboutText}
+									url={aboutUrl}
+									handleSaveOnClick={(e) => handleSaveOnClick(e)}
+									handleTextChange={(e) => setAboutText(e.target.value)}
+									handleTitleChange={(e) => setAboutTitle(e.target.value)}
+									handleUrlChange={(e) => setAboutUrl(e.target.value)}
+								/>
+						}
 					</Container>
 
-					<Container className="create-project mt-5">
-						<ProjectForm 
-							title={projectTitle}
-							text={projectText}
-							url={projectUrl}
-							image={projectImage}
-							uploadProgress={uploadProgress}
-							uploadedImageUrl={uploadedImageUrl}
-							handleSaveOnClick={(e) => handleSaveOnClick(e)}
-							handleImageChange={handleImageChange}
-							handleTitleChange={(e) => setProjectTitle(e.target.value)}
-							handleTextChange={(e) => setProjectText(e.target.value)}
-							handleUrlChange={(e) => setProjectUrl(e.target.value)}
-						/>
+					<Container onClick={() => setFormState('project')} className="pointer mt-5">
+						<h2>Add Project</h2>
+						{
+							formState === 'project' && 
+								<ProjectForm 
+									title={projectTitle}
+									text={projectText}
+									url={projectUrl}
+									image={projectImage}
+									uploadProgress={uploadProgress}
+									uploadedImageUrl={uploadedImageUrl}
+									handleSaveOnClick={(e) => handleSaveOnClick(e)}
+									handleImageChange={handleImageChange}
+									handleTitleChange={(e) => setProjectTitle(e.target.value)}
+									handleTextChange={(e) => setProjectText(e.target.value)}
+									handleUrlChange={(e) => setProjectUrl(e.target.value)}
+								/>
+						}
 					</Container>
 
-					<Container>
-						<ProjectColorPicker />
+					<Container onClick={() => setFormState('color')} className="pointer mt-5">
+						<h2>Choose Color</h2>
+						{
+							formState === 'color' &&
+								<ProjectColorPicker />
+						}
 					</Container>
 
-					<Container className="add-email mt-5">
-						<ContactForm
-							email={email}
-							handleEmailChange={(e) => setEmail(e.target.value)}
-							handleSaveOnClick={(e) => handleSaveOnClick(e)}
-						/>
+					<Container onClick={() => setFormState('contact')} className="pointer mt-5">
+						<h2>Add Contact</h2>	
+						{
+							formState === 'contact' &&
+								<ContactForm
+									email={email}
+									handleEmailChange={(e) => setEmail(e.target.value)}
+									handleSaveOnClick={(e) => handleSaveOnClick(e)}
+								/>
+						}
 					</Container>
 
-					<Container className="add-links-form mt-5">
-						<LinksForm 
-							showLinksSaveButton={showLinksSaveButton}
-							facebookUrl={facebookUrl}
-							gitHubUrl={gitHubUrl}
-							linkedinUrl={linkedinUrl}
-							handleGithubChange={(e) => {
-								setGithubUrl(e.target.value) 
-								setShowLinksSaveButton(true)}}
-							handleLinkedinChange={(e) => {
-								setLinkedinUrl(e.target.value)
-								setShowLinksSaveButton(true)}}
-							handleFacebookChange={(e) => {
-								setFacebookUrl(e.target.value)
-								setShowLinksSaveButton(true)}}
-							handleSaveOnClick={(e) => handleSaveOnClick(e)}
-						/>
+					<Container onClick={() => setFormState('links')} className="pointer mt-5">
+						<h2>Add Links</h2>
+						{
+							formState === 'links' &&
+								<LinksForm 
+									showLinksSaveButton={showLinksSaveButton}
+									facebookUrl={facebookUrl}
+									gitHubUrl={gitHubUrl}
+									linkedinUrl={linkedinUrl}
+									handleGithubChange={(e) => {
+										setGithubUrl(e.target.value) 
+										setShowLinksSaveButton(true)}}
+									handleLinkedinChange={(e) => {
+										setLinkedinUrl(e.target.value)
+										setShowLinksSaveButton(true)}}
+									handleFacebookChange={(e) => {
+										setFacebookUrl(e.target.value)
+										setShowLinksSaveButton(true)}}
+									handleSaveOnClick={(e) => handleSaveOnClick(e)}
+								/>
+						}
 					</Container>
 				</Container>
 
-				<Container className="portfolio-container">
+				<Container style={getTheme()} className="portfolio-container">
 					<PortfolioContent
+						formState={formState}
 						portfolio={portfolio}
 						handleDelete={handleDelete}
 						handleChangeOnClick={handleChangeOnClick}

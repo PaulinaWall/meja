@@ -7,7 +7,6 @@ const ProjectColorPicker = () => {
 
 	return (
 		<div>
-			<h2>Choose your color theme</h2>
 			<div>
 				<div className="d-flex circle" onClick={() => setThemeColor('blue')}>
 					<div className="blue-theme-1 theme-color-section"></div>

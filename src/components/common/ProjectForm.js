@@ -16,7 +16,6 @@ const ProjectForm = ({
 }) => {
 	return ( 
 		<Form className="form">
-			<h3 style={{ color: "#495057" }}>Add project</h3>
 			<Form.Group id="title">
 				<Form.Control 
 					value={title}

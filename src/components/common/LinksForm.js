@@ -10,7 +10,6 @@ const LinksForm = ({ showLinksSaveButton, facebookUrl, linkedinUrl, gitHubUrl, h
 	const { portfolio } = useGetPortfolio();
 	return ( 
 		<Form className="form">
-			<h3>Add Links</h3>
 			<Form.Group id="github" className="d-flex align-items-center" >
 				<FontAwesomeIcon icon={faGithub} className="mr-2 icons" />
 				<Form.Control 

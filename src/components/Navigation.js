@@ -13,52 +13,50 @@ const Navigation = () => {
 
 	return (
 		<div>
-			<Navbar bg="light" variant="light" >
-				<Container>
-					<Link to="/">
-						<Image className="mr-2" width="60" src={Logo} rounded />
-						Meja
-					</Link>
-					<Navbar.Toggle aria-controls="basic-navbar-nav" />
-					<Navbar.Collapse id="basic-navbar-nav">
-						<Nav className="ml-auto">
-							
-							{
-								currentUser ? (
-									<NavDropdown title={currentUser.displayName} id="basic-nav-dropdown">
-										<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/about`} className="dropdown-item">About</NavLink>
-										<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/projects`} className="dropdown-item">Projects</NavLink>
-										<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/contact`} className="dropdown-item">Contact</NavLink>
-										{
-										currentUser &&
-											<NavLink 
-												className="dropdown-item"
-												onClick={() => setCreateOrPreview(!createOrPreview)}
-												to={createOrPreview
-													? `/${currentUser?.displayName.replace(' ', '')}/create`
-													: `/${currentUser?.displayName.replace(' ', '')}/`
-												}
-											>
-												{
-													createOrPreview
-													? 'Create Portfolio'
-													: 'Preview'
-												}
-											</NavLink>
-										}
-										<NavDropdown.Divider />
-										<NavLink to="/signout" className="dropdown-item">Sign Out</NavLink>
-									</NavDropdown>
-								) : (
-									<>
-										<NavLink to="/signin" className="mr-2 nav-link">Sign In</NavLink>
-										<NavLink to="/signup" className="nav-link">Create Acoount</NavLink>
-									</>
-								)
-							}
-						</Nav>
-					</Navbar.Collapse>
-				</Container>
+			<Navbar className="navigation p-3">
+				<Link to="/">
+					<Image className="mr-2" width="60" src={Logo} rounded />
+					Meja
+				</Link>
+				<Navbar.Toggle aria-controls="basic-navbar-nav" />
+				<Navbar.Collapse id="basic-navbar-nav">
+					<Nav className="ml-auto">
+						
+						{
+							currentUser ? (
+								<NavDropdown title={currentUser.displayName} id="basic-nav-dropdown">
+									<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/about`} className="dropdown-item">About</NavLink>
+									<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/projects`} className="dropdown-item">Projects</NavLink>
+									<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/contact`} className="dropdown-item">Contact</NavLink>
+									{
+									currentUser &&
+										<NavLink 
+											className="dropdown-item"
+											onClick={() => setCreateOrPreview(!createOrPreview)}
+											to={createOrPreview
+												? `/${currentUser?.displayName.replace(' ', '')}/create`
+												: `/${currentUser?.displayName.replace(' ', '')}/`
+											}
+										>
+											{
+												createOrPreview
+												? 'Create Portfolio'
+												: 'Preview'
+											}
+										</NavLink>
+									}
+									<NavDropdown.Divider />
+									<NavLink to="/signout" className="dropdown-item">Sign Out</NavLink>
+								</NavDropdown>
+							) : (
+								<>
+									<NavLink to="/signin" className="mr-2 nav-link">Sign In</NavLink>
+									<NavLink to="/signup" className="nav-link">Create Acoount</NavLink>
+								</>
+							)
+						}
+					</Nav>
+				</Navbar.Collapse>
 			</Navbar>
 		</div>
 	)

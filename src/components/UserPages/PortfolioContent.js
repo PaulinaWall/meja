@@ -10,6 +10,7 @@ import ProjectCard from '../common/ProjectCard';
 import About from '../common/About';
 
 const PortfolioContent = ({
+	formState,
 	portfolio,
 	handleDelete,
 	handleChangeOnClick,
@@ -21,7 +22,7 @@ const PortfolioContent = ({
 		<Container style={getTheme()} className="portfoilo-content mt-5 pt-3">
 
 			{
-				(portfolio && portfolio.about.length > 0) && 
+				(portfolio?.about.length > 0 && formState === 'about') && 
 					<Container className="about-container mb-3 pb-2">
 						<h1  className="pt-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
 						{
@@ -38,7 +39,7 @@ const PortfolioContent = ({
 			}
 			<Row className="project-card-container">
 				{
-					portfolio && portfolio.projects.map((project, index) => (
+					formState === 'project' && portfolio?.projects.map((project, index) => (
 						<Col  className="mb-3" sm={12} md={6} lg={6} key={index}>
 							<ProjectCard 
 								project={project}
@@ -50,14 +51,14 @@ const PortfolioContent = ({
 				}
 			</Row>
 			{
-				(portfolio && portfolio.email) && 
+				(portfolio?.email && formState === 'contact') && 
 					<Container className="email-container">
 						<h3>{portfolio.email}</h3>
 						<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" onClick={() => handleDelete('email')} />
 					</Container>
 			}
 			{
-				portfolio && portfolio.links.map((link, index) => (
+				formState === 'links' && portfolio?.links.map((link, index) => (
 					<Links 
 						key={index} 
 						link={link}

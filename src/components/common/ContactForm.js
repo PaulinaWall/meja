@@ -5,7 +5,6 @@ const ContactForm = ({ email, handleEmailChange, handleSaveOnClick }) => {
 
 	return ( 
 		<Form className="form">
-			<h3 style={{ color: "#495057" }}>Add Email for contact form</h3>
 			<Form.Group id="title">
 				<Form.Control 
 					value={email}
