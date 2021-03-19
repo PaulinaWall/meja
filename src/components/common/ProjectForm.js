@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import ProgressBar from 'react-bootstrap/esm/ProgressBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const ProjectForm = ({ 
 	title,
@@ -12,10 +14,17 @@ const ProjectForm = ({
 	handleSaveOnClick, 
 	handleImageChange,
 	uploadedImageUrl,
-	uploadProgress
+	uploadProgress,
+	setFormState,
 }) => {
 	return ( 
 		<Form className="form">
+			<div className="delete-icon">
+				<FontAwesomeIcon
+					icon={faTimes}
+					onClick={setFormState}
+				/>
+			</div>
 			<Form.Group id="title">
 				<Form.Control 
 					value={title}

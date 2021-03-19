@@ -1,10 +1,18 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const AboutForm = ({ title, url, text, handleTextChange, handleUrlChange, handleTitleChange, handleSaveOnClick }) => {
+const AboutForm = ({ title, url, text, handleTextChange, handleUrlChange, handleTitleChange, handleSaveOnClick, setFormState }) => {
 
 	return ( 
 		<Form className="form">
+			<div className="delete-icon">
+				<FontAwesomeIcon
+					icon={faTimes}
+					onClick={setFormState}
+				/>
+			</div>
 			<Form.Group id="title">
 				<Form.Control 
 					value={title}

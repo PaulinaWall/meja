@@ -46,19 +46,19 @@ image{
 }
 
 .peach-theme-1{
-	background-color: #FCD0BA;
+	background-color: #f8c0c5;
 }
 
 .peach-theme-2{
-	background-color: #F1828D;
+	background-color: #df9da4;
 }
 
 .beige-theme-1{
-	background-color: #FAF6F2;
+	background-color:#f0d8ca;
 }
 
 .beige-theme-2{
-	background-color:#DED1BD;
+	background-color: #dec9bd;
 }
 
 .green-theme-1{
@@ -70,11 +70,11 @@ image{
 }
 
 .purple-theme-1{
-	background-color: #816EA7;
+	background-color: #b8b1c4;
 }
 
 .purple-theme-2{
-	background-color: #B19CD9;
+	background-color: #988faa;
 }
 
 .app{
@@ -102,6 +102,12 @@ image{
 			color: var(--darkGrey);
 			cursor: pointer;
 		}
+}
+
+.delete-icon{
+	margin: 10px;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .logo{
@@ -184,6 +190,17 @@ image{
 	align-items: center;
 }
 
+.create-form-menu{
+	display: flex;
+	align-items: center;
+	color: #295e74;
+	svg{
+		font-size: 2rem;
+		margin-right: 20px;
+		color: #295e74;
+	}
+}
+
 .image-button{
 	&:hover{
 		color: #ced4da;
@@ -248,10 +265,10 @@ image{
 	width: 100px;
 }
 
-.portfolio-container{
-	border-left: 3px solid var(--lightGrey);
-	border-left-style: ridge;
-}
+// .portfolio-container{
+// 	border-left: 3px solid var(--lightGrey);
+// 	border-left-style: ridge;
+// }
 
 .about-container{
 	background-color: white;
@@ -330,22 +347,22 @@ image{
 }
 
 .pink{
-	color: #F1828D;
-	background-color: #fcbeba;
+	color: #df9da4;
+	background-color: #f8c0c5;
 	.card{
-		box-shadow: 5px 5px 10px #f57c88;
-		background-color: #F1828D;
-		color: #f8d9ca;
+		box-shadow: 5px 5px 10px #c2888e;
+		background-color: #df9da4;
+		color: #fcdfe1;
 		.linked-icons{
-			color: #ca404e;
+			color: #9b6b70;
 			&:hover{
-				color: #99303b;
+				color: #7e575b;
 			}
 		}
 		a{
-			color: #ca404e;
+			color: #9b6b70;
 			&:hover{
-				color: #99303b;
+				color: #7e575b;
 			}
 		}
 	}
@@ -418,22 +435,22 @@ image{
 }
 
 .purple{
-	color: #816EA7;
-	background-color: #B19CD9;
+	color: #988faa;
+	background-color: #b8b1c4;
 	.card{
-		box-shadow: 5px 5px 10px #645583;
-		background-color: #816EA7;
-		color: #d0bef1;
+		box-shadow: 5px 5px 10px #7e768d;
+		background-color: #988faa;
+		color: #e0dce6;
 		.linked-icons{
-			color: #473c5e;
+			color: #6b6579;
 			&:hover{
-				color: #2e273d;
+				color: #4a4653;
 			}
 		}
 		a{
-			color: #473c5e;
+			color: #6b6579;
 			&:hover{
-				color: #2e273d;
+				color: #4a4653;
 			}
 		}
 	}

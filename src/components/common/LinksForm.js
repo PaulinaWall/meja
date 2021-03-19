@@ -2,14 +2,21 @@ import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import useGetPortfolio from '../../hooks/useGetPortfolio';
 
-const LinksForm = ({ showLinksSaveButton, facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, handleLinkedinChange, handleFacebookChange, handleSaveOnClick }) => {
+const LinksForm = ({ showLinksSaveButton, facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, handleLinkedinChange, handleFacebookChange, handleSaveOnClick, setFormState }) => {
 
 	const { portfolio } = useGetPortfolio();
 	return ( 
 		<Form className="form">
+			<div className="delete-icon">
+				<FontAwesomeIcon
+					icon={faTimes}
+					onClick={setFormState}
+				/>
+			</div>
 			<Form.Group id="github" className="d-flex align-items-center" >
 				<FontAwesomeIcon icon={faGithub} className="mr-2 icons" />
 				<Form.Control 

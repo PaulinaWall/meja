@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Alert, Button, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAlignJustify, faNetworkWired, faPalette, faAddressCard, faLink } from '@fortawesome/free-solid-svg-icons';
 
 import { db, storage } from '../firebase';
 import AboutForm from './common/AboutForm';
@@ -337,14 +339,20 @@ const CreateForm = () => {
 					{error && 
 						(<Alert variant="danger">{error}</Alert>)
 					}
-					<Container onClick={() => setFormState('about')} className="pointer mt-5">
-						<h2>Add About Text</h2>
+					<Container className="pointer mt-5">
+						<div className="create-form-menu">
+							<FontAwesomeIcon
+								icon={faAlignJustify}
+							/>
+							<h2 onClick={() => setFormState('about')}>Add About Text</h2>
+						</div>
 						{
 							formState === 'about' &&
 								<AboutForm 
 									title={aboutTitle}
 									text={aboutText}
 									url={aboutUrl}
+									setFormState={() => setFormState('')}
 									handleSaveOnClick={(e) => handleSaveOnClick(e)}
 									handleTextChange={(e) => setAboutText(e.target.value)}
 									handleTitleChange={(e) => setAboutTitle(e.target.value)}
@@ -353,8 +361,13 @@ const CreateForm = () => {
 						}
 					</Container>
 
-					<Container onClick={() => setFormState('project')} className="pointer mt-5">
-						<h2>Add Project</h2>
+					<Container className="pointer mt-5">
+						<div className="create-form-menu">
+							<FontAwesomeIcon
+								icon={faNetworkWired}
+							/>
+							<h2 onClick={() => setFormState('project')} >Add Project</h2>
+						</div>
 						{
 							formState === 'project' && 
 								<ProjectForm 
@@ -364,6 +377,7 @@ const CreateForm = () => {
 									image={projectImage}
 									uploadProgress={uploadProgress}
 									uploadedImageUrl={uploadedImageUrl}
+									setFormState={() => setFormState('')}
 									handleSaveOnClick={(e) => handleSaveOnClick(e)}
 									handleImageChange={handleImageChange}
 									handleTitleChange={(e) => setProjectTitle(e.target.value)}
@@ -373,28 +387,46 @@ const CreateForm = () => {
 						}
 					</Container>
 
-					<Container onClick={() => setFormState('color')} className="pointer mt-5">
-						<h2>Choose Color</h2>
+					<Container className="pointer mt-5">
+						<div className="create-form-menu">
+							<FontAwesomeIcon
+								icon={faPalette}
+							/>
+							<h2 onClick={() => setFormState('color')}>Choose Color</h2>
+						</div>
 						{
 							formState === 'color' &&
-								<ProjectColorPicker />
+								<ProjectColorPicker 
+									setFormState={() => setFormState('')}
+								/>
 						}
 					</Container>
 
-					<Container onClick={() => setFormState('contact')} className="pointer mt-5">
-						<h2>Add Contact</h2>	
+					<Container className="pointer mt-5">
+						<div className="create-form-menu">
+							<FontAwesomeIcon
+								icon={faAddressCard}
+							/>
+							<h2 onClick={() => setFormState('contact')}>Add Contact</h2>
+						</div>
 						{
 							formState === 'contact' &&
 								<ContactForm
 									email={email}
+									setFormState={() => setFormState('')}
 									handleEmailChange={(e) => setEmail(e.target.value)}
 									handleSaveOnClick={(e) => handleSaveOnClick(e)}
 								/>
 						}
 					</Container>
 
-					<Container onClick={() => setFormState('links')} className="pointer mt-5">
-						<h2>Add Links</h2>
+					<Container className="pointer mt-5">
+						<div className="create-form-menu">
+							<FontAwesomeIcon
+								icon={faLink}
+							/>
+							<h2 onClick={() => setFormState('links')}>Add Links</h2>
+						</div>
 						{
 							formState === 'links' &&
 								<LinksForm 
@@ -402,6 +434,7 @@ const CreateForm = () => {
 									facebookUrl={facebookUrl}
 									gitHubUrl={gitHubUrl}
 									linkedinUrl={linkedinUrl}
+									setFormState={() => setFormState('')}
 									handleGithubChange={(e) => {
 										setGithubUrl(e.target.value) 
 										setShowLinksSaveButton(true)}}
@@ -417,14 +450,17 @@ const CreateForm = () => {
 					</Container>
 				</Col>
 
-				<Col sm={12} md={6} lg={6} className={"portfolio-container " + (getTheme())}>
-					<PortfolioContent
-						formState={formState}
-						portfolio={portfolio}
-						handleDelete={handleDelete}
-						handleChangeOnClick={handleChangeOnClick}
-					/>
-				</Col>
+				{
+					formState &&
+						<Col sm={12} md={6} lg={6} className={"portfolio-container " + (getTheme())}>
+							<PortfolioContent
+								formState={formState}
+								portfolio={portfolio}
+								handleDelete={handleDelete}
+								handleChangeOnClick={handleChangeOnClick}
+							/>
+						</Col>
+				}
 
 			</Row>
 

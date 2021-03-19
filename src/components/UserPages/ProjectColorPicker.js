@@ -1,12 +1,20 @@
 import React, { useContext } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { ThemeContext } from '../../contexts/ThemeContext';
 
-const ProjectColorPicker = () => {
+const ProjectColorPicker = ({ setFormState }) => {
 	const { setTheme } = useContext(ThemeContext);
 
 	return (
 		<div>
+			<div className="delete-icon">
+				<FontAwesomeIcon
+					icon={faTimes}
+					onClick={setFormState}
+				/>
+			</div>
 			<div>
 				<div className="d-flex circle" onClick={() => setTheme('blue')}>
 					<div className="blue-theme-1 theme-color-section"></div>
