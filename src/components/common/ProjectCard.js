@@ -6,7 +6,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 const ProjectCard = ({ project, handleOnClick, handleDelete }) => {
 
 	return (
-		<Card className="card">
+		<Card className="card p-3">
 			<Card.Img variant="top" src={project.image.url} />
 			<Card.Body className="size-sm p-1.5">
 				<Card.Title>{project.title}</Card.Title>

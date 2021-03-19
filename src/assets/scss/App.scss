@@ -86,6 +86,7 @@ image{
 .create-form{
 	display: flex;
 	justify-content: space-between;
+	margin: 0;
 }
 
 .icons{
@@ -123,6 +124,7 @@ image{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	flex-direction: row;
 	background-color: white;
 	border-radius: 5px 5px;
 	box-shadow: 5px 5px 5px lightgray;
@@ -132,6 +134,7 @@ image{
 .email-container{
 	display: flex;
 	justify-content: space-between;
+	flex-direction: row;
 	background-color: white;
 	border-radius: 5px 5px;
 	box-shadow: 5px 5px 5px lightgray;
@@ -246,7 +249,8 @@ image{
 }
 
 .portfolio-container{
-	border-left: 1px solid var(--darkGrey);
+	border-left: 3px solid var(--lightGrey);
+	border-left-style: ridge;
 }
 
 .about-container{
@@ -322,6 +326,116 @@ image{
 	&:hover{
 		filter: grayscale(0);
 		transform: scale(1.5);
+	}
+}
+
+.pink{
+	color: #F1828D;
+	background-color: #fcbeba;
+	.card{
+		box-shadow: 5px 5px 10px #f57c88;
+		background-color: #F1828D;
+		color: #f8d9ca;
+		.linked-icons{
+			color: #ca404e;
+			&:hover{
+				color: #99303b;
+			}
+		}
+		a{
+			color: #ca404e;
+			&:hover{
+				color: #99303b;
+			}
+		}
+	}
+}
+
+.green{
+	color: #77ACA2;
+	background-color: #9DBEBB;
+	.card{
+		box-shadow: 5px 5px 10px #548f84;
+		background-color: #77ACA2;
+		color: #cbe4e2;
+		.linked-icons{
+			color: #406e66;
+			&:hover{
+				color: #2e4d47;
+			}
+		}
+		a{
+			color: #406e66;
+			&:hover{
+				color: #2e4d47;
+			}
+		}
+	}
+}
+
+.blue{
+	color: #305F72;
+	background-color: #568EA6;
+	.card{
+		box-shadow: 5px 5px 10px #295e74;
+		background-color: #305F72;
+		color: #6eaac4;
+		.linked-icons{
+			color: #13242c;
+			&:hover{
+				color: #060808;
+			}
+		}
+		a{
+			color: #13242c;
+			&:hover{
+				color: #060808;
+			}
+		}
+	}
+}
+
+.beige{
+	color: #dec9bd;
+	background-color: #f0d8ca;
+	.card{
+		box-shadow: 5px 5px 10px #c7ae9f;
+		background-color: #dec9bd;
+		color: #fdfdfc;
+		.linked-icons{
+			color:#9b8c84;
+			&:hover{
+				color: #81746d;
+			}
+		}
+		a{
+			color: #9b8c84;
+			&:hover{
+				color: #81746d;
+			}
+		}
+	}
+}
+
+.purple{
+	color: #816EA7;
+	background-color: #B19CD9;
+	.card{
+		box-shadow: 5px 5px 10px #645583;
+		background-color: #816EA7;
+		color: #d0bef1;
+		.linked-icons{
+			color: #473c5e;
+			&:hover{
+				color: #2e273d;
+			}
+		}
+		a{
+			color: #473c5e;
+			&:hover{
+				color: #2e273d;
+			}
+		}
 	}
 }
 

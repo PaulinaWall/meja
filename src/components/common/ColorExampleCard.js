@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Card } from 'react-bootstrap';
 
+import { ThemeContext } from '../../contexts/ThemeContext';
 import PhotoPlaceholder from '../../assets/images/photo-placeholder.png'
 
 const ColorExampleCard = () => {
+	const { getTheme } = useContext(ThemeContext);
 	return(
-		<Container>
-			<Card className="color-example-card mb-3">
+		<Container className={"" + (getTheme())}>
+			<Card className="color-example-card p-3">
 				<h2>This is an example of what the color theme will look like</h2>
 				<Card.Img className="color-image" variant="top" src={PhotoPlaceholder} />
 				<Card.Body>

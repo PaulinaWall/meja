@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
-import { ThemeContext } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
 import Links from '../common/Links';
 import ProjectCard from '../common/ProjectCard';
@@ -17,14 +16,13 @@ const PortfolioContent = ({
 	handleChangeOnClick,
 }) => {
 	const { currentUser } = useAuth();
-	const { getTheme } = useContext(ThemeContext);
 
 	return (
-		<Container style={getTheme()} className="portfoilo-content mt-5 pt-3">
+		<Container className="portfoilo-content mt-5 mb-5 pt-3">
 
 			{
 				(portfolio?.about.length > 0 && formState === 'about') && 
-					<Container className="about-container mb-3 pb-2">
+					<Container className="about-container card mb-3 p-3">
 						<h1  className="pt-3" style={{ fontSize: "40px" }}>{currentUser.displayName}</h1>
 						{
 							portfolio && portfolio.about.map((section, index) => (
@@ -59,7 +57,7 @@ const PortfolioContent = ({
 
 			{
 				(portfolio?.email && formState === 'contact') && 
-					<Container className="email-container">
+					<Container className="email-container card">
 						<h3>{portfolio.email}</h3>
 						<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" onClick={() => handleDelete('email')} />
 					</Container>

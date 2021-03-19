@@ -6,22 +6,22 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 
 const Links = ({ link, handleOnClick, handleDelete }) => {
-	return ( 
-		<Container className="linked-icons-container">
+	return (  
+		<Container className="linked-icons-container card">
 			<div>
 				{ link.github && 
 					<a target="_blank" rel="noopener noreferrer" href={`http://${link.github}`}>
-						<FontAwesomeIcon icon={faGithub} className="mr-2 linked-icons" />
+						<FontAwesomeIcon icon={faGithub} className="zoom mr-2 linked-icons" />
 					</a>
 				}
 				{ link.linkedin && 
 					<a target="_blank" rel="noopener noreferrer" href={`http://${link.linkedin}`}>
-						<FontAwesomeIcon icon={faLinkedin} className="mr-2 linked-icons" />
+						<FontAwesomeIcon icon={faLinkedin} className="zoom mr-2 linked-icons" />
 					</a>
 				}
 				{ link.facebook && 
 					<a target="_blank" rel="noopener noreferrer" href={`http://${link.facebook}`}>
-						<FontAwesomeIcon icon={faFacebook} className="mr-2 linked-icons" />
+						<FontAwesomeIcon icon={faFacebook} className="zoom mr-2 linked-icons" />
 					</a>
 				}
 			</div>

@@ -8,7 +8,7 @@ const About = ({ section, handleOnClick, handleDelete }) => {
 		<Container className="d-flex justify-content-between align-items-center">
 			<div className="mb-3">
 				{section.title && <h2 style={{ fontSize: "25px" }}>{section.title}</h2>}
-				{section.text && <p >{section.text}</p>}
+				{section.text && <p>{section.text}</p>}
 				{section.aboutUrl && <a href={section.aboutUrl}>{section.aboutUrl}</a>}
 			</div>
 			<div className="d-flex">

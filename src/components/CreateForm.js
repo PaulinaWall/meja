@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, Alert, Button } from 'react-bootstrap';
+import { Container, Alert, Button, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
 import { db, storage } from '../firebase';
@@ -331,9 +331,9 @@ const CreateForm = () => {
 	}
 
 	return ( 
-		<>
-			<div className="create-form">
-				<Container className="form-container">
+		<div className="m-3">
+			<Row className="create-form">
+				<Col sm={12} md={6} lg={6} className="form-container">
 					{error && 
 						(<Alert variant="danger">{error}</Alert>)
 					}
@@ -415,24 +415,24 @@ const CreateForm = () => {
 								/>
 						}
 					</Container>
-				</Container>
+				</Col>
 
-				<Container style={getTheme()} className="portfolio-container">
+				<Col sm={12} md={6} lg={6} className={"portfolio-container " + (getTheme())}>
 					<PortfolioContent
 						formState={formState}
 						portfolio={portfolio}
 						handleDelete={handleDelete}
 						handleChangeOnClick={handleChangeOnClick}
 					/>
-				</Container>
+				</Col>
 
-			</div>
+			</Row>
 
 			<div className="save-portfolio-button-container">
 				<Button className="button save-portfolio-button" onClick={handleShowPortfolioOnClick}>Preview Portfolio</Button>
 				<Button className="button save-portfolio-button">Create Portfolio</Button>
 			</div>
-		</>
+		</div>
 	 );
 }
  
