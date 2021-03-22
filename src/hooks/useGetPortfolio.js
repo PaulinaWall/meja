@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
-import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebase';
+import { useAuth } from '../contexts/AuthContext';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const useGetPortfolio = () => {
 	const [portfolio, setPortfolio] = useState();
+	const { setTheme } = useContext(ThemeContext);
 	const { currentUser } = useAuth();
 
 	useEffect(() => {
@@ -16,6 +18,7 @@ const useGetPortfolio = () => {
 		.get()
 		.then((querySnapshot) => {
 			querySnapshot.forEach((doc) => {
+				setTheme(doc.data().theme)
 				setPortfolio(doc.data());
 			})
 		})

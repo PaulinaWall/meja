@@ -54,6 +54,7 @@ const CreateForm = () => {
 					projects: [],
 					links: [],
 					email: '',
+					theme: '',
 				}
 		
 				db.collection("portfolios").add( newPortfolio )
@@ -65,6 +66,7 @@ const CreateForm = () => {
 						projects: [],
 						links: [],
 						email: '',
+						theme: '',
 					});
 					console.log('started new portfolio');
 				})
@@ -146,6 +148,7 @@ const CreateForm = () => {
 			let about;
 			let data;
 			let links;
+			const theme = getTheme();
 			if(partToSet === 'projects'){
 				data = {
 					title: projectTitle,
@@ -235,6 +238,18 @@ const CreateForm = () => {
 				})
 			}
 
+			if(partToSet === 'theme') {
+				db.collection('portfolios').doc(portfolio.id).set({
+					theme,
+				}, { merge: true })
+				.then(() => {
+					console.log('updated projects with success:', theme)
+				})
+				.catch((e) => {
+					setError(e.message);
+				})
+			}
+
 		}).catch((e) => {
 			setError(e.message);
 		})
@@ -271,6 +286,10 @@ const CreateForm = () => {
 		if( e.target.innerHTML === 'Save Email' ){
 			setEmail('');
 			setPortfolioContent('email');
+		}
+
+		if( e.target.innerHTML === 'Save Theme' ){
+			setPortfolioContent('theme');
 		}
 
 	}
@@ -398,6 +417,7 @@ const CreateForm = () => {
 							formState === 'color' &&
 								<ProjectColorPicker 
 									setFormState={() => setFormState('')}
+									handleSaveOnClick={(e) => handleSaveOnClick(e)}
 								/>
 						}
 					</Container>

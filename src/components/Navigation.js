@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from 'react';
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -25,17 +25,17 @@ const Navigation = () => {
 						{
 							currentUser ? (
 								<NavDropdown className="logo" title={currentUser.displayName} id="basic-nav-dropdown">
-									<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/about`} className="dropdown-item">About</NavLink>
-									<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/projects`} className="dropdown-item">Projects</NavLink>
-									<NavLink to={`/${currentUser?.displayName.replace(' ', '')}/contact`} className="dropdown-item">Contact</NavLink>
+									<NavLink to={`/${currentUser?.displayName?.replace(' ', '')}/about`} className="dropdown-item">About</NavLink>
+									<NavLink to={`/${currentUser?.displayName?.replace(' ', '')}/projects`} className="dropdown-item">Projects</NavLink>
+									<NavLink to={`/${currentUser?.displayName?.replace(' ', '')}/contact`} className="dropdown-item">Contact</NavLink>
 									{
 									currentUser &&
 										<NavLink 
 											className="dropdown-item"
 											onClick={() => setCreateOrPreview(!createOrPreview)}
 											to={createOrPreview
-												? `/${currentUser?.displayName.replace(' ', '')}/create`
-												: `/${currentUser?.displayName.replace(' ', '')}/`
+												? `/${currentUser?.displayName?.replace(' ', '')}/create`
+												: `/${currentUser?.displayName?.replace(' ', '')}/`
 											}
 										>
 											{

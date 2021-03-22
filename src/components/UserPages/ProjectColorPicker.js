@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
+import { Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { ThemeContext } from '../../contexts/ThemeContext';
 
-const ProjectColorPicker = ({ setFormState }) => {
+const ProjectColorPicker = ({ setFormState, handleSaveOnClick }) => {
 	const { setTheme } = useContext(ThemeContext);
 
 	return (
-		<div>
+		<Form className="form">
 			<div className="delete-icon">
 				<FontAwesomeIcon
 					icon={faTimes}
@@ -37,7 +38,10 @@ const ProjectColorPicker = ({ setFormState }) => {
 					<div className="purple-theme-2 theme-color-section"></div>
 				</div>
 			</div>
-		</div>
+			<div className="d-flex justify-content-end">
+				<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">Save Theme</Button>
+			</div>
+		</Form>
 	);
 }
 
