@@ -10,7 +10,7 @@ const SignUp = () => {
 	const passwordConfirmRef = useRef();
 	const [error, setError] = useState(null)
 	const [loading, setLoading] = useState(false)
-	const { signup, setName } = useAuth();
+	const { signup, signin } = useAuth();
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
@@ -24,11 +24,10 @@ const SignUp = () => {
 
 		try {
 			setLoading(true);
-			await signup(emailRef.current.value, passwordRef.current.value).then( async () => {
-				await setName(nameRef.current.value);
+			await signup(emailRef.current.value, passwordRef.current.value).then(() => {
+				signin(emailRef.current.value, passwordRef.current.value);
 			});
-
-			navigate('/signin');
+			navigate(`/${nameRef.current.value}/`);
 		} catch (e) {
 			setError(e.message);
 			setLoading(false);
@@ -48,7 +47,7 @@ const SignUp = () => {
 							<Form onSubmit={handleSubmit}>
 
 								<Form.Group id="email">
-									<Form.Label>Name</Form.Label>
+									<Form.Label>First name</Form.Label>
 									<Form.Control type="text" ref={nameRef} required />
 								</Form.Group>
 

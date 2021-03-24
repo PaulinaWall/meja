@@ -15,7 +15,7 @@ const Footer = () => {
 			{
 				<Navbar className="footer">	
 					{
-						currentUser
+						(currentUser && portfolio?.links.length > 0)
 						? portfolio?.links.map((link, index) => {
 							return <Nav className="ml-auto" key={index}>
 								{ link.github && 

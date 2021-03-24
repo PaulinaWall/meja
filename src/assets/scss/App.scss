@@ -22,9 +22,9 @@ body{
 	height: 100vh;
 }
 
-h1{
-	font-size: 100px;
-}
+// h1{
+// 	font-size: 100px;
+// }
 
 image{
 	height: auto;
@@ -90,7 +90,7 @@ image{
 }
 
 .icons{
-	color: var(--lightGrey);
+	color: var(--darkGrey);
 	font-size: 35px;
 }
 
@@ -235,14 +235,22 @@ image{
 	background-color: var(--lightGrey);
 	padding-bottom: 40px;
 	border-radius: 5px 5px;
-	box-shadow: 30px 40px var(--darkGrey);
-	height: 100%;
+	box-shadow: 30px 40px 10px var(--darkGrey);
+	// height: 100%;
+	height: 200px;
+	@media screen and (max-width: 762px) {
+		&:first-child{
+			margin-top: 50px;
+		}
+		&:last-child{
+			margin-bottom: 50px;
+		}
+	}
 }
 
 .landingPage-row{
-	margin-top: 100px;
+	margin: 0;
 	gap: 90px;
-	height: 200px;
 }
 
 .pointer{
@@ -308,7 +316,7 @@ image{
 }
 
 .user-site-container{
-	height: 100vh;
+	// min-height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

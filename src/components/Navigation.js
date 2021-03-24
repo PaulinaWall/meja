@@ -7,7 +7,6 @@ import { useAuth } from '../contexts/AuthContext';
 import Logo from '../assets/images/Logo.png'
 
 const Navigation = () => {
-
 	const { currentUser } = useAuth();
 	const [createOrPreview, setCreateOrPreview] = useState(false);
 
@@ -25,26 +24,23 @@ const Navigation = () => {
 						{
 							currentUser ? (
 								<NavDropdown className="logo" title={currentUser.displayName} id="basic-nav-dropdown">
-									<NavLink to={`/${currentUser?.displayName?.replace(' ', '')}/about`} className="dropdown-item">About</NavLink>
-									<NavLink to={`/${currentUser?.displayName?.replace(' ', '')}/projects`} className="dropdown-item">Projects</NavLink>
-									<NavLink to={`/${currentUser?.displayName?.replace(' ', '')}/contact`} className="dropdown-item">Contact</NavLink>
-									{
-									currentUser &&
-										<NavLink 
-											className="dropdown-item"
-											onClick={() => setCreateOrPreview(!createOrPreview)}
-											to={createOrPreview
-												? `/${currentUser?.displayName?.replace(' ', '')}/create`
-												: `/${currentUser?.displayName?.replace(' ', '')}/`
-											}
-										>
-											{
-												createOrPreview
-												? 'Create Portfolio'
-												: 'Preview'
-											}
-										</NavLink>
-									}
+									<NavLink to={`/${currentUser.displayName}/about`} className="dropdown-item">About</NavLink>
+									<NavLink to={`/${currentUser.displayName}/projects`} className="dropdown-item">Projects</NavLink>
+									<NavLink to={`/${currentUser.displayName}/contact`} className="dropdown-item">Contact</NavLink>
+									<NavLink 
+										className="dropdown-item"
+										onClick={() => setCreateOrPreview(!createOrPreview)}
+										to={createOrPreview
+											? `/${currentUser.displayName}/create`
+											: `/${currentUser.displayName}/`
+										}
+									>
+										{
+											createOrPreview
+											? 'Create Portfolio'
+											: 'Preview'
+										}
+									</NavLink>
 									<NavDropdown.Divider />
 									<NavLink to="/signout" className="dropdown-item">Sign Out</NavLink>
 								</NavDropdown>
