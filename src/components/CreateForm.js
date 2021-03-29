@@ -295,6 +295,7 @@ const CreateForm = () => {
 	}
 
 	const handleImageChange = (e) => {
+		setUploadedImageUrl(e.target.files[0]);
 		addImageToStorage(e.target.files[0]);
 	};
 

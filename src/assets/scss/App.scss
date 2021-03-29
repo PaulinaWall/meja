@@ -110,6 +110,16 @@ image{
 	justify-content: flex-end;
 }
 
+.dropdown-menu{
+	left: auto;
+	right: 10px;
+}
+
+.dropdown-item.active{
+	background-color: #ced4da;
+	color: rgba(0, 0, 0, 0.7);
+}
+
 .logo{
 	font-size: 1.5rem;
 	margin-left: 10px;
@@ -164,6 +174,11 @@ image{
 		&:hover{
 			background-color: #ced4da;
 			color: rgba(0, 0, 0, 0.7);
+		}
+		&:focus{
+			background-color: #ced4da;
+			color: rgba(0, 0, 0, 0.7);
+			border-color: none;
 		}
 }
 
@@ -236,21 +251,26 @@ image{
 	padding-bottom: 40px;
 	border-radius: 5px 5px;
 	box-shadow: 30px 40px 10px var(--darkGrey);
-	// height: 100%;
+	margin-right: 90px;
 	height: 200px;
+	&:last-child{
+		margin-right: 0px;
+	}
 	@media screen and (max-width: 762px) {
+		margin-right: 0;
+		margin-bottom: 50px;
 		&:first-child{
 			margin-top: 50px;
 		}
 		&:last-child{
-			margin-bottom: 50px;
+			margin-bottom: 100px;
 		}
 	}
 }
 
 .landingPage-row{
 	margin: 0;
-	gap: 90px;
+	justify-content: center;
 }
 
 .pointer{
@@ -282,6 +302,7 @@ image{
 	background-color: white;
 	border-radius: 5px 5px;
 	box-shadow: 5px 5px 5px lightgray;
+	padding: 0 50px;
 }
 
 .save-portfolio-button{
@@ -316,17 +337,40 @@ image{
 }
 
 .user-site-container{
-	// min-height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	height: 100%;
+	padding: 30px;
+}
+
+.user-project-page-container{
+	height: 100%;
+    min-width: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+	padding: 0 50px;
+}
+
+.user-contact-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+	height: 100%;
+	min-width: 100%;
+	padding: 0 50px;
+}
+
+.user-landing-page-container{
+	height: 100%;
+    min-width: 100%;
+    display: inline-grid;
+    align-items: center;
 }
 
 .footer{
 	background-color: var(--lightGrey);
-	// position: fixed;
-	// bottom: 0px;
-	// width: 100%;
 }
 
 .navigation{
@@ -355,8 +399,28 @@ image{
 }
 
 .pink{
-	color: #df9da4;
+	color: #9b6b70;
 	background-color: #f8c0c5;
+	input{
+		background-color: #df9da4;
+		border: 1px solid #c2888e;
+	}
+	::placeholder{
+		color: #9b6b70;
+	}
+	textarea{
+		background-color: #df9da4;
+		border: 1px solid #c2888e;
+	}
+	nav{
+		background-color: #df9da4;
+		.linked-icons{
+			color: #9b6b70;
+			&:hover{
+				color: #7e575b;
+			}
+		}
+	}
 	.card{
 		box-shadow: 5px 5px 10px #c2888e;
 		background-color: #df9da4;
@@ -377,8 +441,25 @@ image{
 }
 
 .green{
-	color: #77ACA2;
+	color: #406e66;
 	background-color: #9DBEBB;
+	input{
+		background-color: #77ACA2;
+		border: 1px solid #77ACA2;
+	}
+	textarea{
+		background-color: #77ACA2;
+		border: 1px solid #77ACA2;
+	}
+	nav{
+		background-color: #77ACA2;
+		.linked-icons{
+			color: #406e66;
+			&:hover{
+				color: #2e4d47;
+			}
+		}
+	}
 	.card{
 		box-shadow: 5px 5px 10px #548f84;
 		background-color: #77ACA2;
@@ -399,8 +480,28 @@ image{
 }
 
 .blue{
-	color: #305F72;
+	color: #13242c;
 	background-color: #568EA6;
+	input{
+		background-color: #305F72;
+		border: 1px solid #305F72;
+	}
+	::placeholder{
+		color: #13242c;
+	}
+	textarea{
+		background-color: #305F72;
+		border: 1px solid #305F72;
+	}
+	nav{
+		background-color: #305F72;
+		.linked-icons{
+			color: #13242c;
+			&:hover{
+				color: #060808;
+			}
+		}
+	}
 	.card{
 		box-shadow: 5px 5px 10px #295e74;
 		background-color: #305F72;
@@ -421,8 +522,28 @@ image{
 }
 
 .beige{
-	color: #dec9bd;
+	color: #9b8c84;
 	background-color: #f0d8ca;
+	input{
+		background-color: #dec9bd;
+		border: 1px solid #c7ae9f;
+	}
+	::placeholder{
+		color: #9b8c84;
+	}
+	textarea{
+		background-color: #dec9bd;
+		border: 1px solid #c7ae9f;
+	}
+	nav{
+		background-color: #dec9bd;
+		.linked-icons{
+			color:#9b8c84;
+			&:hover{
+				color: #81746d;
+			}
+		}
+	}
 	.card{
 		box-shadow: 5px 5px 10px #c7ae9f;
 		background-color: #dec9bd;
@@ -443,8 +564,28 @@ image{
 }
 
 .purple{
-	color: #988faa;
+	color: #6b6579;
 	background-color: #b8b1c4;
+	input{
+		background-color: #988faa;
+		border: 1px solid #988faa;
+	}
+	::placeholder{
+		color: #6b6579;
+	}
+	textarea{
+		background-color: #988faa;
+		border: 1px solid #988faa;
+	}
+	nav{
+		background-color: #988faa;
+		.linked-icons{
+			color: #6b6579;
+			&:hover{
+				color: #4a4653;
+			}
+		}
+	}
 	.card{
 		box-shadow: 5px 5px 10px #7e768d;
 		background-color: #988faa;
@@ -462,6 +603,10 @@ image{
 			}
 		}
 	}
+}
+
+.project-page-row{
+	justify-content: center;
 }
 
 // White (#FCF6F5FF), 

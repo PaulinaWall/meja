@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 
 import useGetPortfolio from '../../hooks/useGetPortfolio';
 import { useAuth } from '../../contexts/AuthContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 const Footer = () => {
 	const { currentUser } = useAuth();
 	const { portfolio } = useGetPortfolio();
+	const { getTheme } = useContext(ThemeContext);
 	
+	const location = window.location.pathname;
+
 	return (
-		<>
+		<div className={location === '/user/' ? " " + (getTheme()) : ""}>
 			{
 				<Navbar className="footer">	
 					{
@@ -49,7 +53,7 @@ const Footer = () => {
 					}
 				</Navbar>
 			}
-		</>
+		</div>
 	)
 }
 

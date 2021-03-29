@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './assets/scss/App.scss';
-// import AuthRoute from './components/AuthRoute';
 import SignIn from './components/SignIn';
 import SignOut from './components/SignOut';
 import SignUp from './components/SignUp';

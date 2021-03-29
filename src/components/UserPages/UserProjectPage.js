@@ -1,19 +1,21 @@
-import React from 'react';
-import { Card, Row, Col, Image } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Card, Row, Col, Image, Container } from 'react-bootstrap';
 
 import useGetPortfolio from '../../hooks/useGetPortfolio';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 
 const UserProjectPage = () => {
 	const { portfolio } = useGetPortfolio();
+	const { getTheme } = useContext(ThemeContext);
 
 	return ( 
-		<div className="user-site-container">
-			<Row>
+		<Container className={"user-project-page-container " + (getTheme())}>
+			<Row className="project-page-row">
 				{
 					(portfolio && portfolio.projects) && portfolio.projects.map((project, index) => {
 						return <Col  className="mb-3" sm={6} md={4} lg={3} key={index}>
-								<Card className="card">
+								<Card className="card p-3">
 									{
 										project.image.url 
 										? (
@@ -37,7 +39,7 @@ const UserProjectPage = () => {
 					})
 				}
 			</Row>
-		</div>
+		</Container>
 	 );
 }
  

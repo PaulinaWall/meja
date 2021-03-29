@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 
+import { ThemeContext } from '../../contexts/ThemeContext';
+
 const UserContactForm = () => {
+	const { getTheme } = useContext(ThemeContext);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -9,7 +12,7 @@ const UserContactForm = () => {
 	}
 
 	return ( 
-		<Container className="user-site-container">
+		<Container className={"user-contact-page " + (getTheme())}>
 			<Form onSubmit={handleSubmit}>
 				<Form.Group controlId="exampleForm.ControlInput1">
 					<Form.Label>Email address</Form.Label>
