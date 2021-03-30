@@ -37,6 +37,14 @@ image{
 	padding-top: 5px;
 }
 
+.white-theme-1{
+	background-color: white;
+}
+
+.white-theme-2{
+	background-color: #495057;
+}
+
 .blue-theme-1{
 	background-color: #568EA6;
 }
@@ -179,6 +187,10 @@ image{
 			background-color: #ced4da;
 			color: rgba(0, 0, 0, 0.7);
 			border-color: none;
+		}
+		&:disabled{
+			background-color: var(--extraLightGrey);
+			color: grey;
 		}
 }
 
@@ -386,6 +398,7 @@ image{
 	transition: transform .5s ease;
 	&:hover{
 		transform: scale(1.5);
+		z-index: 10;
 	}
 }
 
