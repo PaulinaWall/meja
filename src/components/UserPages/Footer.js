@@ -12,10 +12,10 @@ const Footer = () => {
 	const { portfolio } = useGetPortfolio();
 	const { getTheme } = useContext(ThemeContext);
 	
-	const location = window.location.pathname;
-
+	const { location } = window;
+	
 	return (
-		<div className={location === '/user/' ? " " + (getTheme()) : ""}>
+		<div className={location.pathname === '/user/' ? " " + (getTheme()) : ""}>
 			{
 				<Navbar className="footer">	
 					{

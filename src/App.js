@@ -41,15 +41,15 @@ function App() {
 							<SignUp />
 						</Route>
 
+						<AuthRoute path="/create">
+							<CreateForm />
+						</AuthRoute>
+
 						<Route path="/:userName">
 						
 							<Route path="/">
 								<UserLandingPage />
 							</Route>
-
-							<AuthRoute path="/create">
-								<CreateForm />
-							</AuthRoute>
 
 							<Route path="/projects">
 								<UserProjectPage />

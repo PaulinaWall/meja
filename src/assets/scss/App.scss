@@ -421,6 +421,14 @@ image{
 			}
 		}
 	}
+	.box-styles{
+		background-color: #fcdfe1;
+		color: #df9da4;
+		box-shadow: 30px 40px 10px #df9da4;
+		a{
+			color: #df9da4;
+		}
+	}
 	.card{
 		box-shadow: 5px 5px 10px #c2888e;
 		background-color: #df9da4;
@@ -458,6 +466,13 @@ image{
 			&:hover{
 				color: #2e4d47;
 			}
+		}
+	}
+	.box-styles{
+		background-color: #cbe4e2;
+		box-shadow: 30px 40px 10px #77ACA2;
+		a{
+			color: #77ACA2;
 		}
 	}
 	.card{
@@ -502,6 +517,13 @@ image{
 			}
 		}
 	}
+	.box-styles{
+		background-color: #6eaac4;
+		box-shadow: 30px 40px 10px #305F72;
+		a{
+			color:#305F72;
+		}
+	}
 	.card{
 		box-shadow: 5px 5px 10px #295e74;
 		background-color: #305F72;
@@ -544,6 +566,13 @@ image{
 			}
 		}
 	}
+	.box-styles{
+		background-color: #fdfdfc;
+		box-shadow: 30px 40px 10px #dec9bd;
+		a{
+			color:#dec9bd;
+		}
+	}
 	.card{
 		box-shadow: 5px 5px 10px #c7ae9f;
 		background-color: #dec9bd;
@@ -584,6 +613,13 @@ image{
 			&:hover{
 				color: #4a4653;
 			}
+		}
+	}
+	.box-styles{
+		background-color: #e0dce6;
+		box-shadow: 30px 40px 10px #988faa;
+		a{
+			color: #988faa;
 		}
 	}
 	.card{

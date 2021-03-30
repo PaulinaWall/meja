@@ -8,7 +8,7 @@ const SignIn = () => {
 	const passwordRef = useRef();
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(null);
-	const { signin, currentUser } = useAuth();
+	const { signin } = useAuth();
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
@@ -19,7 +19,7 @@ const SignIn = () => {
 		try {
 			setLoading(true)
 			await signin(emailRef.current.value, passwordRef.current.value)
-			navigate(`/${currentUser?.displayName.replace(' ', '')}/create`)
+			navigate('/create')
 		} catch (e) {
 			setError(e.message)
 			setLoading(false)

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import { Link, NavLink } from 'react-router-dom';
@@ -10,16 +10,15 @@ import Logo from '../assets/images/Logo.png'
 
 const Navigation = () => {
 	const { currentUser } = useAuth();
-	const [createOrPreview, setCreateOrPreview] = useState(false);
 	const { getTheme } = useContext(ThemeContext);
 
-	const location = window.location.pathname;
+	const { location } = window;
 	
 	return (
-		<div className={!location === '/user/' ? " " + (getTheme()) : ""}>
+		<div className={location.pathname === '/user/' ? " " + (getTheme()) : ""}>
 			<Navbar className="navigation p-3">
 			{
-				location === '/user/' &&
+				!location === '/user/' &&
 				<Link className="logo-link" to="/">
 					<Image className="mr-2" width="60" src={Logo} rounded />
 					<h1 className="logo">Meja</h1>
@@ -35,20 +34,8 @@ const Navigation = () => {
 									<NavLink to={`/${currentUser.displayName ?? 'user'}/about`} className="dropdown-item">About</NavLink>
 									<NavLink to={`/${currentUser.displayName ?? 'user'}/projects`} className="dropdown-item">Projects</NavLink>
 									<NavLink to={`/${currentUser.displayName ?? 'user'}/contact`} className="dropdown-item">Contact</NavLink>
-									<NavLink 
-										className="dropdown-item"
-										onClick={() => setCreateOrPreview(!createOrPreview)}
-										to={createOrPreview
-											? `/${currentUser.displayName ?? 'user'}/create`
-											: `/${currentUser.displayName ?? 'user'}/`
-										}
-									>
-										{
-											createOrPreview
-											? 'Create Portfolio'
-											: 'Preview'
-										}
-									</NavLink>
+									<NavLink to={'/create'} className="dropdown-item">Create Portfolio</NavLink>
+									<NavLink to={`/${currentUser.displayName ?? 'user'}/`} className="dropdown-item">Preview</NavLink>
 									<NavDropdown.Divider />
 									<NavLink to="/signout" className="dropdown-item">Sign Out</NavLink>
 								</NavDropdown>
