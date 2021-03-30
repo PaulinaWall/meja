@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -48,7 +48,17 @@ const AboutForm = ({ title, url, text, handleTextChange, handleUrlChange, handle
 					onClick={handleSaveOnClick}
 					type="button"
 				>
-				Save Section
+					<OverlayTrigger
+						transition={false}
+						placement="top"
+						overlay={
+							<Tooltip>
+								Fill in atleast one field to add content.
+							</Tooltip>
+						}
+					>
+						<span>Save</span>
+					</OverlayTrigger>
 				</Button>
 			</div>
 		</Form>

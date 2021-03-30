@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ProgressBar from 'react-bootstrap/esm/ProgressBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -84,7 +84,17 @@ const ProjectForm = ({
 					type="button"
 					onClick={handleSaveOnClick}
 				>
-					Save Project
+					<OverlayTrigger
+						transition={false}
+						placement="top"
+						overlay={
+							<Tooltip>
+								Title, and url are required to add content.
+							</Tooltip>
+						}
+					>
+						<span>Save</span>
+					</OverlayTrigger>
 				</Button>
 			</div>
 		</Form>

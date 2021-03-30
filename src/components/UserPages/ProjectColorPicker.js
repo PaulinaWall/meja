@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -43,7 +43,20 @@ const ProjectColorPicker = ({ setFormState, handleSaveOnClick }) => {
 				</div>
 			</div>
 			<div className="d-flex justify-content-end">
-				<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">Save Theme</Button>
+				<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">
+					<OverlayTrigger
+						transition={false}
+						placement="top"
+						overlay={
+							<Tooltip>
+								Choose you theme color. 
+								HEADS UP!! Don´t forget to save!
+							</Tooltip>
+						}
+					>
+						<span>Save</span>
+					</OverlayTrigger>
+				</Button>
 			</div>
 		</Form>
 	);

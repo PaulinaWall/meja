@@ -56,7 +56,7 @@ const PortfolioContent = ({
 			}
 
 			{
-				(portfolio?.email && formState === 'contact') && 
+				(portfolio?.email && formState === 'contact') &&
 					<Container className="email-container card">
 						<h3>{portfolio.email}</h3>
 						<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" onClick={() => handleDelete('email')} />
