@@ -32,11 +32,19 @@ const Navigation = () => {
 							currentUser ? (
 								<NavDropdown className="logo" title={currentUser.displayName ?? 'User'} id="basic-nav-dropdown">
 									<NavLink to={`/${currentUser.displayName ?? 'user'}/about`} className="dropdown-item">About</NavLink>
+
 									<NavLink to={`/${currentUser.displayName ?? 'user'}/projects`} className="dropdown-item">Projects</NavLink>
+
 									<NavLink to={`/${currentUser.displayName ?? 'user'}/contact`} className="dropdown-item">Contact</NavLink>
-									<NavLink to={'/create'} className="dropdown-item">Create Portfolio</NavLink>
+
 									<NavLink to={`/${currentUser.displayName ?? 'user'}/`} className="dropdown-item">Preview</NavLink>
+
 									<NavDropdown.Divider />
+
+									<NavLink to={'/create'} className="dropdown-item">Create Portfolio</NavLink>
+
+									<NavDropdown.Divider />
+
 									<NavLink to="/signout" className="dropdown-item">Sign Out</NavLink>
 								</NavDropdown>
 							) : (
