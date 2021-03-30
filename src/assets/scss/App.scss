@@ -8,6 +8,12 @@
 	--darkGrey: rgb(112, 111, 111);
 }
 
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
 a{
 	color: var(--darkGrey);
 	&:hover{
@@ -18,7 +24,6 @@ a{
 
 body{
 	color: var(--darkGrey);
-	height: 100vh;
 }
 
 image{
@@ -223,6 +228,18 @@ image{
 	}
 }
 
+.form-container{
+	@media screen and (max-width: 762px) {
+		padding: 0px;
+	}
+}
+
+.form-container div{
+	@media screen and (max-width: 762px) {
+		padding: 0px;
+	}
+}
+
 .image-button{
 	&:hover{
 		color: #ced4da;
@@ -237,9 +254,6 @@ image{
 	box-shadow: 5px 5px 5px var(--darkGrey);
 	display: flex;
 	flex-direction: column;
-	margin: 50px;
-	margin-left: auto;
-	margin-right: auto;
 	padding-bottom: 40px;
 }
 
@@ -321,10 +335,13 @@ image{
 }
 
 .theme-container{
-    height: 100vh;
     display: flex;
     flex-direction: column;
 	justify-content: space-between;
+	height: 100vh;
+	@media screen and (max-width: 762px) {
+		height: 100%;
+	}
 }
 
 .user-site-container{
@@ -333,6 +350,7 @@ image{
 	justify-content: space-between;
 	height: 100%;
 	padding: 30px;
+
 }
 
 .user-project-page-container{
@@ -342,6 +360,7 @@ image{
     display: flex;
     align-items: center;
 	padding: 0 50px;
+	padding-top: 20px;
 }
 
 .user-contact-page{
@@ -351,6 +370,9 @@ image{
 	height: 100%;
 	min-width: 100%;
 	padding: 0 50px;
+	@media screen and (max-width: 762px) {
+		padding: 20px;
+	}
 }
 
 .user-landing-page-container{
