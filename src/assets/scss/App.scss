@@ -4,6 +4,7 @@
 :root{
 	--extraLightGrey: #dee3eb;
 	--lightGrey: #ced4da;
+	--mediumGrey: #b8bcc0;
 	--darkGrey: rgb(112, 111, 111);
 }
 
@@ -17,14 +18,8 @@ a{
 
 body{
 	color: var(--darkGrey);
-	// font-family: 'Roboto Condensed', sans-serif;
-	// font-size: 1.5rem;
 	height: 100vh;
 }
-
-// h1{
-// 	font-size: 100px;
-// }
 
 image{
 	height: auto;
@@ -103,7 +98,7 @@ image{
 }
 
 .delete-icons{
-	color: var(--lightGrey);
+	color: var(--mediumGrey);
 	font-size: 30px;
 	margin-right: 0 !important;
 		&:hover{
@@ -248,13 +243,6 @@ image{
 	padding-bottom: 40px;
 }
 
-// .center{
-// 	position: fixed;
-// 	top: 50%;
-// 	left: 50%;
-// 	transform: translate(-50%, -50%);
-// }
-
 .box-styles{
 	display: flex;
 	align-items: center;
@@ -305,11 +293,6 @@ image{
 	width: 100px;
 }
 
-// .portfolio-container{
-// 	border-left: 3px solid var(--lightGrey);
-// 	border-left-style: ridge;
-// }
-
 .about-container{
 	background-color: white;
 	border-radius: 5px 5px;
@@ -324,10 +307,6 @@ image{
 	margin-bottom: 30px;
 	margin-top: 200px;
 }
-
-// .save-portfolio-button-container{
-// 	margin: 0, auto !important;
-// }
 
 .theme-color-list{
 	list-style-type: none;
@@ -415,15 +394,15 @@ image{
 	color: #9b6b70;
 	background-color: #f8c0c5;
 	input{
-		background-color: #df9da4;
-		border: 1px solid #c2888e;
+		background-color: #fcdfe1;
+		border: 1px solid #fcdfe1;
 	}
 	::placeholder{
 		color: #9b6b70;
 	}
 	textarea{
-		background-color: #df9da4;
-		border: 1px solid #c2888e;
+		background-color: #fcdfe1;
+		border: 1px solid #fcdfe1;
 	}
 	nav{
 		background-color: #df9da4;
@@ -444,8 +423,8 @@ image{
 	}
 	.card{
 		box-shadow: 5px 5px 10px #c2888e;
-		background-color: #df9da4;
-		color: #fcdfe1;
+		color: #df9da4;
+		background-color: #fcdfe1;
 		.linked-icons{
 			color: #9b6b70;
 			&:hover{
@@ -465,12 +444,12 @@ image{
 	color: #406e66;
 	background-color: #9DBEBB;
 	input{
-		background-color: #77ACA2;
-		border: 1px solid #77ACA2;
+		background-color: #cbe4e2;
+		border: 1px solid #cbe4e2;
 	}
 	textarea{
-		background-color: #77ACA2;
-		border: 1px solid #77ACA2;
+		background-color: #cbe4e2;
+		border: 1px solid #cbe4e2;
 	}
 	nav{
 		background-color: #77ACA2;
@@ -490,8 +469,8 @@ image{
 	}
 	.card{
 		box-shadow: 5px 5px 10px #548f84;
-		background-color: #77ACA2;
-		color: #cbe4e2;
+		color: #77ACA2;
+		background-color: #cbe4e2;
 		.linked-icons{
 			color: #406e66;
 			&:hover{
@@ -511,15 +490,15 @@ image{
 	color: #13242c;
 	background-color: #568EA6;
 	input{
-		background-color: #305F72;
-		border: 1px solid #305F72;
+		background-color: #6eaac4;
+		border: 1px solid #6eaac4;
 	}
 	::placeholder{
 		color: #13242c;
 	}
 	textarea{
-		background-color: #305F72;
-		border: 1px solid #305F72;
+		background-color: #6eaac4;
+		border: 1px solid #6eaac4;
 	}
 	nav{
 		background-color: #305F72;
@@ -539,8 +518,8 @@ image{
 	}
 	.card{
 		box-shadow: 5px 5px 10px #295e74;
-		background-color: #305F72;
-		color: #6eaac4;
+		color: #305F72;
+		background-color: #6eaac4;
 		.linked-icons{
 			color: #13242c;
 			&:hover{
@@ -560,15 +539,15 @@ image{
 	color: #9b8c84;
 	background-color: #f0d8ca;
 	input{
-		background-color: #dec9bd;
-		border: 1px solid #c7ae9f;
+		background-color: #fdfdfc;
+		border: 1px solid #fdfdfc;
 	}
 	::placeholder{
 		color: #9b8c84;
 	}
 	textarea{
-		background-color: #dec9bd;
-		border: 1px solid #c7ae9f;
+		background-color: #fdfdfc;
+		border: 1px solid #fdfdfc;
 	}
 	nav{
 		background-color: #dec9bd;
@@ -588,8 +567,8 @@ image{
 	}
 	.card{
 		box-shadow: 5px 5px 10px #c7ae9f;
-		background-color: #dec9bd;
-		color: #fdfdfc;
+		color: #dec9bd;
+		background-color: #fdfdfc;
 		.linked-icons{
 			color:#9b8c84;
 			&:hover{
@@ -609,15 +588,15 @@ image{
 	color: #6b6579;
 	background-color: #b8b1c4;
 	input{
-		background-color: #988faa;
-		border: 1px solid #988faa;
+		background-color: #e0dce6;
+		border: 1px solid #e0dce6;
 	}
 	::placeholder{
 		color: #6b6579;
 	}
 	textarea{
-		background-color: #988faa;
-		border: 1px solid #988faa;
+		background-color: #e0dce6;
+		border: 1px solid #e0dce6;
 	}
 	nav{
 		background-color: #988faa;
@@ -637,8 +616,8 @@ image{
 	}
 	.card{
 		box-shadow: 5px 5px 10px #7e768d;
-		background-color: #988faa;
-		color: #e0dce6;
+		color: #988faa;
+		background-color: #e0dce6;
 		.linked-icons{
 			color: #6b6579;
 			&:hover{
@@ -657,8 +636,3 @@ image{
 .project-page-row{
 	justify-content: center;
 }
-
-// White (#FCF6F5FF), 
-// Vanilla Custard (#F0E1B9FF), 
-// Goldfinch (#F3DB74FF) 
-// Scarlet Sage (#A13941FF)
