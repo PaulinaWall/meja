@@ -1,25 +1,24 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 
 import useGetPortfolio from '../../hooks/useGetPortfolio';
-import { useAuth } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
 
 const Footer = () => {
-	const { currentUser } = useAuth();
 	const { portfolio } = useGetPortfolio();
 	const { getTheme } = useContext(ThemeContext);
-	
-	const { location } = window;
-	
+	const location = useLocation();
+
+	const userPage = location.pathname.includes('/user')
 	return (
-		<div className={location.pathname === '/user/' ? " " + (getTheme()) : ""}>
+		<div className={userPage ? " " + (getTheme()) : ""}>
 			{
 				<Navbar className="footer">	
 					{
-						(currentUser && portfolio?.links.length > 0)
+						(userPage && portfolio?.links.length > 0)
 						? portfolio?.links.map((link, index) => {
 							return <Nav className="ml-auto" key={index}>
 								{ link.github && 

@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import { useAuth } from '../contexts/AuthContext';
 import { ThemeContext } from '../contexts/ThemeContext';
@@ -11,14 +11,15 @@ import Logo from '../assets/images/Logo.png'
 const Navigation = () => {
 	const { currentUser } = useAuth();
 	const { getTheme } = useContext(ThemeContext);
+	const location = useLocation();
 
-	const { location } = window;
+	const userPage = location.pathname.includes('/user');
 	
 	return (
-		<div className={location.pathname === '/user/' ? " " + (getTheme()) : ""}>
+		<div className={userPage ? " " + (getTheme()) : ""}>
 			<Navbar className="navigation p-3">
 			{
-				!location === '/user/' &&
+				!userPage &&
 				<Link className="logo-link" to="/">
 					<Image className="mr-2" width="60" src={Logo} rounded />
 					<h1 className="logo">Meja</h1>
