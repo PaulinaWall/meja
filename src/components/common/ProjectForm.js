@@ -17,6 +17,7 @@ const ProjectForm = ({
 	uploadProgress,
 	setFormState,
 }) => {
+
 	return ( 
 		<Form className="form">
 			<div className="delete-icon">
@@ -76,7 +77,13 @@ const ProjectForm = ({
 				)}
 			</Form.Group>
 			<div className="d-flex justify-content-end">
-				<Button className="button" size="sm" type="button" onClick={handleSaveOnClick} >
+				<Button
+					disabled={!url || !title}
+					className="button"
+					size="sm"
+					type="button"
+					onClick={handleSaveOnClick}
+				>
 					Save Project
 				</Button>
 			</div>

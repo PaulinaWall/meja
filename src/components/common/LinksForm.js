@@ -4,11 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import useGetPortfolio from '../../hooks/useGetPortfolio';
+const LinksForm = ({ facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, handleLinkedinChange, handleFacebookChange, handleSaveOnClick, setFormState }) => {
 
-const LinksForm = ({ showLinksSaveButton, facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, handleLinkedinChange, handleFacebookChange, handleSaveOnClick, setFormState }) => {
-
-	const { portfolio } = useGetPortfolio();
 	return ( 
 		<Form className="form">
 			<div className="delete-icon">
@@ -47,10 +44,9 @@ const LinksForm = ({ showLinksSaveButton, facebookUrl, linkedinUrl, gitHubUrl, h
 				/>
 			</Form.Group>
 			{
-				(!portfolio?.links.length > 0 || showLinksSaveButton) &&
-					<div className="d-flex justify-content-end">
-						<Button className="button" size="sm" onClick={handleSaveOnClick} type="button">Save Links</Button>
-					</div>
+				<div className="d-flex justify-content-end">
+					<Button disabled={!gitHubUrl && !linkedinUrl && !facebookUrl} className="button" size="sm" onClick={handleSaveOnClick} type="button">Save Links</Button>
+				</div>
 			}
 			
 		</Form>

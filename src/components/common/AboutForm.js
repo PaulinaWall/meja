@@ -41,7 +41,15 @@ const AboutForm = ({ title, url, text, handleTextChange, handleUrlChange, handle
 				/>
 			</Form.Group>
 			<div className="d-flex justify-content-end">
-				<Button className="button" size="sm" onClick={handleSaveOnClick} type="button">Save Section</Button>
+				<Button
+					disabled={!title && !url && !text}
+					className="button"
+					size="sm"
+					onClick={handleSaveOnClick}
+					type="button"
+				>
+				Save Section
+				</Button>
 			</div>
 		</Form>
 	 );

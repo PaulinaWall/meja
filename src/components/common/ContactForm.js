@@ -22,7 +22,7 @@ const ContactForm = ({ email, handleEmailChange, handleSaveOnClick, setFormState
 				/>
 			</Form.Group>
 			<div className="d-flex justify-content-end">
-				<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">Save Email</Button>
+				<Button disabled={!email} className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">Save Email</Button>
 			</div>
 		</Form>
 	 );
