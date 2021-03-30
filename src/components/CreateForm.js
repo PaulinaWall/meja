@@ -16,7 +16,6 @@ import { ThemeContext } from '../contexts/ThemeContext';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
-	const [showLinksSaveButton, setShowLinksSaveButton] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState(null);
 	const [formState, setFormState] = useState('');
 	
@@ -255,8 +254,8 @@ const CreateForm = () => {
 		})
 	}
 
-	const handleSaveOnClick = (e) => {
-		if (e.target.innerHTML === 'Save Project') {
+	const handleSaveOnClick = () => {
+		if (formState === 'project') {
 			if(projectText.length > 50) {
 				return;
 			}
@@ -268,27 +267,26 @@ const CreateForm = () => {
 			setPortfolioContent('projects');
 		}
 
-		if( e.target.innerHTML === 'Save Section') {
+		if( formState === 'about') {
 			setAboutTitle('');
 			setAboutText('');
 			setAboutUrl('');
 			setPortfolioContent('about');
 		}
 
-		if( e.target.innerHTML === 'Save Links') {
+		if( formState === 'links') {
 			setGithubUrl('');
 			setFacebookUrl('');
 			setLinkedinUrl('');
-			setShowLinksSaveButton(false);
 			setPortfolioContent('links');
 		}
 
-		if( e.target.innerHTML === 'Save Email' ){
+		if( formState === 'contact' ){
 			setEmail('');
 			setPortfolioContent('email');
 		}
 
-		if( e.target.innerHTML === 'Save Theme' ){
+		if( formState === 'color' ){
 			setPortfolioContent('theme');
 		}
 
@@ -303,7 +301,7 @@ const CreateForm = () => {
 		if(part === 'project') {
 			setProjectTitle(object.title);
 			setUploadedImageUrl(object.image.url);
-			setProjectImage(object.image.url);
+			setProjectImage(object.image);
 			setProjectUrl(object.projectUrl);
 			setProjectText(object.text);
 			setCurrentProjectIndex(index);
@@ -373,7 +371,7 @@ const CreateForm = () => {
 									text={aboutText}
 									url={aboutUrl}
 									setFormState={() => setFormState('')}
-									handleSaveOnClick={(e) => handleSaveOnClick(e)}
+									handleSaveOnClick={handleSaveOnClick}
 									handleTextChange={(e) => setAboutText(e.target.value)}
 									handleTitleChange={(e) => setAboutTitle(e.target.value)}
 									handleUrlChange={(e) => setAboutUrl(e.target.value)}
@@ -398,7 +396,7 @@ const CreateForm = () => {
 									uploadProgress={uploadProgress}
 									uploadedImageUrl={uploadedImageUrl}
 									setFormState={() => setFormState('')}
-									handleSaveOnClick={(e) => handleSaveOnClick(e)}
+									handleSaveOnClick={handleSaveOnClick}
 									handleImageChange={handleImageChange}
 									handleTitleChange={(e) => setProjectTitle(e.target.value)}
 									handleTextChange={(e) => setProjectText(e.target.value)}
@@ -418,7 +416,7 @@ const CreateForm = () => {
 							formState === 'color' &&
 								<ProjectColorPicker 
 									setFormState={() => setFormState('')}
-									handleSaveOnClick={(e) => handleSaveOnClick(e)}
+									handleSaveOnClick={handleSaveOnClick}
 								/>
 						}
 					</Container>
@@ -436,7 +434,7 @@ const CreateForm = () => {
 									email={email}
 									setFormState={() => setFormState('')}
 									handleEmailChange={(e) => setEmail(e.target.value)}
-									handleSaveOnClick={(e) => handleSaveOnClick(e)}
+									handleSaveOnClick={handleSaveOnClick}
 								/>
 						}
 					</Container>
@@ -451,21 +449,14 @@ const CreateForm = () => {
 						{
 							formState === 'links' &&
 								<LinksForm 
-									showLinksSaveButton={showLinksSaveButton}
 									facebookUrl={facebookUrl}
 									gitHubUrl={gitHubUrl}
 									linkedinUrl={linkedinUrl}
 									setFormState={() => setFormState('')}
-									handleGithubChange={(e) => {
-										setGithubUrl(e.target.value) 
-										setShowLinksSaveButton(true)}}
-									handleLinkedinChange={(e) => {
-										setLinkedinUrl(e.target.value)
-										setShowLinksSaveButton(true)}}
-									handleFacebookChange={(e) => {
-										setFacebookUrl(e.target.value)
-										setShowLinksSaveButton(true)}}
-									handleSaveOnClick={(e) => handleSaveOnClick(e)}
+									handleGithubChange={(e) => setGithubUrl(e.target.value)}
+									handleLinkedinChange={(e) => setLinkedinUrl(e.target.value)}
+									handleFacebookChange={(e) => setFacebookUrl(e.target.value)}
+									handleSaveOnClick={handleSaveOnClick}
 								/>
 						}
 					</Container>
