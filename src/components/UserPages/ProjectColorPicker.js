@@ -37,6 +37,10 @@ const ProjectColorPicker = ({ setFormState, handleSaveOnClick }) => {
 					<div className="purple-theme-1 theme-color-section"></div>
 					<div className="purple-theme-2 theme-color-section"></div>
 				</div>
+				<div className="d-flex" onClick={() => setTheme('')}>
+					<div className="white-theme-1 theme-color-section"></div>
+					<div className="white-theme-2 theme-color-section"></div>
+				</div>
 			</div>
 			<div className="d-flex justify-content-end">
 				<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">Save Theme</Button>
