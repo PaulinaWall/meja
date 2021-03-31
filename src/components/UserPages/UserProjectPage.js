@@ -14,7 +14,7 @@ const UserProjectPage = () => {
 			<Row className="project-page-row">
 				{
 					(portfolio && portfolio.projects) && portfolio.projects.map((project, index) => {
-						return <Col  className="mb-3" sm={6} md={4} lg={3} key={index}>
+						return <Col className="mb-3" sm={6} md={4} lg={3} key={index}>
 								<Card className="zoom card p-3">
 									{
 										project.image.url 

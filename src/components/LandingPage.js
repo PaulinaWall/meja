@@ -1,12 +1,60 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons';
+
+import projectView from '../assets/images/projectView.png';
+import formView from '../assets/images/formView.png';
 
 const LandingPage = () => {
 	return ( 
-		<Container className="landingPage">
-			<h1 className="mt-5">MEJA</h1>
-			<p className="mt-5">Makes it easy to create a cool portfolio in a few steps. <a href="value">SAMPLE</a></p>
-		</Container>
+		<div className="landing-page">
+			<Row className="landing-page-bottom">
+				<Col className="landing-page-quote" sm={12} md={12} lg={12}>
+				<span className="quote-text">
+					<FontAwesomeIcon className="left-quote" icon={faQuoteLeft}/>
+					Always have a priview of your ongoing work!
+					<FontAwesomeIcon className="right-quote" icon={faQuoteRight}/>
+				</span>
+				</Col>
+			</Row>
+			<Row className="landing-page-bottom">
+				<Col className="p-0" sm={12} md={6} lg={6}>
+					<img className="landing-page-image" src={projectView} alt="project example" />
+				</Col>
+				<Col className="landing-page-list-top" sm={12} md={6} lg={6}>
+					<ul>
+						<li>Add you projects with links and images</li>
+						<li>Create about section, add text and links</li>
+						<li>Choose among different colors for your personal taste</li>
+						<li>Add your email for all the contacts you will get.</li>
+						<li>Link to social media with cool icons</li>
+					</ul>
+				</Col>
+			</Row>
+			<Row className="landing-page-bottom">
+				<Col className="landing-page-quote" sm={12} md={12} lg={12}>
+				<span className="quote-text">
+					<FontAwesomeIcon className="left-quote" icon={faQuoteLeft}/>
+					Any questions don´t hesitate to contact. Infomation below.
+					<FontAwesomeIcon className="right-quote" icon={faQuoteRight}/>
+				</span>
+				</Col>
+			</Row>
+			<Row className="landing-page-bottom">
+				<Col className="landing-page-images-container" sm={12} md={6} lg={6}>
+					<img className="landing-page-image" src={formView} alt="form example" />
+				</Col>
+				<Col className="landing-page-list-bottom" sm={12} md={6} lg={6}>
+					<ul>
+						<li>Navigate easily around you project.</li>
+						<li>You get a priview straight away.</li>
+						<li>Save and collect your personal url.</li>
+						<li>Sign in and change content anytime.</li>
+					</ul>
+				</Col>
+			</Row>
+		</div>
 	 );
 }
  

@@ -247,14 +247,56 @@ image{
 	}
 }
 
-.landingPage{
-	align-items: center;
-	background-color: var(--lightGrey);
-	border-radius: 5px 5px;
-	box-shadow: 5px 5px 5px var(--darkGrey);
+.landing-page{
+	color: #295e74;
+}
+
+.landing-page-bottom{
 	display: flex;
-	flex-direction: column;
-	padding-bottom: 40px;
+}
+
+.landing-page-top{
+	margin-bottom: 100px;
+    margin-left: 30px;
+}
+
+.landing-page-image{
+	width: 100%;
+}
+
+.landing-page-images{
+	width: 50%;
+}
+
+.landing-page-images-container{
+	display: flex;
+    align-items: center;
+}
+
+.landing-page-list-top{
+	display: flex;
+    align-items: center;
+	justify-content: center;
+	padding: 40px;
+    font-size: 20px;
+	background-color: #6eaac4;
+}
+
+.landing-page-list-bottom{
+	display: flex;
+    align-items: center;
+	justify-content: center;
+	padding: 40px;
+    font-size: 20px;
+	background-color: var(--extraLightGrey);
+}
+
+.landing-page-quote{
+	height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	background-color: whitesmoke;
 }
 
 .box-styles{
@@ -359,6 +401,7 @@ image{
     margin: 0;
     display: flex;
     align-items: center;
+	justify-content: center;
 	padding: 0 50px;
 	padding-top: 20px;
 }
@@ -383,11 +426,11 @@ image{
 }
 
 .footer{
-	background-color: var(--lightGrey);
+	background-color: #83aabb;
 }
 
 .navigation{
-	background-color: var(--lightGrey);
+	background-color: #83aabb;
 }
 
 .zoomCointainer{

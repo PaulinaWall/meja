@@ -22,7 +22,6 @@ const Navigation = () => {
 				!userPage &&
 				<Link className="logo-link" to="/">
 					<Image className="mr-2" width="60" src={Logo} rounded />
-					<h1 className="logo">Meja</h1>
 				</Link>
 			}
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
