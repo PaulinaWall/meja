@@ -658,3 +658,25 @@ image{
 .project-page-row{
 	justify-content: center;
 }
+
+.quotes-column{
+	display: flex;
+	align-items: center;
+	@media screen and (max-width: 762px) {
+		display: none;
+	}
+}
+
+.right-quote{
+	margin-left: 10px;
+}
+
+.left-quote{
+	margin-right: 10px;
+}
+
+.quote-text{
+	padding: 0 3rem;
+	font-size: 40px;
+	color: #295e74;
+}

@@ -13,6 +13,7 @@ import { useAuth } from '../contexts/AuthContext';
 import ProjectColorPicker from './UserPages/ProjectColorPicker';
 import PortfolioContent from './UserPages/PortfolioContent';
 import { ThemeContext } from '../contexts/ThemeContext';
+import QuotesComponent from './QuotesComponent';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
@@ -461,19 +462,19 @@ const CreateForm = () => {
 						}
 					</Container>
 				</Col>
-
 				{
-					formState &&
-						<Col sm={12} md={6} lg={6} className={"portfolio-container " + (getTheme())}>
-							<PortfolioContent
-								formState={formState}
-								portfolio={portfolio}
-								handleDelete={handleDelete}
-								handleChangeOnClick={handleChangeOnClick}
-							/>
-						</Col>
+					formState === ''
+					? <Col sm={12} md={6} lg={6} className="quotes-column"><QuotesComponent /></Col>
+					: <Col sm={12} md={6} lg={6} className={"portfolio-container " + (getTheme())}>
+						<PortfolioContent
+							className={" " }
+							formState={formState}
+							portfolio={portfolio}
+							handleDelete={handleDelete}
+							handleChangeOnClick={handleChangeOnClick}
+						/>
+					</Col>
 				}
-
 			</Row>
 
 			<div className="save-portfolio-button-container">
