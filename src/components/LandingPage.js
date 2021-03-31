@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons';
 
 import projectView from '../assets/images/projectView.png';
-import formView from '../assets/images/formView.png';
+import formViewSample from '../assets/images/formViewSample.png';
 
 const LandingPage = () => {
 	return ( 
 		<div className="landing-page">
-			<Row className="landing-page-bottom">
+			<Row className="m-0 landing-page-bottom">
 				<Col className="landing-page-quote" sm={12} md={12} lg={12}>
 				<span className="quote-text">
 					<FontAwesomeIcon className="left-quote" icon={faQuoteLeft}/>
@@ -18,7 +18,7 @@ const LandingPage = () => {
 				</span>
 				</Col>
 			</Row>
-			<Row className="landing-page-bottom">
+			<Row className="m-0 landing-page-bottom">
 				<Col className="p-0" sm={12} md={6} lg={6}>
 					<img className="landing-page-image" src={projectView} alt="project example" />
 				</Col>
@@ -32,7 +32,7 @@ const LandingPage = () => {
 					</ul>
 				</Col>
 			</Row>
-			<Row className="landing-page-bottom">
+			<Row className="m-0 landing-page-bottom">
 				<Col className="landing-page-quote" sm={12} md={12} lg={12}>
 				<span className="quote-text">
 					<FontAwesomeIcon className="left-quote" icon={faQuoteLeft}/>
@@ -41,9 +41,9 @@ const LandingPage = () => {
 				</span>
 				</Col>
 			</Row>
-			<Row className="landing-page-bottom">
-				<Col className="landing-page-images-container" sm={12} md={6} lg={6}>
-					<img className="landing-page-image" src={formView} alt="form example" />
+			<Row className="m-0 landing-page-bottom">
+				<Col className="p-0 landing-page-images-container" sm={12} md={6} lg={6}>
+					<img className="landing-page-image" src={formViewSample} alt="form example" />
 				</Col>
 				<Col className="landing-page-list-bottom" sm={12} md={6} lg={6}>
 					<ul>
