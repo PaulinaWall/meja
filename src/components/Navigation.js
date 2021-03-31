@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useContext } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import Image from 'react-bootstrap/Image';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSuitcase } from '@fortawesome/free-solid-svg-icons'
 
 import { useAuth } from '../contexts/AuthContext';
 import { ThemeContext } from '../contexts/ThemeContext';
-import Logo from '../assets/images/Logo.png'
 
 const Navigation = () => {
 	const { currentUser } = useAuth();
@@ -21,7 +21,7 @@ const Navigation = () => {
 			{
 				!userPage &&
 				<Link className="logo-link" to="/">
-					<Image className="mr-2" width="60" src={Logo} rounded />
+					<FontAwesomeIcon icon={faSuitcase} className="mr-2 nav-icons" />
 				</Link>
 			}
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -17,57 +17,60 @@ import AuthRoute from './components/AuthRoute';
 import Footer from './components/UserPages/Footer';
 import AuthContextProvider from './contexts/AuthContext';
 import ThemeContextProvider from './contexts/ThemeContext';
+import BackgroundContextProvider from './contexts/BackgroundContext';
 
 function App() {
   return (
 	<Router>
 		<AuthContextProvider>
-			<ThemeContextProvider>
-				<Navigation />
-					<Routes>
-						<Route path="/">
-							<LandingPage />
-						</Route>
-
-						<Route path="/signin">
-							<SignIn />
-						</Route>
-
-						<Route path="/signout">
-							<SignOut />
-						</Route>
-
-						<Route path="/signup">
-							<SignUp />
-						</Route>
-
-						<AuthRoute path="/create">
-							<CreateForm />
-						</AuthRoute>
-
-						<Route path="/:userName">
-						
+			<BackgroundContextProvider>
+				<ThemeContextProvider>
+					<Navigation />
+						<Routes>
 							<Route path="/">
-								<UserLandingPage />
+								<LandingPage />
 							</Route>
 
-							<Route path="/projects">
-								<UserProjectPage />
+							<Route path="/signin">
+								<SignIn />
 							</Route>
 
-							<Route path="/about">
-								<UserAboutPage />
+							<Route path="/signout">
+								<SignOut />
 							</Route>
 
-							<Route path="/contact">
-								<UserContactForm />
+							<Route path="/signup">
+								<SignUp />
 							</Route>
 
-							<Route path="*" element={<NotFound />} />
-						</Route>
-					</Routes>
-				<Footer />
-			</ThemeContextProvider>
+							<AuthRoute path="/create">
+								<CreateForm />
+							</AuthRoute>
+
+							<Route path="/:userName">
+							
+								<Route path="/">
+									<UserLandingPage />
+								</Route>
+
+								<Route path="/projects">
+									<UserProjectPage />
+								</Route>
+
+								<Route path="/about">
+									<UserAboutPage />
+								</Route>
+
+								<Route path="/contact">
+									<UserContactForm />
+								</Route>
+
+								<Route path="*" element={<NotFound />} />
+							</Route>
+						</Routes>
+					<Footer />
+				</ThemeContextProvider>
+			</BackgroundContextProvider>
 		</AuthContextProvider>
 	</Router>
   );

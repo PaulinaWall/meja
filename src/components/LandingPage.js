@@ -13,7 +13,7 @@ const LandingPage = () => {
 				<Col className="landing-page-quote" sm={12} md={12} lg={12}>
 				<span className="quote-text">
 					<FontAwesomeIcon className="left-quote" icon={faQuoteLeft}/>
-					Always have a priview of your ongoing work!
+					Always see a preview of your ongoing work!
 					<FontAwesomeIcon className="right-quote" icon={faQuoteRight}/>
 				</span>
 				</Col>
@@ -41,11 +41,7 @@ const LandingPage = () => {
 				</span>
 				</Col>
 			</Row>
-			<Row className="m-0 landing-page-bottom">
-				<Col className="p-0 landing-page-images-container" sm={12} md={6} lg={6}>
-					<img className="landing-page-image" src={formViewSample} alt="form example" />
-				</Col>
-				<Col className="landing-page-list-bottom" sm={12} md={6} lg={6}>
+			<Row className="m-0 landing-page-bottom"><Col className="landing-page-list-bottom" sm={12} md={6} lg={6}>
 					<ul>
 						<li>Navigate easily around you project.</li>
 						<li>You get a priview straight away.</li>
@@ -53,6 +49,10 @@ const LandingPage = () => {
 						<li>Sign in and change content anytime.</li>
 					</ul>
 				</Col>
+				<Col className="p-0 landing-page-images-container" sm={12} md={6} lg={6}>
+					<img className="landing-page-image" src={formViewSample} alt="form example" />
+				</Col>
+				
 			</Row>
 		</div>
 	 );

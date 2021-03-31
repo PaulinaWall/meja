@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Container, Alert, Button, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAlignJustify, faNetworkWired, faPalette, faAddressCard, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faAlignJustify, faNetworkWired, faPalette, faAddressCard, faLink, faImage } from '@fortawesome/free-solid-svg-icons';
 
 import { db, storage } from '../firebase';
 import AboutForm from './common/AboutForm';
@@ -14,6 +14,7 @@ import ProjectColorPicker from './UserPages/ProjectColorPicker';
 import PortfolioContent from './UserPages/PortfolioContent';
 import { ThemeContext } from '../contexts/ThemeContext';
 import QuotesComponent from './QuotesComponent';
+import BackgroundImageForm from './common/BackgroundImageForm';
 
 const CreateForm = () => {
 	const [error, setError] = useState(false)
@@ -461,11 +462,27 @@ const CreateForm = () => {
 								/>
 						}
 					</Container>
+
+					<Container className="pointer mt-5">
+						<div className="create-form-menu">
+							<FontAwesomeIcon
+								icon={faImage}
+							/>
+							<h2 onClick={() => setFormState('background')}>Add landing page background</h2>
+						</div>
+						{
+							formState === 'background' &&
+								<BackgroundImageForm 
+									setFormState={() => setFormState('')}
+									handleSaveOnClick={handleSaveOnClick}
+								/>
+						}
+					</Container>
 				</Col>
 				{
 					formState === ''
 					? <Col sm={12} md={6} lg={6} className="quotes-column"><QuotesComponent /></Col>
-					: <Col sm={12} md={6} lg={6} className={"portfolio-container " + (getTheme())}>
+					: <Col sm={12} md={6} lg={6} className={"portfolio-container p-0 " + (getTheme())}>
 						<PortfolioContent
 							className={" " }
 							formState={formState}

@@ -40,13 +40,13 @@ const Footer = () => {
 						})
 						: <Nav className="ml-auto">
 							<a target="_blank" rel="noopener noreferrer" href="http://www.github.com">
-								<FontAwesomeIcon icon={faGithub} className="zoom mr-2 linked-icons" />
+								<FontAwesomeIcon icon={faGithub} className="zoom mr-2 nav-icons" />
 							</a>
 							<a target="_blank" rel="noopener noreferrer" href="http://www.linkedin.com">
-								<FontAwesomeIcon icon={faLinkedin} className="zoom mr-2 linked-icons" />
+								<FontAwesomeIcon icon={faLinkedin} className="zoom mr-2 nav-icons" />
 							</a>
 							<a target="_blank" rel="noopener noreferrer" href="http://www.facebook.com">
-								<FontAwesomeIcon icon={faFacebook} className="zoom mr-2 linked-icons" />
+								<FontAwesomeIcon icon={faFacebook} className="zoom mr-2 nav-icons" />
 							</a>
 						</Nav>
 					}

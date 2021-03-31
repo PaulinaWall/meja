@@ -7,7 +7,7 @@ import PhotoPlaceholder from '../../assets/images/photo-placeholder.png'
 const ColorExampleCard = () => {
 	const { getTheme } = useContext(ThemeContext);
 	return(
-		<Container className={"" + (getTheme())}>
+		<Container className={"color-example-card" + (getTheme())}>
 			<Card className="color-example-card p-3">
 				<h2>This is an example of what the color theme will look like</h2>
 				<Card.Img className="color-image" variant="top" src={PhotoPlaceholder} />

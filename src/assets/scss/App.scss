@@ -91,6 +91,23 @@ image{
 	height: 100vh;
 }
 
+.background-image{
+	width: 180px;
+	padding: 10px;
+}
+
+.background-image-landing-page{
+	@media screen and (max-width: 762px) {
+		display: none;
+	}
+}
+
+.background-image-none{
+	width: 100px;
+	padding: 10px;
+	background-color: white;
+}
+
 .create-form{
 	display: flex;
 	justify-content: space-between;
@@ -144,6 +161,12 @@ image{
 	margin: 20px !important;
 }
 
+.nav-icons{
+	color: #295e74;
+	font-size: 50px;
+	margin: 20px !important;
+}
+
 .linked-icons-container{
 	display: flex;
 	justify-content: space-between;
@@ -152,7 +175,11 @@ image{
 	background-color: white;
 	border-radius: 5px 5px;
 	box-shadow: 5px 5px 5px lightgray;
-	margin-bottom: 10px;
+	padding: 20px;
+	margin: 20px;
+	&.card{
+		height: auto;
+	}
 }
 
 .email-container{
@@ -163,7 +190,10 @@ image{
 	border-radius: 5px 5px;
 	box-shadow: 5px 5px 5px lightgray;
 	padding: 20px;
-	margin-bottom: 10px;
+	margin: 20px;
+	&.card{
+		height: auto;
+	}
 }
 
 .form{
@@ -215,6 +245,9 @@ image{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin: 20px;
+	height: 100%;
+    padding-bottom: 20px;
 }
 
 .create-form-menu{
@@ -279,7 +312,7 @@ image{
 	justify-content: center;
 	padding: 40px;
     font-size: 20px;
-	background-color: #6eaac4;
+	background-color: var(--extraLightGrey);
 }
 
 .landing-page-list-bottom{
@@ -300,27 +333,37 @@ image{
 }
 
 .box-styles{
+	opacity: 0.8;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background-color: var(--lightGrey);
 	padding-bottom: 40px;
 	border-radius: 5px 5px;
-	box-shadow: 30px 40px 10px var(--darkGrey);
-	margin-right: 90px;
-	height: 200px;
-	&:last-child{
-		margin-right: 0px;
-	}
+	box-shadow: 10px 10px 10px var(--darkGrey);
+	height: 150px;
+	margin-bottom: 50px;
+	margin-left: 100px;
+
 	@media screen and (max-width: 762px) {
-		margin-right: 0;
-		margin-bottom: 50px;
-		&:first-child{
-			margin-top: 50px;
-		}
-		&:last-child{
-			margin-bottom: 100px;
-		}
+		margin: 20px;
+	}
+}
+
+.box-styles-example{
+	opacity: 0.8;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--lightGrey);
+	padding-bottom: 40px;
+	border-radius: 5px 5px;
+	box-shadow: 5px 5px 5px var(--darkGrey);
+	margin-bottom: 50px;
+	margin-left: 50px;
+	height: 100px;
+	@media screen and (max-width: 1000px) {
+		margin: 30px;
 	}
 }
 
@@ -346,14 +389,17 @@ image{
 
 .portfolio-content{
 	height: 100%;
-	width: 100px;
 }
 
 .about-container{
 	background-color: white;
 	border-radius: 5px 5px;
 	box-shadow: 5px 5px 5px lightgray;
-	padding: 0 50px;
+	padding: 20px 40px;
+	margin: 20px;
+	&.card{
+		height: auto;
+	}
 }
 
 .save-portfolio-button{
@@ -390,6 +436,7 @@ image{
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	align-items: center;
 	height: 100%;
 	padding: 30px;
 
@@ -425,12 +472,28 @@ image{
     align-items: center;
 }
 
+.user-landing-page-row{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%
+}
+
+.user-landing-page-example{
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .footer{
-	background-color: #83aabb;
+	background-color: var(--lightGrey);
+	// background-color: #83aabb;
 }
 
 .navigation{
-	background-color: #83aabb;
+	background-color: var(--lightGrey);
+	// background-color: #83aabb;
 }
 
 .zoomCointainer{
@@ -443,6 +506,7 @@ image{
 	&:hover{
 		transform: scale(1.5);
 		z-index: 10;
+		opacity: 1;
 	}
 }
 
@@ -478,7 +542,7 @@ image{
 			}
 		}
 	}
-	.box-styles{
+	.box-styles, .box-styles-example{
 		background-color: #fcdfe1;
 		color: #df9da4;
 		box-shadow: 30px 40px 10px #df9da4;
@@ -525,7 +589,7 @@ image{
 			}
 		}
 	}
-	.box-styles{
+	.box-styles, .box-styles-example{
 		background-color: #cbe4e2;
 		box-shadow: 30px 40px 10px #77ACA2;
 		a{
@@ -574,7 +638,7 @@ image{
 			}
 		}
 	}
-	.box-styles{
+	.box-styles, .box-styles-example{
 		background-color: #6eaac4;
 		box-shadow: 30px 40px 10px #305F72;
 		a{
@@ -623,7 +687,7 @@ image{
 			}
 		}
 	}
-	.box-styles{
+	.box-styles, .box-styles-example{
 		background-color: #fdfdfc;
 		box-shadow: 30px 40px 10px #dec9bd;
 		a{
@@ -672,7 +736,7 @@ image{
 			}
 		}
 	}
-	.box-styles{
+	.box-styles, .box-styles-example{
 		background-color: #e0dce6;
 		box-shadow: 30px 40px 10px #988faa;
 		a{
