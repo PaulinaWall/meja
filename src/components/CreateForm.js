@@ -18,6 +18,7 @@ import QuotesComponent from './QuotesComponent';
 import BackgroundImageForm from './common/BackgroundImageForm';
 
 const CreateForm = () => {
+	const [message, setMessage] = useState(false);
 	const [error, setError] = useState(false)
 	const [uploadProgress, setUploadProgress] = useState(null);
 	const [formState, setFormState] = useState('');
@@ -71,7 +72,7 @@ const CreateForm = () => {
 						email: '',
 						theme: '',
 					});
-					console.log('started new portfolio');
+					setMessage('started new portfolio');
 				})
 				.catch((e) => {
 					setError(e.message);
@@ -171,7 +172,6 @@ const CreateForm = () => {
 					projects: projects,
 				}, { merge: true })
 				.then(() => {
-					console.log('updated projects with success:', data)
 					setCurrentProjectIndex(null);
 				})
 				.catch((e) => {
@@ -196,7 +196,6 @@ const CreateForm = () => {
 					about: about,
 				}, { merge: true })
 				.then(() => {
-					console.log('updated projects with success:', data)
 					setCurrentProjectIndex(null);
 				})
 				.catch((e) => {
@@ -222,7 +221,6 @@ const CreateForm = () => {
 					links: links,
 				}, { merge: true })
 				.then(() => {
-					console.log('updated projects with success:', data)
 					setCurrentProjectIndex(null);
 				})
 				.catch((e) => {
@@ -235,7 +233,6 @@ const CreateForm = () => {
 					email: email,
 				}, { merge: true })
 				.then(() => {
-					console.log('updated projects with success:', email)
 				})
 				.catch((e) => {
 					setError(e.message);
@@ -247,7 +244,7 @@ const CreateForm = () => {
 					theme,
 				}, { merge: true })
 				.then(() => {
-					console.log('updated projects with success:', theme)
+					setMessage(`Succesfully updated portfolio with a new theme color!`);
 				})
 				.catch((e) => {
 					setError(e.message);
@@ -259,7 +256,7 @@ const CreateForm = () => {
 					background,
 				}, { merge: true })
 				.then(() => {
-					console.log('updated projects with success:', background)
+					setMessage('Successfully added a background image to your portfolio´s landing page!');
 				})
 				.catch((e) => {
 					setError(e.message);
@@ -349,9 +346,9 @@ const CreateForm = () => {
 				[part]: ''
 			})
 			.then(function() {
-				console.log("Document successfully deleted!");
+				setMessage(`Document successfully deleted!`);
 			}).catch(function(error) {
-				console.error("Error removing document: ", error);
+				setError(`Error removing document: ${error}`);
 			});
 		} else{
 			const updatedPart = portfolio[part];
@@ -360,9 +357,9 @@ const CreateForm = () => {
 				[part]: updatedPart 
 			})
 			.then(function() {
-				console.log("Document successfully deleted!");
+				setMessage(`Document successfully deleted!`);
 			}).catch(function(error) {
-				console.error("Error removing document: ", error);
+				setError(`Error removing document: ${error}`);
 			});
 		}
 	}
@@ -375,8 +372,11 @@ const CreateForm = () => {
 		<div className="m-3">
 			<Row className="create-form">
 				<Col sm={12} md={6} lg={6} className="form-container">
+					{message && 
+						(<Alert variant="success" onClose={() => setMessage(false)} dismissible>{message}</Alert>)
+					}
 					{error && 
-						(<Alert variant="danger">{error}</Alert>)
+						(<Alert variant="danger" onClose={() => setError(false)} dismissible>{error}</Alert>)
 					}
 					<Container className="pointer mt-5">
 						<div className="create-form-menu">
