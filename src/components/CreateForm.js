@@ -10,9 +10,10 @@ import LinksForm from './common/LinksForm';
 import ProjectForm from './common/ProjectForm';
 import ContactForm from './common/ContactForm';
 import { useAuth } from '../contexts/AuthContext';
+import { ThemeContext } from '../contexts/ThemeContext';
+import { BackgroundContext } from '../contexts/BackgroundContext';
 import ProjectColorPicker from './UserPages/ProjectColorPicker';
 import PortfolioContent from './UserPages/PortfolioContent';
-import { ThemeContext } from '../contexts/ThemeContext';
 import QuotesComponent from './QuotesComponent';
 import BackgroundImageForm from './common/BackgroundImageForm';
 
@@ -40,6 +41,7 @@ const CreateForm = () => {
 	
 	const [portfolio, setPortfolio] = useState();
 	const { currentUser } = useAuth();
+	const { getBackground } = useContext(BackgroundContext);
 	const { getTheme } = useContext(ThemeContext);
 	const navigate = useNavigate();
 
@@ -150,6 +152,7 @@ const CreateForm = () => {
 			let data;
 			let links;
 			const theme = getTheme();
+			const background = getBackground();
 			if(partToSet === 'projects'){
 				data = {
 					title: projectTitle,
@@ -251,6 +254,18 @@ const CreateForm = () => {
 				})
 			}
 
+			if(partToSet === 'background') {
+				db.collection('portfolios').doc(portfolio.id).set({
+					background,
+				}, { merge: true })
+				.then(() => {
+					console.log('updated projects with success:', background)
+				})
+				.catch((e) => {
+					setError(e.message);
+				})
+			}
+
 		}).catch((e) => {
 			setError(e.message);
 		})
@@ -269,27 +284,31 @@ const CreateForm = () => {
 			setPortfolioContent('projects');
 		}
 
-		if( formState === 'about') {
+		if (formState === 'about') {
 			setAboutTitle('');
 			setAboutText('');
 			setAboutUrl('');
 			setPortfolioContent('about');
 		}
 
-		if( formState === 'links') {
+		if (formState === 'links') {
 			setGithubUrl('');
 			setFacebookUrl('');
 			setLinkedinUrl('');
 			setPortfolioContent('links');
 		}
 
-		if( formState === 'contact' ){
+		if (formState === 'contact' ){
 			setEmail('');
 			setPortfolioContent('email');
 		}
 
-		if( formState === 'color' ){
+		if (formState === 'color' ){
 			setPortfolioContent('theme');
+		}
+
+		if (formState === 'background') {
+			setPortfolioContent('background');
 		}
 
 	}

@@ -10,9 +10,9 @@ const UserLandingPage = () => {
 
 	const backgroundUrl = getBackground();
 	return ( 
-		<Container className={"p-0 user-landing-page-example " + (getTheme())}>
+		<Container className={"p-0 card user-landing-page-example " + (getTheme())}>
 					<Row>
-						<Col sm={6} md={6} lg={6}>
+						<Col sm={4} md={4} lg={4}>
 							<Row className="landing-page-row">
 								<Col className="box-styles-example" sm={8} md={8} lg={8}>
 									<h3>About</h3>
@@ -25,11 +25,11 @@ const UserLandingPage = () => {
 								</Col>
 							</Row>
 						</Col>
-						<Col className="background-image-landing-page" sm={6} md={6} lg={6} style={{
+						<Col className="background-image-landing-page" sm={8} md={8} lg={8} style={{
 						backgroundImage: `url(${backgroundUrl})`,
 						backgroundRepeat: 'no-repeat',
 						backgroundPosition: 'center center',
-						backgroundSize: '100% 100%;',
+						backgroundSize: 'auto',
 						width:'250px'
 						}}></Col>
 					</Row>

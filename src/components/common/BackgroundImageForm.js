@@ -10,7 +10,7 @@ import lightblue from '../../assets/images/lightblue.png'
 import orange from '../../assets/images/orange.png'
 import { BackgroundContext } from '../../contexts/BackgroundContext';
 
-const BackgroundImageForm = ({ background, handleSaveOnClick, setFormState }) => {
+const BackgroundImageForm = ({ handleSaveOnClick, setFormState }) => {
 	const { setBackground } = useContext(BackgroundContext);
 
 	return (
@@ -27,10 +27,22 @@ const BackgroundImageForm = ({ background, handleSaveOnClick, setFormState }) =>
 				<Image src={green} onClick={() => setBackground(green)} className="background-image" />
 				<Image src={orange} onClick={() => setBackground(orange)} className="background-image" />
 				<Image src={purple} onClick={() => setBackground(purple)} className="background-image" />
-				{/* <div onClick={() => setBackground('')} className="background-image-none">None</div> */}
 			</div>
 			<div className="d-flex justify-content-end">
-				<Button disabled={!background} className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">
+				<Button className="button btn-secondary mr-3" size="sm" onClick={() => setBackground('')}>
+					<OverlayTrigger
+						transition={false}
+						placement="top"
+						overlay={
+							<Tooltip>
+								Press here and save to not add an image.
+							</Tooltip>
+						}
+					>
+						<span>No image</span>
+					</OverlayTrigger>
+				</Button>
+				<Button className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">
 					<OverlayTrigger
 						transition={false}
 						placement="top"

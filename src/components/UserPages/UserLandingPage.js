@@ -31,7 +31,7 @@ const UserLandingPage = () => {
 						backgroundImage: `url(${backgroundUrl})`,
 						backgroundRepeat: 'no-repeat',
 						backgroundPosition: 'center center',
-						backgroundSize: '100% 100%;',
+						backgroundSize: 'auto',
 						width:'250px'
 						}}>
 				</Col>

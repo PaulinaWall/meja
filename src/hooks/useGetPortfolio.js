@@ -3,11 +3,13 @@ import { useEffect, useState, useContext } from 'react';
 import { db } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { ThemeContext } from '../contexts/ThemeContext';
+import { BackgroundContext } from '../contexts/BackgroundContext';
 
 const useGetPortfolio = () => {
 	const [portfolio, setPortfolio] = useState();
 	const [loading, setLoading] = useState(true);
 	const { setTheme } = useContext(ThemeContext);
+	const { setBackground } = useContext(BackgroundContext);
 	const { currentUser } = useAuth();
 
 	useEffect(() => {
@@ -19,7 +21,8 @@ const useGetPortfolio = () => {
 		.get()
 		.then((querySnapshot) => {
 			querySnapshot.forEach((doc) => {
-				setTheme(doc.data().theme)
+				setTheme(doc.data().theme);
+				setBackground(doc.data().background);
 				setPortfolio(doc.data());
 				setLoading(false);
 			})
