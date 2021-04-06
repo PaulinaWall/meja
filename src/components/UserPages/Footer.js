@@ -13,12 +13,13 @@ const Footer = () => {
 	const location = useLocation();
 
 	const userPage = location.pathname.includes('/user')
+
 	return (
 		<div className={userPage ? " " + (getTheme()) : ""}>
 			{
 				<Navbar className="footer">	
 					{
-						(userPage && portfolio?.links.length > 0)
+						((userPage && portfolio?.links.length > 0) || userPage)
 						? portfolio?.links.map((link, index) => {
 							return <Nav className="ml-auto" key={index}>
 								{ link.github && 
