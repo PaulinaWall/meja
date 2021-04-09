@@ -22,7 +22,7 @@ const ContactForm = ({ email, handleEmailChange, handleSaveOnClick, setFormState
 				/>
 			</Form.Group>
 			<div className="d-flex justify-content-end">
-				<Button disabled={!email} className="button btn-secondary" size="sm" onClick={handleSaveOnClick} type="button">
+				<Button disabled={!email} className="button" size="sm" onClick={handleSaveOnClick} type="button">
 					<OverlayTrigger
 						transition={false}
 						placement="top"
