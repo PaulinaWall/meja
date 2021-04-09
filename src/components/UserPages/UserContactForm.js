@@ -6,14 +6,9 @@ import { ThemeContext } from '../../contexts/ThemeContext';
 const UserContactForm = () => {
 	const { getTheme } = useContext(ThemeContext);
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log('submitted');
-	}
-
 	return ( 
 		<Container className={"user-contact-page " + (getTheme())}>
-			<Form onSubmit={handleSubmit}>
+			<Form action="mailto:paulina_wall@outlook.com" method="POST">
 				<Form.Group controlId="exampleForm.ControlInput1">
 					<Form.Label>Email address</Form.Label>
 					<Form.Control type="email" placeholder="name@example.com" />
