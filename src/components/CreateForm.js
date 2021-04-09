@@ -19,7 +19,7 @@ import BackgroundImageForm from './common/BackgroundImageForm';
 
 const CreateForm = () => {
 	const [message, setMessage] = useState(false);
-	const [error, setError] = useState(false)
+	const [error, setError] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState(null);
 	const [formState, setFormState] = useState('');
 	
@@ -46,6 +46,7 @@ const CreateForm = () => {
 	const { getTheme } = useContext(ThemeContext);
 	const navigate = useNavigate();
 
+	console.log(portfolio)
 	const getPortfolio = async () => {
 		await db.collection('portfolios')
 		.where('owner', '==', currentUser.uid)
@@ -54,25 +55,22 @@ const CreateForm = () => {
 			if(querySnapshot.empty){
 				const newPortfolio = {
 					owner: currentUser.uid,
+					url: `http://localhost:3000/${currentUser.displayName}/`,
 					about: [],
 					projects: [],
 					links: [],
 					email: '',
 					theme: '',
+					background: '',
 				}
 		
 				db.collection("portfolios").add( newPortfolio )
 				.then(docRef => {
 					setPortfolio({
 						id: docRef.id,
-						owner: currentUser.uid,
-						about: [],
-						projects: [],
-						links: [],
-						email: '',
-						theme: '',
+						...newPortfolio
 					});
-					setMessage('started new portfolio');
+					setMessage('Your new portfolio is just started!');
 				})
 				.catch((e) => {
 					setError(e.message);
@@ -345,9 +343,9 @@ const CreateForm = () => {
 			db.collection("portfolios").doc(portfolio.id).update({
 				[part]: ''
 			})
-			.then(function() {
+			.then(() => {
 				setMessage(`Document successfully deleted!`);
-			}).catch(function(error) {
+			}).catch((error) => {
 				setError(`Error removing document: ${error}`);
 			});
 		} else{
@@ -356,20 +354,20 @@ const CreateForm = () => {
 			db.collection("portfolios").doc(portfolio.id).update({
 				[part]: updatedPart 
 			})
-			.then(function() {
+			.then(() => {
 				setMessage(`Document successfully deleted!`);
-			}).catch(function(error) {
+			}).catch((error) => {
 				setError(`Error removing document: ${error}`);
 			});
 		}
 	}
 
 	const handleShowPortfolioOnClick = () => {
-		navigate(`/${currentUser?.displayName.replace(' ', '')}/`)
+		navigate(`/${currentUser.displayName ?? 'user'}/`)
 	}
 
 	return ( 
-		<div className="m-3">
+		<Container className="create-form-container">
 			<Row className="create-form">
 				<Col sm={12} md={6} lg={6} className="form-container">
 					{message && 
@@ -500,10 +498,9 @@ const CreateForm = () => {
 				</Col>
 				{
 					formState === ''
-					? <Col sm={12} md={6} lg={6} className="quotes-column"><QuotesComponent /></Col>
+					? <Col sm={12} md={6} lg={6} className="quotes-column"><QuotesComponent/></Col>
 					: <Col sm={12} md={6} lg={6} className={"portfolio-container p-0 " + (getTheme())}>
 						<PortfolioContent
-							className={" " }
 							formState={formState}
 							portfolio={portfolio}
 							handleDelete={handleDelete}
@@ -515,9 +512,13 @@ const CreateForm = () => {
 
 			<div className="save-portfolio-button-container">
 				<Button className="button save-portfolio-button" onClick={handleShowPortfolioOnClick}>Preview Portfolio</Button>
-				<Button className="button save-portfolio-button">Create Portfolio</Button>
+				<Button
+					className="button save-portfolio-button"
+				>
+					{`http://localhost:3000/${currentUser.displayName}/`}
+				</Button>
 			</div>
-		</div>
+		</Container>
 	 );
 }
  
