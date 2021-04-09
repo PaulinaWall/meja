@@ -24,8 +24,8 @@ const SignUp = () => {
 
 		try {
 			setLoading(true);
-			await signup(emailRef.current.value, passwordRef.current.value).then(() => {
-				signin(emailRef.current.value, passwordRef.current.value);
+			await signup(emailRef.current.value, passwordRef.current.value).then(async () => {
+				await signin(emailRef.current.value, passwordRef.current.value, nameRef.current.value)
 			});
 			navigate(`/${nameRef.current.value}/`);
 		} catch (e) {

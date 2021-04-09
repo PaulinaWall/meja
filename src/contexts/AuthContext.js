@@ -12,8 +12,13 @@ const AuthContextProvider = (props) => {
 	const [currentUser, setCurrentUser] = useState(null)
 	const [loading, setLoading] = useState(true)
 
-	const signin = (email, password) => {
-		return auth.signInWithEmailAndPassword(email, password)
+
+	const signin = async (email, password, name) => {
+		return auth.signInWithEmailAndPassword(email, password).then((response) => {
+			response.user.updateProfile({
+				displayName: name,
+			})
+		})
 	}
 
 	const signout = () => {
@@ -22,12 +27,6 @@ const AuthContextProvider = (props) => {
 
 	const signup = (email, password) => {
 		return auth.createUserWithEmailAndPassword(email, password)
-	}
-
-	const setName = (name) => {
-		return currentUser.updateProfile({
-			displayName: name
-		})
 	}
 
 	useEffect(() => {
@@ -45,7 +44,6 @@ const AuthContextProvider = (props) => {
 		signin,
 		signout,
 		signup,
-		setName,
 	}
 
 	return (
