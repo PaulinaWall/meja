@@ -12,6 +12,7 @@ import ContactForm from './common/ContactForm';
 import { useAuth } from '../contexts/AuthContext';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { BackgroundContext } from '../contexts/BackgroundContext';
+import { CurrentPortfolioContext } from '../contexts/CurrentPortfolioContext';
 import ProjectColorPicker from './UserPages/ProjectColorPicker';
 import PortfolioContent from './UserPages/PortfolioContent';
 import QuotesComponent from './QuotesComponent';
@@ -44,9 +45,9 @@ const CreateForm = () => {
 	const { currentUser } = useAuth();
 	const { getBackground } = useContext(BackgroundContext);
 	const { getTheme } = useContext(ThemeContext);
+	const { setPortfolioId } = useContext(CurrentPortfolioContext);
 	const navigate = useNavigate();
 
-	console.log(portfolio)
 	const getPortfolio = async () => {
 		await db.collection('portfolios')
 		.where('owner', '==', currentUser.uid)
@@ -55,7 +56,7 @@ const CreateForm = () => {
 			if(querySnapshot.empty){
 				const newPortfolio = {
 					owner: currentUser.uid,
-					url: `http://localhost:3000/${currentUser.displayName}/`,
+					url: `http://localhost:3000/${currentUser.displayName}/${portfolio.id}`,
 					about: [],
 					projects: [],
 					links: [],
@@ -66,6 +67,7 @@ const CreateForm = () => {
 		
 				db.collection("portfolios").add( newPortfolio )
 				.then(docRef => {
+					setPortfolioId(docRef.id);
 					setPortfolio({
 						id: docRef.id,
 						...newPortfolio
@@ -77,6 +79,7 @@ const CreateForm = () => {
 				})
 			}
 			querySnapshot.forEach((doc) => {
+				setPortfolioId(doc.id);
 				setPortfolio({
 					id: doc.id,
 					...doc.data(),
@@ -99,6 +102,7 @@ const CreateForm = () => {
 		.onSnapshot((snapshot) => {
 
 			snapshot.forEach(doc => {
+				setPortfolioId(doc.id);
 				setPortfolio({
 					id: doc.id,
 					...doc.data(),
@@ -363,7 +367,7 @@ const CreateForm = () => {
 	}
 
 	const handleShowPortfolioOnClick = () => {
-		navigate(`/${currentUser.displayName ?? 'user'}/`)
+		navigate(`/${currentUser.displayName}/${portfolio.id}`)
 	}
 
 	return ( 
@@ -512,11 +516,11 @@ const CreateForm = () => {
 
 			<div className="save-portfolio-button-container">
 				<Button className="button save-portfolio-button" onClick={handleShowPortfolioOnClick}>Preview Portfolio</Button>
-				<Button
+				<span
 					className="button save-portfolio-button"
 				>
-					{`http://localhost:3000/${currentUser.displayName}/`}
-				</Button>
+					{`http://localhost:3000/${currentUser.displayName}/${portfolio?.id}`}
+				</span>
 			</div>
 		</Container>
 	 );

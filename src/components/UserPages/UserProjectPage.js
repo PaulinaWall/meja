@@ -1,45 +1,51 @@
 import React, { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import { Card, Row, Col, Image, Container } from 'react-bootstrap';
+import { BounceLoader } from 'react-spinners'
 
-import useGetPortfolio from '../../hooks/useGetPortfolio';
+import useGetSinglePortfolio from '../../hooks/useGetSinglePortfolio';
 import { ThemeContext } from '../../contexts/ThemeContext';
 
 
 const UserProjectPage = () => {
-	const { portfolio } = useGetPortfolio();
+	const { portfolioID } = useParams();
+	const { portfolio, loadingPortfolio } = useGetSinglePortfolio(portfolioID);
 	const { getTheme } = useContext(ThemeContext);
 
 	return ( 
-		<Container className={"user-project-page-container " + (getTheme())}>
-			<Row className="project-page-row">
-				{
-					(portfolio && portfolio.projects) && portfolio.projects.map((project, index) => {
-						return <Col className="mb-3" sm={6} md={4} lg={3} key={index}>
-								<Card className="zoom card p-3">
-									{
-										project.image.url 
-										? (
-											<Card.Img variant="top" src={project.image.url} />
-										) : (
-											<Image src="holder.js/171x180" thumbnail />
-										)
-									}
-									
-									<Card.Body className="size-sm p-1.5">
-										<Card.Title>{project.title}</Card.Title>
-										<Card.Text>
-											{project.text}
-										</Card.Text>
-									</Card.Body>
-									<Card.Body className="p-1.5">
-										<Card.Link target="_blank" rel="noopener noreferrer" href={`http://${project.projectUrl}`}>{project.projectUrl}</Card.Link>
-									</Card.Body>
-								</Card>
-							</Col>
-					})
-				}
-			</Row>
-		</Container>
+		<>
+		{loadingPortfolio && <BounceLoader color={"#888"} size={100} />}
+			<Container className={"user-project-page-container " + (getTheme())}>
+				<Row className="project-page-row">
+					{
+						(portfolio && portfolio.projects) && portfolio.projects.map((project, index) => {
+							return <Col className="mb-3" sm={6} md={4} lg={3} key={index}>
+									<Card className="zoom card p-3">
+										{
+											project.image.url 
+											? (
+												<Card.Img variant="top" src={project.image.url} />
+											) : (
+												<Image src="holder.js/171x180" thumbnail />
+											)
+										}
+										
+										<Card.Body className="size-sm p-1.5">
+											<Card.Title>{project.title}</Card.Title>
+											<Card.Text>
+												{project.text}
+											</Card.Text>
+										</Card.Body>
+										<Card.Body className="p-1.5">
+											<Card.Link target="_blank" rel="noopener noreferrer" href={`http://${project.projectUrl}`}>{project.projectUrl}</Card.Link>
+										</Card.Body>
+									</Card>
+								</Col>
+						})
+					}
+				</Row>
+			</Container>
+		</>
 	 );
 }
  
