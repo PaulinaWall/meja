@@ -1,17 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
 import useGetSinglePortfolio from '../../hooks/useGetSinglePortfolio';
-import { ThemeContext } from '../../contexts/ThemeContext';
 
 const UserAboutPage = () => {
 	const { portfolioID } = useParams();
 	const { portfolio } = useGetSinglePortfolio(portfolioID);
-	const { getTheme } = useContext(ThemeContext);
 
 	return ( 
-		<div className={"user-site-container " + (getTheme())}>
+		<div className={"user-site-container " + (portfolio?.theme)}>
 			{
 			(portfolio?.about.length > 0) && 
 				<Container className="card about-container">

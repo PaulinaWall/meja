@@ -1,21 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Row, Col, Image, Container } from 'react-bootstrap';
 import { BounceLoader } from 'react-spinners'
 
 import useGetSinglePortfolio from '../../hooks/useGetSinglePortfolio';
-import { ThemeContext } from '../../contexts/ThemeContext';
 
 
 const UserProjectPage = () => {
 	const { portfolioID } = useParams();
 	const { portfolio, loadingPortfolio } = useGetSinglePortfolio(portfolioID);
-	const { getTheme } = useContext(ThemeContext);
 
 	return ( 
 		<>
 		{loadingPortfolio && <BounceLoader color={"#888"} size={100} />}
-			<Container className={"user-project-page-container " + (getTheme())}>
+			<Container className={"user-project-page-container " + (portfolio?.theme)}>
 				<Row className="project-page-row">
 					{
 						(portfolio && portfolio.projects) && portfolio.projects.map((project, index) => {

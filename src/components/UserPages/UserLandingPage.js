@@ -1,20 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
 
-import { ThemeContext } from '../../contexts/ThemeContext';
-import { BackgroundContext } from '../../contexts/BackgroundContext';
+import useGetSinglePortfolio from '../../hooks/useGetSinglePortfolio';
 
 
 const UserLandingPage = () => {
 	const { portfolioID, userName } = useParams();
-	const { getTheme } = useContext(ThemeContext);
-	const { getBackground } = useContext(BackgroundContext);
+	const { portfolio } = useGetSinglePortfolio(portfolioID);
 
-	const backgroundUrl = getBackground();
+	const backgroundUrl = portfolio?.background;
 	return ( 
-		<Container className={"user-landing-page-container " + (getTheme())}>
+		<Container className={"user-landing-page-container " + (portfolio?.theme)}>
 			<Row>
 				<Col sm={6} md={6} lg={6}>
 					<Row className="user-landingPage-row">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Container, Alert, Button, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,11 +12,13 @@ import ContactForm from './common/ContactForm';
 import { useAuth } from '../contexts/AuthContext';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { BackgroundContext } from '../contexts/BackgroundContext';
-import { CurrentPortfolioContext } from '../contexts/CurrentPortfolioContext';
 import ProjectColorPicker from './UserPages/ProjectColorPicker';
 import PortfolioContent from './UserPages/PortfolioContent';
 import QuotesComponent from './QuotesComponent';
 import BackgroundImageForm from './common/BackgroundImageForm';
+import useGetCurrentUserPortfolio from '../hooks/useGetCurrentUserPortfolio';
+import useSetPortfolio from '../hooks/useSetPortfolio'
+import useAddImage from '../hooks/useAddImage';
 
 const CreateForm = () => {
 	const [message, setMessage] = useState(false);
@@ -29,7 +31,8 @@ const CreateForm = () => {
 	const [projectText, setProjectText] = useState('');
 	const [projectUrl, setProjectUrl] = useState('');
 	const [projectImage, setProjectImage] = useState('');
-	const [currentProjectIndex, setCurrentProjectIndex] = useState(null); 
+	const [currentProjectIndex, setCurrentProjectIndex] = useState(null);
+	// const [portfolioContent, setPortfolioContent] = useState(''); 
 	
 	const [aboutTitle, setAboutTitle] = useState('');
 	const [aboutText, setAboutText] = useState('');
@@ -41,78 +44,29 @@ const CreateForm = () => {
 	const [linkedinUrl, setLinkedinUrl] = useState('');
 	const [facebookUrl, setFacebookUrl] = useState('');
 	
-	const [portfolio, setPortfolio] = useState();
 	const { currentUser } = useAuth();
-	const { getBackground } = useContext(BackgroundContext);
 	const { getTheme } = useContext(ThemeContext);
-	const { setPortfolioId } = useContext(CurrentPortfolioContext);
+	const { getBackground } = useContext(BackgroundContext);
 	const navigate = useNavigate();
-
-	const getPortfolio = async () => {
-		await db.collection('portfolios')
-		.where('owner', '==', currentUser.uid)
-		.get()
-		.then((querySnapshot) => {
-			if(querySnapshot.empty){
-				const newPortfolio = {
-					owner: currentUser.uid,
-					url: `http://localhost:3000/${currentUser.displayName}/${portfolio.id}`,
-					about: [],
-					projects: [],
-					links: [],
-					email: '',
-					theme: '',
-					background: '',
-				}
-		
-				db.collection("portfolios").add( newPortfolio )
-				.then(docRef => {
-					setPortfolioId(docRef.id);
-					setPortfolio({
-						id: docRef.id,
-						...newPortfolio
-					});
-					setMessage('Your new portfolio is just started!');
-				})
-				.catch((e) => {
-					setError(e.message);
-				})
-			}
-			querySnapshot.forEach((doc) => {
-				setPortfolioId(doc.id);
-				setPortfolio({
-					id: doc.id,
-					...doc.data(),
-				});
-			})
-		})
-		.catch((e) => {
-			setError(e.message);
-		})
-	}
-
-	useEffect(() => {
-		getPortfolio();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
-
-	useEffect(() => {
-		const unsubscribe = db.collection('portfolios')
-		.where('owner', '==', currentUser.uid)
-		.onSnapshot((snapshot) => {
-
-			snapshot.forEach(doc => {
-				setPortfolioId(doc.id);
-				setPortfolio({
-					id: doc.id,
-					...doc.data(),
-				});
-			});
-		})
-		return unsubscribe;
-		
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [portfolio?.id])
+	const { portfolio } = useGetCurrentUserPortfolio();
+	// const { uploadProgress, uploadedImageUrl, setUploadedImageUrl, error: uploadImageError } = useAddImage(setProjectImage);
+	// console.log(projectImage)
+	// const {error: setPortfolioError, message: setPortfolioMessage} = useSetPortfolio(
+	// 	portfolioContent,
+	// 	projectTitle,
+	// 	projectImage,
+	// 	projectUrl,
+	// 	projectText,
+	// 	currentProjectIndex,
+	// 	setCurrentProjectIndex,
+	// 	aboutTitle,
+	// 	aboutUrl,
+	// 	aboutText,
+	// 	facebookUrl,
+	// 	linkedinUrl,
+	// 	gitHubUrl,
+	// 	email,
+	// );
 
 	const addImageToStorage = (image) => {
 		if(!image) {
@@ -120,7 +74,6 @@ const CreateForm = () => {
 		};
 		const storageRef = storage.ref();
 
-		//TODO We can add a folder for every owner in firebase and send to right owner folder `${owner.id}/${image.name}`
 		const fileRef = storageRef.child(image.name);
 		
 		const uploadTask = fileRef.put(image);
@@ -284,10 +237,10 @@ const CreateForm = () => {
 		}
 
 		if (formState === 'about') {
+			setPortfolioContent('about');
 			setAboutTitle('');
 			setAboutText('');
 			setAboutUrl('');
-			setPortfolioContent('about');
 		}
 
 		if (formState === 'links') {
@@ -374,7 +327,7 @@ const CreateForm = () => {
 		<Container className="create-form-container">
 			<Row className="create-form">
 				<Col sm={12} md={6} lg={6} className="form-container">
-					{message && 
+					{message&& 
 						(<Alert variant="success" onClose={() => setMessage(false)} dismissible>{message}</Alert>)
 					}
 					{error && 

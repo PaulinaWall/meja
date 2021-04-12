@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { Form, Button, Container } from 'react-bootstrap';
 
-import { ThemeContext } from '../../contexts/ThemeContext';
+import useGetSinglePortfolio from '../../hooks/useGetSinglePortfolio';
 
 const UserContactForm = () => {
-	const { getTheme } = useContext(ThemeContext);
+	const { portfolioID } = useParams();
+	const { portfolio } = useGetSinglePortfolio(portfolioID);
 
 	return ( 
-		<Container className={"user-contact-page " + (getTheme())}>
+		<Container className={"user-contact-page " + (portfolio?.theme)}>
 			<Form action="mailto:paulina_wall@outlook.com" method="POST">
 				<Form.Group controlId="exampleForm.ControlInput1">
 					<Form.Label>Email address</Form.Label>
