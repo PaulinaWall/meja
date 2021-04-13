@@ -456,7 +456,7 @@ const CreateForm = () => {
 				{
 					formState === ''
 					? <Col sm={12} md={6} lg={6} className="quotes-column"><QuotesComponent/></Col>
-					: <Col sm={12} md={6} lg={6} className={"portfolio-container p-0 " + (getTheme())}>
+					: <Col sm={12} md={6} lg={6} className={"portfolio-container p-0 " + (portfolio.theme)}>
 						<PortfolioContent
 							formState={formState}
 							portfolio={portfolio}
