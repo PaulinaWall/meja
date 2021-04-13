@@ -1,6 +1,8 @@
-import React,{ useRef, useState }  from 'react'
+import React,{ useRef, useState, useEffect }  from 'react'
 import { Row, Col, Form, Button, Card, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
+
+import { db } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 
 const SignIn = () => {
@@ -8,8 +10,27 @@ const SignIn = () => {
 	const passwordRef = useRef();
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(null);
-	const { signin } = useAuth();
+	const { signin, currentUser } = useAuth();
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if(!currentUser){
+			return
+		}
+		db.collection('portfolios')
+			.where('owner', '==', currentUser.uid)
+			.get()
+			.then((querySnapshot) => {
+				setLoading(false);
+				querySnapshot.forEach((doc) => {
+					navigate(`/create/${doc.id}`)
+				})
+			})
+			.catch((e) => {
+				setError(e.message);
+			})
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentUser])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -19,7 +40,6 @@ const SignIn = () => {
 		try {
 			setLoading(true)
 			await signin(emailRef.current.value, passwordRef.current.value)
-			navigate('/create')
 		} catch (e) {
 			setError(e.message)
 			setLoading(false)

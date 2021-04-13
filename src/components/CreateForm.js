@@ -17,8 +17,8 @@ import PortfolioContent from './UserPages/PortfolioContent';
 import QuotesComponent from './QuotesComponent';
 import BackgroundImageForm from './common/BackgroundImageForm';
 import useGetCurrentUserPortfolio from '../hooks/useGetCurrentUserPortfolio';
-import useSetPortfolio from '../hooks/useSetPortfolio'
-import useAddImage from '../hooks/useAddImage';
+// import useSetPortfolio from '../hooks/useSetPortfolio'
+// import useAddImage from '../hooks/useAddImage';
 
 const CreateForm = () => {
 	const [message, setMessage] = useState(false);
@@ -456,7 +456,7 @@ const CreateForm = () => {
 				{
 					formState === ''
 					? <Col sm={12} md={6} lg={6} className="quotes-column"><QuotesComponent/></Col>
-					: <Col sm={12} md={6} lg={6} className={"portfolio-container p-0 " + (portfolio.theme)}>
+					: <Col sm={12} md={6} lg={6} className={"portfolio-container p-0 " + (getTheme())}>
 						<PortfolioContent
 							formState={formState}
 							portfolio={portfolio}

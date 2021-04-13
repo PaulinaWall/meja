@@ -58,10 +58,7 @@ const PortfolioContent = ({
 
 			{
 				formState === 'background' &&
-					<UserLandingPageExample
-						background={portfolio.background}
-						theme={portfolio.theme}
-					/>
+					<UserLandingPageExample />
 			}
 
 			{

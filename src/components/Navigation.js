@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useContext } from 'react';
+import React from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,23 +7,19 @@ import { faSuitcase } from '@fortawesome/free-solid-svg-icons'
 
 import useGetSinglePortfolio from '../hooks/useGetSinglePortfolio';
 import { useAuth } from '../contexts/AuthContext';
-import { ThemeContext } from '../contexts/ThemeContext';
 
 const Navigation = () => {
 	const { currentUser } = useAuth();
-	const { getTheme } = useContext(ThemeContext);
 	const location = useLocation();
 	const [, userName, portfolioID] = location.pathname.split('/');
-
 	const { portfolio } = useGetSinglePortfolio(portfolioID);
+	const userPage = userName !== 'create';
 
-	console.log(location.pathname)
-	
 	return (
-		<div className={userName ? " " + (getTheme()) : ""}>
+		<div className={userPage ? " " + (portfolio?.theme) : ""}>
 			<Navbar className="navigation p-3">
 			{
-				!userName &&
+				!userPage &&
 				<Link className="logo-link" to="/">
 					<FontAwesomeIcon icon={faSuitcase} className="mr-2 nav-icons" />
 				</Link>
@@ -35,17 +31,17 @@ const Navigation = () => {
 						{
 							currentUser ? (
 								<NavDropdown className="logo" title={currentUser.displayName} id="basic-nav-dropdown">
-									<NavLink to={`/${currentUser.displayName}/${portfolio?.id}/about`} className="dropdown-item">About</NavLink>
+									<NavLink to={`/${currentUser.displayName}/${portfolioID}/about`} className="dropdown-item">About</NavLink>
 
-									<NavLink to={`/${currentUser.displayName}/${portfolio?.id}/projects`} className="dropdown-item">Projects</NavLink>
+									<NavLink to={`/${currentUser.displayName}/${portfolioID}/projects`} className="dropdown-item">Projects</NavLink>
 
-									<NavLink to={`/${currentUser.displayName}/${portfolio?.id}/contact`} className="dropdown-item">Contact</NavLink>
+									<NavLink to={`/${currentUser.displayName}/${portfolioID}/contact`} className="dropdown-item">Contact</NavLink>
 
-									<NavLink to={`/${currentUser.displayName}/${portfolio?.id}/`} className="dropdown-item">Preview</NavLink>
+									<NavLink to={`/${currentUser.displayName}/${portfolioID}/`} className="dropdown-item">Preview</NavLink>
 
 									<NavDropdown.Divider />
 
-									<NavLink to={'/create'} className="dropdown-item">Create Portfolio</NavLink>
+									<NavLink to={`/create/${portfolioID}`} className="dropdown-item">Create Portfolio</NavLink>
 
 									<NavDropdown.Divider />
 

@@ -18,61 +18,58 @@ import Footer from './components/UserPages/Footer';
 import AuthContextProvider from './contexts/AuthContext';
 import ThemeContextProvider from './contexts/ThemeContext';
 import BackgroundContextProvider from './contexts/BackgroundContext';
-import CurrentPortfolioContextProvider from './contexts/CurrentPortfolioContext';
 
 function App() {
   return (
 	<Router>
 		<AuthContextProvider>
 			<BackgroundContextProvider>
-				<CurrentPortfolioContextProvider>
-					<ThemeContextProvider>
-						<Navigation />
-							<Routes>
-								<Route path="/">
-									<LandingPage />
+				<ThemeContextProvider>
+					<Navigation />
+						<Routes>
+							<Route path="/">
+								<LandingPage />
+							</Route>
+
+							<Route path="/signin">
+								<SignIn />
+							</Route>
+
+							<Route path="/signout">
+								<SignOut />
+							</Route>
+
+							<Route path="/signup">
+								<SignUp />
+							</Route>
+
+							<AuthRoute path="/create/:portfolioID">
+								<CreateForm />
+							</AuthRoute>
+
+							<Route path="/:userName">
+							
+								<Route path="/:portfolioID">
+									<UserLandingPage />
 								</Route>
 
-								<Route path="/signin">
-									<SignIn />
+								<Route path="/:portfolioID/projects">
+									<UserProjectPage />
 								</Route>
 
-								<Route path="/signout">
-									<SignOut />
+								<Route path="/:portfolioID/about">
+									<UserAboutPage />
 								</Route>
 
-								<Route path="/signup">
-									<SignUp />
+								<Route path="/:portfolioID/contact">
+									<UserContactForm />
 								</Route>
 
-								<AuthRoute path="/create">
-									<CreateForm />
-								</AuthRoute>
-
-								<Route path="/:userName">
-								
-									<Route path="/:portfolioID">
-										<UserLandingPage />
-									</Route>
-
-									<Route path="/:portfolioID/projects">
-										<UserProjectPage />
-									</Route>
-
-									<Route path="/:portfolioID/about">
-										<UserAboutPage />
-									</Route>
-
-									<Route path="/:portfolioID/contact">
-										<UserContactForm />
-									</Route>
-
-									<Route path="*" element={<NotFound />} />
-								</Route>
-							</Routes>
-						<Footer />
-					</ThemeContextProvider>
-				</CurrentPortfolioContextProvider>
+								<Route path="*" element={<NotFound />} />
+							</Route>
+						</Routes>
+					<Footer />
+				</ThemeContextProvider>
 			</BackgroundContextProvider>
 		</AuthContextProvider>
 	</Router>

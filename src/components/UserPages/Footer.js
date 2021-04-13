@@ -1,24 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 
 import useGetSinglePortfolio from '../../hooks/useGetSinglePortfolio';
-import { ThemeContext } from '../../contexts/ThemeContext';
 
 const Footer = () => {
 	const location = useLocation();
 	const [, userName, portfolioID] = location.pathname.split('/');
 	const { portfolio } = useGetSinglePortfolio(portfolioID);
-	const { getTheme } = useContext(ThemeContext);
+
+	const userPage = userName !== 'create';
 
 	return (
-		<div className={userName ? " " + (getTheme()) : ""}>
+		<div className={userPage ? " " + (portfolio?.theme) : ""}>
 			{
 				<Navbar className="footer">	
 					{
-						((userName && portfolio?.links.length > 0) || userName)
+						((userPage && portfolio?.links.length > 0) || userPage)
 						? portfolio?.links.map((link, index) => {
 							return <Nav className="ml-auto" key={index}>
 								{ link.github && 

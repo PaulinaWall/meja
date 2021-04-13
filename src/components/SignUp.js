@@ -1,6 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Row, Col, Button, Card, Alert, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { db } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 
 const SignUp = () => {
@@ -10,8 +12,33 @@ const SignUp = () => {
 	const passwordConfirmRef = useRef();
 	const [error, setError] = useState(null)
 	const [loading, setLoading] = useState(false)
-	const { signup, signin } = useAuth();
+	const { signup, signin, currentUser } = useAuth();
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if(!currentUser){
+			return
+		}
+		const newPortfolio = {
+			owner: currentUser.uid,
+			about: [],
+			projects: [],
+			links: [],
+			email: '',
+			theme: '',
+			background: '',
+		}
+
+		db.collection("portfolios").add( newPortfolio )
+		.then(docRef => {
+			setLoading(false);
+			navigate(`/create/${docRef.id}`)
+		})
+		.catch((e) => {
+			setError(e.message);
+		})
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentUser])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -24,10 +51,10 @@ const SignUp = () => {
 
 		try {
 			setLoading(true);
-			await signup(emailRef.current.value, passwordRef.current.value).then(async () => {
-				await signin(emailRef.current.value, passwordRef.current.value, nameRef.current.value)
-			});
-			navigate(`/${nameRef.current.value}/`);
+			await signup(emailRef.current.value, passwordRef.current.value)
+				.then(async () => {
+					await signin(emailRef.current.value, passwordRef.current.value, nameRef.current.value)
+				});
 		} catch (e) {
 			setError(e.message);
 			setLoading(false);
@@ -45,7 +72,6 @@ const SignUp = () => {
 							{error && (<Alert variant="danger">{error}</Alert>)}
 
 							<Form onSubmit={handleSubmit}>
-
 								<Form.Group id="email">
 									<Form.Label>First name</Form.Label>
 									<Form.Control type="text" ref={nameRef} required />
@@ -67,7 +93,6 @@ const SignUp = () => {
 								</Form.Group>
 
 								<Button className="button" disabled={loading} type="submit">Create Account</Button>
-
 							</Form>
 						</Card.Body>
 					</Card>
