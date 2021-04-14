@@ -13,7 +13,7 @@ const Navigation = () => {
 	const location = useLocation();
 	const [, userName, portfolioID] = location.pathname.split('/');
 	const { portfolio } = useGetSinglePortfolio(portfolioID);
-	const userPage = userName !== 'create';
+	const userPage = userName !== 'create' && userName !== '';
 
 	return (
 		<div className={userPage ? " " + (portfolio?.theme) : ""}>
