@@ -14,9 +14,9 @@ const AuthContextProvider = (props) => {
 
 
 	const signin = async (email, password, name) => {
-		return auth.signInWithEmailAndPassword(email, password).then((response) => {
-			response.user.updateProfile({
-				displayName: name.trim(),
+		return auth.signInWithEmailAndPassword(email, password).then( async (response) => {
+			await response.user.updateProfile({
+				displayName: name,
 			})
 		})
 	}

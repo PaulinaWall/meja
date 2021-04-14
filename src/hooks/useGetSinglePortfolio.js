@@ -8,7 +8,6 @@ const useGetSinglePortfolio = (portfolioId) => {
 	useEffect(() => {
 		const unsubscribe = db.collection('portfolios').doc(portfolioId)
 		.onSnapshot(snapshot => {
-			setLoadingPortfolio(true)
 			setPortfolio(snapshot.data());
 			setLoadingPortfolio(false)
 		})

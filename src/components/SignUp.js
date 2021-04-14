@@ -53,7 +53,7 @@ const SignUp = () => {
 			setLoading(true);
 			await signup(emailRef.current.value, passwordRef.current.value)
 				.then(async () => {
-					await signin(emailRef.current.value, passwordRef.current.value, nameRef.current.value)
+					await signin(emailRef.current.value, passwordRef.current.value, nameRef.current.value.replace(' ', ''))
 				});
 		} catch (e) {
 			setError(e.message);
@@ -73,7 +73,7 @@ const SignUp = () => {
 
 							<Form onSubmit={handleSubmit}>
 								<Form.Group id="email">
-									<Form.Label>First name</Form.Label>
+									<Form.Label>User name</Form.Label>
 									<Form.Control type="text" ref={nameRef} required />
 								</Form.Group>
 

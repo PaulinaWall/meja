@@ -11,7 +11,8 @@ const Footer = () => {
 	const [, userName, portfolioID] = location.pathname.split('/');
 	const { portfolio } = useGetSinglePortfolio(portfolioID);
 
-	const userPage = userName !== 'create' && userName !== '';
+	const notUserPages = ['create', 'signin', 'signout', 'signup', ''];
+	const userPage = !notUserPages.includes(userName);
 
 	return (
 		<div className={userPage ? " " + (portfolio?.theme) : ""}>

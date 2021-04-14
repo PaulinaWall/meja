@@ -462,8 +462,7 @@ image{
     display: flex;
     align-items: center;
 	justify-content: center;
-	padding: 0 50px;
-	padding-top: 20px;
+	padding: 50px;
 }
 
 .user-contact-page{
@@ -483,6 +482,10 @@ image{
     min-width: 100%;
     display: inline-grid;
     align-items: center;
+	padding-bottom: 100px;
+	@media screen and (max-width: 762px) {
+		padding-bottom: 20px;
+	}
 }
 
 .user-landing-page-row{
@@ -508,20 +511,11 @@ image{
 .zoom {
 	transition: transform .5s ease;
 	&:hover{
-		transform: scale(1.5);
+		transform: scale(1.25);
 		z-index: 10;
 		opacity: 1;
 	}
 }
-
-// .zoom-colorize {
-// 	transition: transform .5s, filter 1.5s ease-in-out;
-// 	filter: grayscale(100%);
-// 	&:hover{
-// 		filter: grayscale(0);
-// 		transform: scale(1.5);
-// 	}
-// }
 
 // ThemeColors and classes
 
@@ -603,8 +597,15 @@ image{
 			}
 		}
 	}
-	ol{
+	ol, li{
+		color: #9b6b70;
 		background-color: #f8c0c5;
+		a{
+			color: #9b6b70;
+			&:hover{
+				color: #7e575b;
+			}
+		}
 	}
 	.box-styles, .box-styles-example{
 		background-color: #fcdfe1;
@@ -653,8 +654,15 @@ image{
 			}
 		}
 	}
-	ol{
+	ol, li{
+		color: #406e66;
 		background-color:#9DBEBB;
+		a{
+			color: #406e66;
+			&:hover{
+				color: #2e4d47;
+			}
+		}
 	}
 	.box-styles, .box-styles-example{
 		background-color: #cbe4e2;
@@ -705,8 +713,15 @@ image{
 			}
 		}
 	}
-	ol{
+	ol, li{
+		color: #13242c;
 		background-color: #568EA6;
+		a{
+			color: #13242c;
+			&:hover{
+				color: #060808;
+			}
+		}
 	}
 	.box-styles, .box-styles-example{
 		background-color: #6eaac4;
@@ -757,8 +772,15 @@ image{
 			}
 		}
 	}
-	ol{
+	ol, li{
+		color: #9b8c84;
 		background-color: #f0d8ca;
+		a{
+			color: #9b8c84;
+			&:hover{
+				color: #81746d;
+			}
+		}
 	}
 	.box-styles, .box-styles-example{
 		background-color: #fdfdfc;
@@ -809,8 +831,15 @@ image{
 			}
 		}
 	}
-	ol{
+	ol, li{
+		color: #6b6579;
 		background-color: #b8b1c4;
+		a{
+			color: #6b6579;
+			&:hover{
+				color: #4a4653;
+			}
+		}
 	}
 	.box-styles, .box-styles-example{
 		background-color: #e0dce6;

@@ -13,16 +13,21 @@ const Navigation = () => {
 	const location = useLocation();
 	const [, userName, portfolioID] = location.pathname.split('/');
 	const { portfolio } = useGetSinglePortfolio(portfolioID);
-	const userPage = userName !== 'create' && userName !== '';
+	const notUserPages = ['create', 'signin', 'signout', 'signup', ''];
+	const userPage = !notUserPages.includes(userName);
 
 	return (
 		<div className={userPage ? " " + (portfolio?.theme) : ""}>
 			<Navbar className="navigation p-3">
 			{
-				!userPage &&
-				<Link className="logo-link" to="/">
-					<FontAwesomeIcon icon={faSuitcase} className="mr-2 nav-icons" />
-				</Link>
+				!userPage 
+				? (
+					<Link className="logo-link" to="/">
+						<FontAwesomeIcon icon={faSuitcase} className="mr-2 nav-icons" />
+					</Link>
+				) : (
+					<h3>{userName}</h3>
+				)
 			}
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
@@ -30,7 +35,7 @@ const Navigation = () => {
 						
 						{
 							currentUser ? (
-								<NavDropdown className="logo" title={currentUser.displayName} id="basic-nav-dropdown">
+								<NavDropdown className="logo" title="Menu" id="basic-nav-dropdown">
 									<NavLink to={`/${currentUser.displayName}/${portfolioID}/about`} className="dropdown-item">About</NavLink>
 
 									<NavLink to={`/${currentUser.displayName}/${portfolioID}/projects`} className="dropdown-item">Projects</NavLink>

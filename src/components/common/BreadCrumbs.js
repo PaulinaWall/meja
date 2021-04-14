@@ -11,7 +11,7 @@ const BreadCrumbs = ({ routes, portfolio }) => {
 						<ol className="breadcrumb">
 							{
 								routes.map(({ path, name }, index) => (
-									<li key={index} className="breadcrumb-item active" aria-current="page"><Link to={path}>{name}</Link></li>
+									<li key={index} className="breadcrumb-item" aria-current="page"><Link to={path}>{name}</Link></li>
 								))
 							}
 						</ol>

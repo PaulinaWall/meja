@@ -24,7 +24,7 @@ const UserAboutPage = () => {
 								return <div className="mb-3" key={index}>
 									{section.title && <h3>{section.title}</h3>}
 									{section.text && <p className="m-0">{section.text}</p>}
-									{section.aboutUrl && <a href={section.aboutUrl}>{section.aboutUrl}</a>}
+									{section.aboutUrl && <a href={`https://${section.aboutUrl}`} target="_blank" rel="noopener noreferrer">{section.aboutUrl}</a>}
 								</div>
 							})
 						}
