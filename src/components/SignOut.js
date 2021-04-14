@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Row, Col, Card } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { ThemeContext } from '../contexts/ThemeContext';
+import { BackgroundContext } from '../contexts/BackgroundContext';
 
 const SignOut = () => {
 	const { signout } = useAuth()
+	const { setTheme } = useContext(ThemeContext);
+	const { setBackground } = useContext(BackgroundContext);
 	const navigate = useNavigate()
 
 	useEffect(() => {
 		(async () => {
-			await signout()
-			navigate('/signin')
+			await signout();
+			setTheme('');
+			setBackground('');
+			navigate('/signin');
 		})()
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])

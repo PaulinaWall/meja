@@ -1,9 +1,11 @@
-import React,{ useRef, useState, useEffect }  from 'react'
+import React,{ useRef, useState, useEffect, useContext }  from 'react'
 import { Row, Col, Form, Button, Card, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { db } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
+import { ThemeContext } from '../contexts/ThemeContext';
+import { BackgroundContext } from '../contexts/BackgroundContext';
 
 const SignIn = () => {
 	const emailRef = useRef();
@@ -11,6 +13,8 @@ const SignIn = () => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(null);
 	const { signin, currentUser } = useAuth();
+	const { setTheme } = useContext(ThemeContext);
+	const { setBackground } = useContext(BackgroundContext);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -23,6 +27,8 @@ const SignIn = () => {
 			.then((querySnapshot) => {
 				setLoading(false);
 				querySnapshot.forEach((doc) => {
+					setTheme(doc.data().theme);
+					setBackground(doc.data().background);
 					navigate(`/create/${doc.id}`)
 				})
 			})
