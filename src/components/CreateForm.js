@@ -295,7 +295,7 @@ const CreateForm = () => {
 		}
 	}
 
-	const handleDelete = (part, index = 0) => {
+	const handleDelete = async (part, index = 0) => {
 		if(part === 'email'){
 			db.collection("portfolios").doc(portfolio.id).update({
 				[part]: ''
@@ -305,7 +305,24 @@ const CreateForm = () => {
 			}).catch((error) => {
 				setError(`Error removing document: ${error}`);
 			});
-		} else{
+		} else if(part === 'projects') {
+			const updatedPart = portfolio[part];
+			updatedPart.splice(index, 1);
+			await db.collection('portfolios').doc(portfolio.id)
+			.get()
+			.then((doc) => {
+				const image = doc.data().projects[index].image;
+				db.collection("portfolios").doc(portfolio.id).update({
+					[part]: updatedPart 
+				});
+				const imageExists = updatedPart.some((part) => part.image.path === image.path);
+				if(imageExists) {
+					return
+				}else{
+					storage.ref(image.path).delete();
+				}
+			})
+		}else{
 			const updatedPart = portfolio[part];
 			updatedPart.splice(index, 1);
 			db.collection("portfolios").doc(portfolio.id).update({
