@@ -7,7 +7,13 @@ import blue from '../../assets/images/blue.png'
 import purple from '../../assets/images/purple.svg'
 import green from '../../assets/images/green.png'
 import lightblue from '../../assets/images/lightblue.png'
-import orange from '../../assets/images/orange.png'
+import webdesignYellow from '../../assets/images/webdesignYellow.png'
+import webdesignPink from '../../assets/images/webdesignPink.png'
+import webdesignBlue from '../../assets/images/webdesignBlue.png'
+import webdesignPurple from '../../assets/images/webdesignPurple.png'
+import webdesignGrey from '../../assets/images/webdesignGrey.png'
+import webdesignLightBlue from '../../assets/images/webdesignLightBlue.jpeg'
+import webdesignBeige from '../../assets/images/webdesignBeige.png'
 import { BackgroundContext } from '../../contexts/BackgroundContext';
 
 const BackgroundImageForm = ({ handleSaveOnClick, setFormState }) => {
@@ -25,8 +31,14 @@ const BackgroundImageForm = ({ handleSaveOnClick, setFormState }) => {
 				<Image src={blue} onClick={() => setBackground(blue)} className="background-image" />
 				<Image src={lightblue} onClick={() => setBackground(lightblue)} className="background-image" />
 				<Image src={green} onClick={() => setBackground(green)} className="background-image" />
-				<Image src={orange} onClick={() => setBackground(orange)} className="background-image" />
 				<Image src={purple} onClick={() => setBackground(purple)} className="background-image" />
+				<Image src={webdesignYellow} onClick={() => setBackground(webdesignYellow)} className="background-image" />
+				<Image src={webdesignPink} onClick={() => setBackground(webdesignPink)} className="background-image" />
+				<Image src={webdesignBlue} onClick={() => setBackground(webdesignBlue)} className="background-image" />
+				<Image src={webdesignPurple} onClick={() => setBackground(webdesignPurple)} className="background-image" />
+				<Image src={webdesignGrey} onClick={() => setBackground(webdesignGrey)} className="background-image" />
+				<Image src={webdesignBeige} onClick={() => setBackground(webdesignBeige)} className="background-image" />
+				<Image src={webdesignLightBlue} onClick={() => setBackground(webdesignLightBlue)} className="background-image" />
 			</div>
 			<div className="d-flex justify-content-end">
 				<Button className="button btn-secondary mr-3" size="sm" onClick={() => setBackground('')}>

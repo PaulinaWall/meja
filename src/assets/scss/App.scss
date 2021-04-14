@@ -51,6 +51,11 @@ image{
 		height: auto;
 	}
 }
+.background-image-example-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
 .background-image{
 	width: 180px;
@@ -58,6 +63,18 @@ image{
 }
 
 .background-image-landing-page{
+	width: 800px;
+	border-radius: 10px 10px;
+
+	@media screen and (max-width: 762px) {
+		display: none;
+	}
+}
+
+.background-image-example-landing-page{
+	max-width: 400px;
+	border-radius: 10px 10px;
+
 	@media screen and (max-width: 762px) {
 		display: none;
 	}
@@ -365,9 +382,24 @@ image{
 	height: 100%;
 }
 
+.portfolio-url{
+	padding: 0.375rem 0.75rem;
+	border-radius: 0.25rem;
+	border: 2px solid var(--darkBlue);
+	box-shadow: 3px 3px 3px var(--darkBlue);
+	color: var(--darkBlue);
+	height: 100%;
+	margin-left: 10px;
+}
+
+.portfolio-url-container{
+	margin-top: 80px;
+}
+
 .project-page-row{
 	justify-content: center;
 }
+
 .quotes-column{
 	display: flex;
 	align-items: center;
@@ -384,14 +416,6 @@ image{
 
 .right-quote{
 	margin-left: 10px;
-}
-
-.save-portfolio-button{
-	font-size: 1rem;
-	height: 50px;
-	margin-left: 10px;
-	margin-bottom: 30px;
-	margin-top: 200px;
 }
 
 .theme-color-list{

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Image } from 'react-bootstrap';
 
 import useGetSinglePortfolio from '../../hooks/useGetSinglePortfolio';
 
@@ -13,7 +13,7 @@ const UserLandingPage = () => {
 	const backgroundUrl = portfolio?.background;
 	return ( 
 		<Container className={"user-landing-page-container " + (portfolio?.theme)}>
-			<Row>
+			<Row className="align-items-center">
 				<Col sm={6} md={6} lg={6}>
 					<Row className="user-landingPage-row">
 						<Col className="box-styles zoom" sm={8} md={8} lg={8}>
@@ -27,13 +27,8 @@ const UserLandingPage = () => {
 						</Col>
 					</Row>
 				</Col>
-				<Col className="background-image-landing-page" sm={6} md={6} lg={6} style={{
-						backgroundImage: `url(${backgroundUrl})`,
-						backgroundRepeat: 'no-repeat',
-						backgroundPosition: 'center center',
-						backgroundSize: 'auto',
-						width:'250px'
-						}}>
+				<Col sm={6} md={6} lg={6}>
+					<Image className="background-image-landing-page" src={backgroundUrl} />
 				</Col>
 			</Row>
 		</Container>

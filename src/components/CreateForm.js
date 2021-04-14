@@ -467,10 +467,10 @@ const CreateForm = () => {
 				}
 			</Row>
 
-			<div className="save-portfolio-button-container">
-				<Button className="button save-portfolio-button" onClick={handleShowPortfolioOnClick}>Preview Portfolio</Button>
+			<div className="portfolio-url-container">
+				<Button className="button" onClick={handleShowPortfolioOnClick}>Preview Portfolio</Button>
 				<span
-					className="button save-portfolio-button"
+					className="portfolio-url"
 				>
 					{`http://localhost:3000/${currentUser.displayName}/${portfolio?.id}`}
 				</span>

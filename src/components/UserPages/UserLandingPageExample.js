@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Image } from 'react-bootstrap';
 
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { BackgroundContext } from '../../contexts/BackgroundContext';
@@ -24,13 +24,9 @@ const UserLandingPage = ({ background, theme }) => {
 						</Col>
 					</Row>
 				</Col>
-				<Col className="background-image-landing-page" sm={8} md={8} lg={8} style={{
-				backgroundImage: `url(${getBackground()})`,
-				backgroundRepeat: 'no-repeat',
-				backgroundPosition: 'center center',
-				backgroundSize: 'auto',
-				width:'250px'
-				}}></Col>
+				<Col className="background-image-example-container" sm={8} md={8} lg={8}>
+					<Image className="background-image-example-landing-page" src={getBackground()} />
+				</Col>
 			</Row>
 		</Container>
 		
