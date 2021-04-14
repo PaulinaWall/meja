@@ -136,6 +136,11 @@ image{
 		}
 }
 
+.breadcrumb-container{
+	font-size: x-large;
+	padding: 20px;
+}
+
 .card{
 	height: 100%;
 	background-color: white;
@@ -447,7 +452,6 @@ image{
 	align-items: center;
 	height: 100%;
 	padding: 30px;
-
 }
 
 .user-project-page-container{
@@ -598,6 +602,9 @@ image{
 			}
 		}
 	}
+	ol{
+		background-color: #f8c0c5;
+	}
 	.box-styles, .box-styles-example{
 		background-color: #fcdfe1;
 		color: #df9da4;
@@ -644,6 +651,9 @@ image{
 				color: #2e4d47;
 			}
 		}
+	}
+	ol{
+		background-color:#9DBEBB;
 	}
 	.box-styles, .box-styles-example{
 		background-color: #cbe4e2;
@@ -694,6 +704,9 @@ image{
 			}
 		}
 	}
+	ol{
+		background-color: #568EA6;
+	}
 	.box-styles, .box-styles-example{
 		background-color: #6eaac4;
 		box-shadow: 30px 40px 10px #305F72;
@@ -743,6 +756,9 @@ image{
 			}
 		}
 	}
+	ol{
+		background-color: #f0d8ca;
+	}
 	.box-styles, .box-styles-example{
 		background-color: #fdfdfc;
 		box-shadow: 30px 40px 10px #dec9bd;
@@ -791,6 +807,9 @@ image{
 				color: #4a4653;
 			}
 		}
+	}
+	ol{
+		background-color: #b8b1c4;
 	}
 	.box-styles, .box-styles-example{
 		background-color: #e0dce6;

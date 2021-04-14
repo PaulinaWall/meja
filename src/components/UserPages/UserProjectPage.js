@@ -4,14 +4,19 @@ import { Card, Row, Col, Image, Container } from 'react-bootstrap';
 import { BounceLoader } from 'react-spinners'
 
 import useGetSinglePortfolio from '../../hooks/useGetSinglePortfolio';
+import BreadCrumbs from '../common/BreadCrumbs';
 
 
 const UserProjectPage = () => {
-	const { portfolioID } = useParams();
+	const { userName, portfolioID } = useParams();
 	const { portfolio, loadingPortfolio } = useGetSinglePortfolio(portfolioID);
 
 	return ( 
 		<>
+			<BreadCrumbs
+				routes={[{path: `/${userName}/${portfolioID}`, name: 'Home'}, {path: `/${userName}/${portfolioID}/projects`, name: 'Projects'}]}
+				portfolio={portfolio}
+			/>
 		{loadingPortfolio && <BounceLoader color={"#888"} size={100} />}
 			<Container className={"user-project-page-container " + (portfolio?.theme)}>
 				<Row className="project-page-row">
