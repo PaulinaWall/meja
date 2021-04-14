@@ -8,10 +8,10 @@ const BreadCrumbs = ({ routes, portfolio }) => {
 			{
 				routes.length > 0 &&
 					<nav className="breadcrumb-nav" aria-label="breadcrumb">
-						<ol class="breadcrumb">
+						<ol className="breadcrumb">
 							{
-								routes.map(({ path, name }) => (
-									<li class="breadcrumb-item active" aria-current="page"><Link to={path}>{name}</Link></li>
+								routes.map(({ path, name }, index) => (
+									<li key={index} className="breadcrumb-item active" aria-current="page"><Link to={path}>{name}</Link></li>
 								))
 							}
 						</ol>
