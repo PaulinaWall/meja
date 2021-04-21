@@ -17,6 +17,7 @@ import PortfolioContent from './UserPages/PortfolioContent';
 import QuotesComponent from './QuotesComponent';
 import BackgroundImageForm from './common/BackgroundImageForm';
 import useGetCurrentUserPortfolio from '../hooks/useGetCurrentUserPortfolio';
+// import useGetCurrentUserPortfolio from '../hooks/useGetCurrentUserPortfolio';
 // import useSetPortfolio from '../hooks/useSetPortfolio'
 // import useAddImage from '../hooks/useAddImage';
 
