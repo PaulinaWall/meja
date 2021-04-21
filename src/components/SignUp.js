@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Row, Col, Button, Card, Alert, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card, Alert, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { db } from '../firebase';
@@ -62,7 +62,7 @@ const SignUp = () => {
 	};
 
 	return ( 
-		<>
+		<Container>
 			<Row>
 				<Col md={{ span: 6, offset: 3 }}>
 					<Card>
@@ -101,7 +101,7 @@ const SignUp = () => {
 					</div>
 				</Col>
 			</Row>
-		</>
+		</Container>
 	 );
 }
  

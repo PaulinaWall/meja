@@ -1,5 +1,5 @@
 import React,{ useRef, useState, useEffect, useContext }  from 'react'
-import { Row, Col, Form, Button, Card, Alert } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { db } from '../firebase';
@@ -52,7 +52,7 @@ const SignIn = () => {
 		}
 	}
 	return (
-		<>
+		<Container>
 			<Row>
 				<Col md={{ span: 6, offset: 3 }}>
 					<Card>
@@ -83,7 +83,7 @@ const SignIn = () => {
 					</div>
 				</Col>
 			</Row>
-		</>
+		</Container>
 	)
 }
 
