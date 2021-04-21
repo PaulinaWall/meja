@@ -17,7 +17,6 @@ import PortfolioContent from './UserPages/PortfolioContent';
 import QuotesComponent from './QuotesComponent';
 import BackgroundImageForm from './common/BackgroundImageForm';
 import useGetCurrentUserPortfolio from '../hooks/useGetCurrentUserPortfolio';
-// import useGetCurrentUserPortfolio from '../hooks/useGetCurrentUserPortfolio';
 // import useSetPortfolio from '../hooks/useSetPortfolio'
 // import useAddImage from '../hooks/useAddImage';
 
@@ -26,24 +25,14 @@ const CreateForm = () => {
 	const [error, setError] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState(null);
 	const [formState, setFormState] = useState('');
-	
 	const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
-	const [projectTitle, setProjectTitle] = useState('');
-	const [projectText, setProjectText] = useState('');
-	const [projectUrl, setProjectUrl] = useState('');
-	const [projectImage, setProjectImage] = useState('');
 	const [currentProjectIndex, setCurrentProjectIndex] = useState(null);
 	// const [portfolioContent, setPortfolioContent] = useState(''); 
 	
-	const [aboutTitle, setAboutTitle] = useState('');
-	const [aboutText, setAboutText] = useState('');
-	const [aboutUrl, setAboutUrl] = useState('');
-
+	const [project, setProject] = useState({});
+	const [aboutState, setAboutState] = useState({});
 	const [email, setEmail] = useState('');
-	
-	const [gitHubUrl, setGithubUrl] = useState('');
-	const [linkedinUrl, setLinkedinUrl] = useState('');
-	const [facebookUrl, setFacebookUrl] = useState('');
+	const [link, setLink] = useState({});
 	
 	const { currentUser } = useAuth();
 	const { getTheme } = useContext(ThemeContext);
@@ -87,12 +76,15 @@ const CreateForm = () => {
 		uploadTask.then(snapshot => {
 			snapshot.ref.getDownloadURL().then(url => {
 				setUploadedImageUrl(url);
-				setProjectImage({
-					name: image.name,
-					size: image.size,
-					type: image.type,
-					path: snapshot.ref.fullPath,
-					url,
+				setProject({
+					...project,
+					image: {
+						name: image.name,
+						size: image.size,
+						type: image.type,
+						path: snapshot.ref.fullPath,
+						url,
+					}
 				});
 				setUploadProgress(null);
 			});
@@ -112,10 +104,10 @@ const CreateForm = () => {
 			const background = getBackground();
 			if(partToSet === 'projects'){
 				data = {
-					title: projectTitle,
-					image: projectImage,
-					projectUrl: projectUrl,
-					text: projectText,
+					title: project.title,
+					image: project.image,
+					url: project.url,
+					text: project.text,
 				}
 				projects = snapshot.data().projects;
 				if(currentProjectIndex || currentProjectIndex === 0){
@@ -123,7 +115,7 @@ const CreateForm = () => {
 				}else{
 					projects.push(data);
 				}
-
+				console.log(projects)
 				db.collection('portfolios').doc(portfolio.id).set({
 					projects: projects,
 				}, { merge: true })
@@ -137,9 +129,9 @@ const CreateForm = () => {
 			
 			if (partToSet === 'about'){
 				data = {
-					title: aboutTitle,
-					aboutUrl: aboutUrl,
-					text: aboutText,
+					title: aboutState.title,
+					url: aboutState.url,
+					text: aboutState.text,
 				}
 				about = snapshot.data().about;
 				if(currentProjectIndex || currentProjectIndex === 0) {
@@ -161,9 +153,9 @@ const CreateForm = () => {
 
 			if (partToSet === 'links') {
 				data = {
-					facebook: facebookUrl,
-					linkedin: linkedinUrl,
-					github: gitHubUrl,
+					facebook: link.facebook,
+					linkedin: link.linkedin,
+					github: link.github,
 				}
 
 				links = snapshot.data().links;
@@ -200,7 +192,7 @@ const CreateForm = () => {
 					theme,
 				}, { merge: true })
 				.then(() => {
-					setMessage(`Succesfully updated portfolio with a new theme color!`);
+					setMessage(`Successfully updated portfolio with a new theme color!`);
 				})
 				.catch((e) => {
 					setError(e.message);
@@ -226,28 +218,34 @@ const CreateForm = () => {
 
 	const handleSaveOnClick = () => {
 		if (formState === 'project') {
-			if(projectText.length > 50) {
+			if(project.text.length > 50) {
 				return;
 			}
-			setProjectTitle('');
-			setProjectImage('');
+			setProject({
+				title: '',
+				image: '',
+				url: '',
+				text: '',
+			});
 			setUploadedImageUrl(null);
-			setProjectUrl('');
-			setProjectText('');
 			setPortfolioContent('projects');
 		}
 
 		if (formState === 'about') {
 			setPortfolioContent('about');
-			setAboutTitle('');
-			setAboutText('');
-			setAboutUrl('');
+			setAboutState({
+				title: '',
+				text: '',
+				url: '',
+			});
 		}
 
 		if (formState === 'links') {
-			setGithubUrl('');
-			setFacebookUrl('');
-			setLinkedinUrl('');
+			setLink({
+				facebook: '',
+				linkedin: '',
+				github: '',
+			});
 			setPortfolioContent('links');
 		}
 
@@ -273,25 +271,31 @@ const CreateForm = () => {
 
 	const handleChangeOnClick = (part, object, index) => {
 		if(part === 'project') {
-			setProjectTitle(object.title);
+			setProject({
+				title: object.title,
+				image: object.image,
+				url: object.url,
+				text: object.text,
+			});
 			setUploadedImageUrl(object.image.url);
-			setProjectImage(object.image);
-			setProjectUrl(object.projectUrl);
-			setProjectText(object.text);
 			setCurrentProjectIndex(index);
 		}
 
 		if(part === 'about') {
-			setAboutText(object.text);
-			setAboutTitle(object.title);
-			setAboutUrl(object.aboutUrl);
+			setAboutState({
+				title: object.title,
+				text: object.text,
+				url: object.url,
+			});
 			setCurrentProjectIndex(index);
 		}
 
 		if(part === 'links') {
-			setFacebookUrl(object.facebook);
-			setLinkedinUrl(object.linkedin);
-			setGithubUrl(object.github);
+			setLink({
+				facebook: object.facebook,
+				linkedin: object.linkedin,
+				github: object.github,
+			});
 			setCurrentProjectIndex(index);
 		}
 	}
@@ -341,11 +345,12 @@ const CreateForm = () => {
 		navigate(`/${currentUser.displayName}/${portfolio.id}`)
 	}
 
+	console.log(project)
 	return ( 
 		<Container className="create-form-container">
 			<Row className="create-form">
 				<Col sm={12} md={6} lg={6} className="form-container">
-					{message&& 
+					{message && 
 						(<Alert variant="success" onClose={() => setMessage(false)} dismissible>{message}</Alert>)
 					}
 					{error && 
@@ -361,14 +366,14 @@ const CreateForm = () => {
 						{
 							formState === 'about' &&
 								<AboutForm 
-									title={aboutTitle}
-									text={aboutText}
-									url={aboutUrl}
+									title={aboutState.title}
+									text={aboutState.text}
+									url={aboutState.url}
 									setFormState={() => setFormState('')}
 									handleSaveOnClick={handleSaveOnClick}
-									handleTextChange={(e) => setAboutText(e.target.value)}
-									handleTitleChange={(e) => setAboutTitle(e.target.value)}
-									handleUrlChange={(e) => setAboutUrl(e.target.value)}
+									handleTextChange={(e) => setAboutState({ ...aboutState, text: e.target.value })}
+									handleTitleChange={(e) => setAboutState({ ...aboutState, title: e.target.value })}
+									handleUrlChange={(e) => setAboutState({ ...aboutState, url: e.target.value })}
 								/>
 						}
 					</Container>
@@ -383,18 +388,18 @@ const CreateForm = () => {
 						{
 							formState === 'project' && 
 								<ProjectForm 
-									title={projectTitle}
-									text={projectText}
-									url={projectUrl}
-									image={projectImage}
+									title={project.title}
+									text={project.text}
+									url={project.url}
+									image={project.image}
 									uploadProgress={uploadProgress}
 									uploadedImageUrl={uploadedImageUrl}
 									setFormState={() => setFormState('')}
 									handleSaveOnClick={handleSaveOnClick}
 									handleImageChange={handleImageChange}
-									handleTitleChange={(e) => setProjectTitle(e.target.value)}
-									handleTextChange={(e) => setProjectText(e.target.value)}
-									handleUrlChange={(e) => setProjectUrl(e.target.value)}
+									handleTitleChange={(e) => setProject({ ...project, title: e.target.value })}
+									handleTextChange={(e) => setProject({ ...project, text: e.target.value })}
+									handleUrlChange={(e) => setProject({ ...project, url: e.target.value })}
 								/>
 						}
 					</Container>
@@ -443,13 +448,13 @@ const CreateForm = () => {
 						{
 							formState === 'links' &&
 								<LinksForm 
-									facebookUrl={facebookUrl}
-									gitHubUrl={gitHubUrl}
-									linkedinUrl={linkedinUrl}
+									facebookUrl={link.facebook}
+									gitHubUrl={link.github}
+									linkedinUrl={link.linkedin}
 									setFormState={() => setFormState('')}
-									handleGithubChange={(e) => setGithubUrl(e.target.value)}
-									handleLinkedinChange={(e) => setLinkedinUrl(e.target.value)}
-									handleFacebookChange={(e) => setFacebookUrl(e.target.value)}
+									handleGithubChange={(e) => setLink({ ...link, github: e.target.value })}
+									handleLinkedinChange={(e) => setLink({ ...link, linkedin: e.target.value })}
+									handleFacebookChange={(e) => setLink({ ...link, facebook: e.target.value })}
 									handleSaveOnClick={handleSaveOnClick}
 								/>
 						}

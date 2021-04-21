@@ -9,7 +9,7 @@ const About = ({ section, handleOnClick, handleDelete }) => {
 			<div className="mb-3">
 				{section.title && <h2 style={{ fontSize: "25px" }}>{section.title}</h2>}
 				{section.text && <p>{section.text}</p>}
-				{section.aboutUrl && <a href={`https://${section.aboutUrl}`} target="_blank" rel="noopener noreferrer">{section.aboutUrl}</a>}
+				{section.url && <a href={`https://${section.url}`} target="_blank" rel="noopener noreferrer">{section.url}</a>}
 			</div>
 			<div className="d-flex">
 				<Button className="button mr-3" size="sm" type="button" onClick={handleOnClick}>

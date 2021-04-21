@@ -15,7 +15,7 @@ const ProjectCard = ({ project, handleOnClick, handleDelete }) => {
 				</Card.Text>
 			</Card.Body>
 			<Card.Body className="p-1.5">
-				<Card.Link href={`https://${project.projectUrl}`} target="_blank" rel="noopener noreferrer">{project.projectUrl}</Card.Link>
+				<Card.Link href={`https://${project.url}`} target="_blank" rel="noopener noreferrer">{project.url}</Card.Link>
 			</Card.Body>
 			<div className="d-flex justify-content-between m-2">
 				<Button className="button btn-secondary" size="sm" type="button" onClick={handleOnClick}>
