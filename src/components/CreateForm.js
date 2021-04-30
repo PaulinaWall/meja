@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Container, Alert, Button, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAlignJustify, faNetworkWired, faPalette, faAddressCard, faLink, faImage } from '@fortawesome/free-solid-svg-icons';
 
-import { db, storage } from '../firebase';
+import { db } from '../firebase';
 import AboutForm from './common/AboutForm';
 import LinksForm from './common/LinksForm';
 import ProjectForm from './common/ProjectForm';
@@ -17,20 +17,21 @@ import PortfolioContent from './UserPages/PortfolioContent';
 import QuotesComponent from './QuotesComponent';
 import BackgroundImageForm from './common/BackgroundImageForm';
 import useGetCurrentUserPortfolio from '../hooks/useGetCurrentUserPortfolio';
-// import useSetPortfolio from '../hooks/useSetPortfolio'
-// import useAddImage from '../hooks/useAddImage';
+import useAddImage from '../hooks/useAddImage';
+import useDeleteSection from '../hooks/useDeleteSection';
 
 const CreateForm = () => {
 	const [message, setMessage] = useState(false);
 	const [error, setError] = useState(false);
-	const [uploadProgress, setUploadProgress] = useState(null);
+	const [showUrl, setShowUrl] = useState(false);
+	const [imageToAdd, setImageToAdd] = useState('');
+	const [deleteSection, setDeleteSection] = useState(false);
 	const [formState, setFormState] = useState('');
-	const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
+	const [uploadedImageUrl, setUploadedImageUrl] = useState('');
 	const [currentProjectIndex, setCurrentProjectIndex] = useState(null);
-	// const [portfolioContent, setPortfolioContent] = useState(''); 
 	
 	const [project, setProject] = useState({});
-	const [aboutState, setAboutState] = useState({});
+	const [about, setAbout] = useState({});
 	const [email, setEmail] = useState('');
 	const [link, setLink] = useState({});
 	
@@ -39,69 +40,41 @@ const CreateForm = () => {
 	const { getBackground } = useContext(BackgroundContext);
 	const navigate = useNavigate();
 	const { portfolio } = useGetCurrentUserPortfolio();
-	// const { uploadProgress, uploadedImageUrl, setUploadedImageUrl, error: uploadImageError } = useAddImage(setProjectImage);
-	// console.log(projectImage)
-	// const {error: setPortfolioError, message: setPortfolioMessage} = useSetPortfolio(
-	// 	portfolioContent,
-	// 	projectTitle,
-	// 	projectImage,
-	// 	projectUrl,
-	// 	projectText,
-	// 	currentProjectIndex,
-	// 	setCurrentProjectIndex,
-	// 	aboutTitle,
-	// 	aboutUrl,
-	// 	aboutText,
-	// 	facebookUrl,
-	// 	linkedinUrl,
-	// 	gitHubUrl,
-	// 	email,
-	// );
+	const { uploadProgress, imageUrl, projectImage, error: uploadImageError } = useAddImage(imageToAdd);
+	const { error: deleteError, message: deleteMessage } = useDeleteSection(deleteSection);
+	
+	useEffect(() => {
+		setUploadedImageUrl(imageUrl)
+		setProject({
+			...project,
+			image: { ...projectImage },
+		})
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [projectImage])
 
-	const addImageToStorage = (image) => {
-		if(!image) {
-			return;
-		};
-		const storageRef = storage.ref();
-
-		const fileRef = storageRef.child(image.name);
-		
-		const uploadTask = fileRef.put(image);
-
-		uploadTask.on('state_changed', taskSnapshot => {
-			setUploadProgress(Math.round(
-				(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100));
-		});
-
-		uploadTask.then(snapshot => {
-			snapshot.ref.getDownloadURL().then(url => {
-				setUploadedImageUrl(url);
-				setProject({
-					...project,
-					image: {
-						name: image.name,
-						size: image.size,
-						type: image.type,
-						path: snapshot.ref.fullPath,
-						url,
-					}
-				});
-				setUploadProgress(null);
-			});
-		}).catch(error => {
-			setError(error.message)
-		});
+	const setToDB = (section, part, message) => {
+		db.collection('portfolios').doc(portfolio.id).set({
+			[section]: part,
+		}, { merge: true })
+		.then(() => {
+			setCurrentProjectIndex(null);
+			setMessage(message)
+		})
+		.catch((e) => {
+			setError(e.message);
+		})
 	};
 
 	const setPortfolioContent = (partToSet) => {
 		db.collection('portfolios').doc(portfolio.id).get()
         .then((snapshot) => {
 			let projects;
-			let about;
+			let aboutSection;
 			let data;
 			let links;
 			const theme = getTheme();
 			const background = getBackground();
+
 			if(partToSet === 'projects'){
 				data = {
 					title: project.title,
@@ -115,40 +88,22 @@ const CreateForm = () => {
 				}else{
 					projects.push(data);
 				}
-				console.log(projects)
-				db.collection('portfolios').doc(portfolio.id).set({
-					projects: projects,
-				}, { merge: true })
-				.then(() => {
-					setCurrentProjectIndex(null);
-				})
-				.catch((e) => {
-					setError(e.message);
-				})
+				setToDB('projects', projects);
 			}
 			
 			if (partToSet === 'about'){
 				data = {
-					title: aboutState.title,
-					url: aboutState.url,
-					text: aboutState.text,
+					title: about.title,
+					url: about.url,
+					text: about.text,
 				}
-				about = snapshot.data().about;
+				aboutSection = snapshot.data().about;
 				if(currentProjectIndex || currentProjectIndex === 0) {
-					about[currentProjectIndex] = data;
+					aboutSection[currentProjectIndex] = data;
 				}else{
-					about.push(data);
+					aboutSection.push(data);
 				}
-
-				db.collection('portfolios').doc(portfolio.id).set({
-					about: about,
-				}, { merge: true })
-				.then(() => {
-					setCurrentProjectIndex(null);
-				})
-				.catch((e) => {
-					setError(e.message);
-				})
+				setToDB('about', aboutSection);
 			}
 
 			if (partToSet === 'links') {
@@ -164,51 +119,21 @@ const CreateForm = () => {
 				}else{
 					links[0] = data;
 				}
-
-				db.collection('portfolios').doc(portfolio.id).set({
-					links: links,
-				}, { merge: true })
-				.then(() => {
-					setCurrentProjectIndex(null);
-				})
-				.catch((e) => {
-					setError(e.message);
-				})
+				setToDB('links', links);
 			}
 
 			if(partToSet === 'email') {
-				db.collection('portfolios').doc(portfolio.id).set({
-					email: email,
-				}, { merge: true })
-				.then(() => {
-				})
-				.catch((e) => {
-					setError(e.message);
-				})
+				setToDB('email', email)
 			}
 
 			if(partToSet === 'theme') {
-				db.collection('portfolios').doc(portfolio.id).set({
-					theme,
-				}, { merge: true })
-				.then(() => {
-					setMessage(`Successfully updated portfolio with a new theme color!`);
-				})
-				.catch((e) => {
-					setError(e.message);
-				})
+				const message = `Successfully updated portfolio with a new theme color!`;
+				setToDB('theme', theme, message);
 			}
 
 			if(partToSet === 'background') {
-				db.collection('portfolios').doc(portfolio.id).set({
-					background,
-				}, { merge: true })
-				.then(() => {
-					setMessage('Successfully added a background image to your portfolio´s landing page!');
-				})
-				.catch((e) => {
-					setError(e.message);
-				})
+				const message = 'Successfully added a background image to your portfolio´s landing page!';
+				setToDB('background', background, message);
 			}
 
 		}).catch((e) => {
@@ -231,42 +156,23 @@ const CreateForm = () => {
 			setPortfolioContent('projects');
 		}
 
-		if (formState === 'about') {
-			setPortfolioContent('about');
-			setAboutState({
-				title: '',
-				text: '',
-				url: '',
-			});
-		}
-
-		if (formState === 'links') {
-			setLink({
-				facebook: '',
-				linkedin: '',
-				github: '',
-			});
-			setPortfolioContent('links');
-		}
-
-		if (formState === 'contact' ){
-			setEmail('');
-			setPortfolioContent('email');
-		}
-
-		if (formState === 'color' ){
-			setPortfolioContent('theme');
-		}
-
-		if (formState === 'background') {
-			setPortfolioContent('background');
-		}
-
+		setPortfolioContent(formState);
+		setAbout({
+			title: '',
+			text: '',
+			url: '',
+		});
+		setLink({
+			facebook: '',
+			linkedin: '',
+			github: '',
+		});
+		setEmail('');
 	}
 
 	const handleImageChange = (e) => {
 		setUploadedImageUrl(e.target.files[0]);
-		addImageToStorage(e.target.files[0]);
+		setImageToAdd(e.target.files[0]);
 	};
 
 	const handleChangeOnClick = (part, object, index) => {
@@ -280,9 +186,8 @@ const CreateForm = () => {
 			setUploadedImageUrl(object.image.url);
 			setCurrentProjectIndex(index);
 		}
-
 		if(part === 'about') {
-			setAboutState({
+			setAbout({
 				title: object.title,
 				text: object.text,
 				url: object.url,
@@ -301,61 +206,30 @@ const CreateForm = () => {
 	}
 
 	const handleDelete = async (part, index = 0) => {
-		if(part === 'email'){
-			db.collection("portfolios").doc(portfolio.id).update({
-				[part]: ''
-			})
-			.then(() => {
-				setMessage(`Document successfully deleted!`);
-			}).catch((error) => {
-				setError(`Error removing document: ${error}`);
-			});
-		} else if(part === 'projects') {
-			const updatedPart = portfolio[part];
-			updatedPart.splice(index, 1);
-			await db.collection('portfolios').doc(portfolio.id)
-			.get()
-			.then((doc) => {
-				const image = doc.data().projects[index].image;
-				db.collection("portfolios").doc(portfolio.id).update({
-					[part]: updatedPart 
-				});
-				const imageExists = updatedPart.some((part) => part.image.path === image.path);
-				if(imageExists) {
-					return
-				}else{
-					storage.ref(image.path).delete();
-				}
-			})
-		}else{
-			const updatedPart = portfolio[part];
-			updatedPart.splice(index, 1);
-			db.collection("portfolios").doc(portfolio.id).update({
-				[part]: updatedPart 
-			})
-			.then(() => {
-				setMessage(`Document successfully deleted!`);
-			}).catch((error) => {
-				setError(`Error removing document: ${error}`);
-			});
-		}
+		setDeleteSection({ part, index });
 	}
 
 	const handleShowPortfolioOnClick = () => {
 		navigate(`/${currentUser.displayName}/${portfolio.id}`)
 	}
 
-	console.log(project)
+	const messages = [message, deleteMessage];
+	const errors = [error, deleteError, uploadImageError];
 	return ( 
 		<Container className="create-form-container">
 			<Row className="create-form">
 				<Col sm={12} md={6} lg={6} className="form-container">
-					{message && 
-						(<Alert variant="success" onClose={() => setMessage(false)} dismissible>{message}</Alert>)
+					{
+						messages.map((message, index) => (
+							message && (<Alert key={index} variant="success" onClose={() => setMessage(false)} dismissible>{message}</Alert>)
+						))
 					}
-					{error && 
-						(<Alert variant="danger" onClose={() => setError(false)} dismissible>{error}</Alert>)
+					{
+						errors.map((error, index) => (
+							error && (<Alert key={index} variant="danger" onClose={() => setError(false)} dismissible>{error}</Alert>)
+						))
 					}
+					
 					<Container className="pointer mt-5">
 						<div className="create-form-menu">
 							<FontAwesomeIcon
@@ -366,14 +240,14 @@ const CreateForm = () => {
 						{
 							formState === 'about' &&
 								<AboutForm 
-									title={aboutState.title}
-									text={aboutState.text}
-									url={aboutState.url}
+									title={about.title}
+									text={about.text}
+									url={about.url}
 									setFormState={() => setFormState('')}
 									handleSaveOnClick={handleSaveOnClick}
-									handleTextChange={(e) => setAboutState({ ...aboutState, text: e.target.value })}
-									handleTitleChange={(e) => setAboutState({ ...aboutState, title: e.target.value })}
-									handleUrlChange={(e) => setAboutState({ ...aboutState, url: e.target.value })}
+									handleTextChange={(e) => setAbout({ ...about, text: e.target.value })}
+									handleTitleChange={(e) => setAbout({ ...about, title: e.target.value })}
+									handleUrlChange={(e) => setAbout({ ...about, url: e.target.value })}
 								/>
 						}
 					</Container>
@@ -409,10 +283,10 @@ const CreateForm = () => {
 							<FontAwesomeIcon
 								icon={faPalette}
 							/>
-							<h2 onClick={() => setFormState('color')}>Choose Color</h2>
+							<h2 onClick={() => setFormState('theme')}>Choose Color</h2>
 						</div>
 						{
-							formState === 'color' &&
+							formState === 'theme' &&
 								<ProjectColorPicker 
 									setFormState={() => setFormState('')}
 									handleSaveOnClick={handleSaveOnClick}
@@ -425,10 +299,10 @@ const CreateForm = () => {
 							<FontAwesomeIcon
 								icon={faAddressCard}
 							/>
-							<h2 onClick={() => setFormState('contact')}>Add Contact</h2>
+							<h2 onClick={() => setFormState('email')}>Add Contact</h2>
 						</div>
 						{
-							formState === 'contact' &&
+							formState === 'email' &&
 								<ContactForm
 									email={email}
 									setFormState={() => setFormState('')}
@@ -492,11 +366,11 @@ const CreateForm = () => {
 
 			<div className="portfolio-url-container">
 				<Button className="button" onClick={handleShowPortfolioOnClick}>Preview Portfolio</Button>
-				<span
-					className="portfolio-url"
-				>
-					{`http://localhost:3000/${currentUser.displayName}/${portfolio?.id}`}
-				</span>
+				{
+					showUrl
+						? <span className="portfolio-url">{`http://localhost:3000/${currentUser.displayName}/${portfolio?.id}`}</span>
+						: <Button className="button ml-3" onClick={() => setShowUrl(true)}>View Portfolio Url</Button>
+				}
 			</div>
 		</Container>
 	 );
