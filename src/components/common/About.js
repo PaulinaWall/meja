@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Button } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const About = ({ section, handleOnClick, handleDelete }) => {
 	return ( 
@@ -12,10 +12,8 @@ const About = ({ section, handleOnClick, handleDelete }) => {
 				{section.url && <a href={`https://${section.url}`} target="_blank" rel="noopener noreferrer">{section.url}</a>}
 			</div>
 			<div className="d-flex">
-				<Button className="button mr-3" size="sm" type="button" onClick={handleOnClick}>
-					Change
-				</Button>
-				<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons"  onClick={handleDelete} />
+				<FontAwesomeIcon icon={faEdit} className="edit-icons"  onClick={handleOnClick} />
+				<FontAwesomeIcon icon={faTrashAlt} className="delete-icons"  onClick={handleDelete} />
 			</div>
 		</Container>
 	 );

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 
 const Links = ({ link, handleOnClick, handleDelete }) => {
@@ -26,9 +25,7 @@ const Links = ({ link, handleOnClick, handleDelete }) => {
 				}
 			</div>
 			<div className="d-flex">
-				<Button style={{ height: "min-content" }} className="button mr-3" size="sm" type="button" onClick={handleOnClick}>
-					Change
-				</Button>
+				<FontAwesomeIcon icon={faEdit} className="edit-icons"  onClick={handleOnClick} />
 				<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons" onClick={handleDelete} />
 			</div>
 		</div>

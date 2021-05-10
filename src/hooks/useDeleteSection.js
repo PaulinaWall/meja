@@ -9,6 +9,10 @@ const useDeleteSection = async ({ part, index }) => {
 	const { portfolio } = useGetCurrentUserPortfolio();
 	
 	useEffect(() => {
+		if (!part) {
+			return;
+		}
+		
 		if(part === 'email'){
 			db.collection("portfolios").doc(portfolio.id).update({
 				[part]: ''

@@ -194,9 +194,19 @@ image{
 	margin-top: 20px;
 }
 
+.edit-icons{
+	color: var(--mediumGrey);
+	font-size: 25px;
+	margin-right: 20px !important;
+	&:hover{
+		color: var(--darkGrey);
+		cursor: pointer;
+	}
+}
+
 .delete-icons{
 	color: var(--mediumGrey);
-	font-size: 30px;
+	font-size: 25px;
 	margin-right: 0 !important;
 	&:hover{
 		color: var(--darkGrey);

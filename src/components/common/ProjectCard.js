@@ -1,7 +1,7 @@
 import React from 'react'
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const ProjectCard = ({ project, handleOnClick, handleDelete }) => {
 
@@ -18,9 +18,7 @@ const ProjectCard = ({ project, handleOnClick, handleDelete }) => {
 				<Card.Link href={`https://${project.url}`} target="_blank" rel="noopener noreferrer">{project.url}</Card.Link>
 			</Card.Body>
 			<div className="d-flex justify-content-between m-2">
-				<Button className="button btn-secondary" size="sm" type="button" onClick={handleOnClick}>
-					Change
-				</Button>
+				<FontAwesomeIcon icon={faEdit} className="edit-icons"  onClick={handleOnClick} />
 				<FontAwesomeIcon icon={faTrashAlt} className="mr-2 delete-icons"  onClick={handleDelete} />
 			</div>
 		</Card>
