@@ -13,7 +13,7 @@ const LandingPage = () => {
 				<Col className="landing-page-quote" sm={12} md={12} lg={12}>
 				<span className="quote-text">
 					<FontAwesomeIcon className="left-quote" icon={faQuoteLeft}/>
-					Always see a preview of your ongoing work!
+					Portfolio-Script, where you create your personal portfolio.
 					<FontAwesomeIcon className="right-quote" icon={faQuoteRight}/>
 				</span>
 				</Col>
@@ -24,11 +24,11 @@ const LandingPage = () => {
 				</Col>
 				<Col className="landing-page-list-top" sm={12} md={6} lg={6}>
 					<ul>
-						<li>Add you projects with links and images</li>
-						<li>Create about section, add text and links</li>
-						<li>Choose among different colors for your personal taste</li>
+						<li>Add your special projects and show them with links and images.</li>
+						<li>Create a section about you, add headers, text and links.</li>
+						<li>Choose among several different colors for your personal taste.</li>
 						<li>Add your email for all the contacts you will get.</li>
-						<li>Link to social media with cool icons</li>
+						<li>Link to social media, rendered with icons.</li>
 					</ul>
 				</Col>
 			</Row>
@@ -36,17 +36,17 @@ const LandingPage = () => {
 				<Col className="landing-page-quote" sm={12} md={12} lg={12}>
 				<span className="quote-text">
 					<FontAwesomeIcon className="left-quote" icon={faQuoteLeft}/>
-					Any questions don´t hesitate to contact. Infomation below.
+					Any questions, don´t hesitate to contact support. Information below.
 					<FontAwesomeIcon className="right-quote" icon={faQuoteRight}/>
 				</span>
 				</Col>
 			</Row>
 			<Row className="m-0 landing-page-bottom"><Col className="landing-page-list-bottom" sm={12} md={6} lg={6}>
 					<ul>
-						<li>Navigate easily around you project.</li>
-						<li>You get a priview straight away.</li>
-						<li>Save and collect your personal url.</li>
-						<li>Sign in and change content anytime.</li>
+						<li>Navigate easy around your project, while creating.</li>
+						<li>You get a preview of every change in selected section straight away.</li>
+						<li>After signed in you will have your personal url.</li>
+						<li>Sign in and change your content anytime.</li>
 					</ul>
 				</Col>
 				<Col className="p-0 landing-page-images-container" sm={12} md={6} lg={6}>
