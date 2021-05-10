@@ -368,7 +368,7 @@ const CreateForm = () => {
 				<Button className="button" onClick={handleShowPortfolioOnClick}>Preview Portfolio</Button>
 				{
 					showUrl
-						? <span className="portfolio-url">{`http://localhost:3000/${currentUser.displayName}/${portfolio?.id}`}</span>
+						? <span className="portfolio-url">{`https://portfolio-script.herokuapp.com/${currentUser.displayName}/${portfolio?.id}`}</span>
 						: <Button className="button ml-3" onClick={() => setShowUrl(true)}>View Portfolio Url</Button>
 				}
 			</div>
