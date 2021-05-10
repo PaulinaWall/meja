@@ -41,7 +41,7 @@ const CreateForm = () => {
 	const navigate = useNavigate();
 	const { portfolio } = useGetCurrentUserPortfolio();
 	const { uploadProgress, imageUrl, projectImage, error: uploadImageError } = useAddImage(imageToAdd);
-	const { error: deleteError, message: deleteMessage } = useDeleteSection(deleteSection);
+	const { error: deleteError, message: deleteMessage } = useDeleteSection(deleteSection, setDeleteSection);
 	
 	useEffect(() => {
 		setUploadedImageUrl(imageUrl)
@@ -205,7 +205,7 @@ const CreateForm = () => {
 		}
 	}
 
-	const handleDelete = async (part, index = 0) => {
+	const handleDelete = (part, index = 0) => {
 		setDeleteSection({ part, index });
 	}
 
