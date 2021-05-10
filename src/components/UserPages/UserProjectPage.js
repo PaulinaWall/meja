@@ -10,7 +10,6 @@ import BreadCrumbs from '../common/BreadCrumbs';
 const UserProjectPage = () => {
 	const { userName, portfolioID } = useParams();
 	const { portfolio, loadingPortfolio } = useGetSinglePortfolio(portfolioID);
-	console.log(portfolio)
 
 	return ( 
 		<>
