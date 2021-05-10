@@ -41,7 +41,7 @@ const UserProjectPage = () => {
 												</Card.Text>
 											</Card.Body>
 											<Card.Body className="p-1.5">
-												<Card.Link target="_blank" rel="noopener noreferrer" href={`http://${project.projectUrl}`}>{project.projectUrl}</Card.Link>
+												<Card.Link target="_blank" rel="noopener noreferrer" href={`http://${project.url}`}>{project.url}</Card.Link>
 											</Card.Body>
 										</Card>
 									</Col>
