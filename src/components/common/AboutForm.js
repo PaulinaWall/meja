@@ -35,7 +35,7 @@ const AboutForm = ({ title, url, text, handleTextChange, handleUrlChange, handle
 			<Form.Group id="url">
 				<Form.Control 
 					value={url}
-					placeholder="URL"
+					placeholder="example: www.example.com"
 					onChange={handleUrlChange}
 					type="text" 
 				/>
@@ -53,7 +53,7 @@ const AboutForm = ({ title, url, text, handleTextChange, handleUrlChange, handle
 						placement="top"
 						overlay={
 							<Tooltip>
-								Fill in atleast one field to add content.
+								Fill in atleast one field to add content. Add url without https://
 							</Tooltip>
 						}
 					>

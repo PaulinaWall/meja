@@ -58,7 +58,7 @@ const ProjectForm = ({
 			<Form.Group id="url">
 				<Form.Control 
 					value={url}
-					placeholder="URL"
+					placeholder="example: www.example.com"
 					onChange={handleUrlChange}
 					type="text" 
 				/>
@@ -89,7 +89,7 @@ const ProjectForm = ({
 						placement="top"
 						overlay={
 							<Tooltip>
-								Title, and url are required to add content.
+								Title, and url are required to add content. Please add url without https://
 							</Tooltip>
 						}
 					>

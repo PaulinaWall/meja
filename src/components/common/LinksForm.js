@@ -18,7 +18,7 @@ const LinksForm = ({ facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, ha
 				<FontAwesomeIcon icon={faGithub} className="mr-2 icons" />
 				<Form.Control 
 					value={gitHubUrl}
-					placeholder="Github"
+					placeholder="example: www.github.com"
 					onChange={handleGithubChange}
 					type="text" 
 				/>
@@ -28,7 +28,7 @@ const LinksForm = ({ facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, ha
 				<FontAwesomeIcon icon={faLinkedin} className="mr-2 icons" />
 				<Form.Control 
 					value={linkedinUrl}
-					placeholder="Linkedin"
+					placeholder="example: www.linkedin.com"
 					onChange={handleLinkedinChange}
 					type="text" 
 				/>
@@ -38,7 +38,7 @@ const LinksForm = ({ facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, ha
 				<FontAwesomeIcon icon={faFacebook} className="mr-2 icons" />
 				<Form.Control 
 					value={facebookUrl}
-					placeholder="Facebook"
+					placeholder="example: www.facebook.com"
 					onChange={handleFacebookChange}
 					type="text" 
 				/>
@@ -51,7 +51,7 @@ const LinksForm = ({ facebookUrl, linkedinUrl, gitHubUrl, handleGithubChange, ha
 							placement="top"
 							overlay={
 								<Tooltip>
-									Add links to your accounts, will be added as icons in the footer of portfolio.
+									Add links (without https://) to your accounts, will be added as icons in the footer of portfolio.
 									BEWARE, if started project with links, rather change in the preview. To not risk overwrite content.
 								</Tooltip>
 							}
